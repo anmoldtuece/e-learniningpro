@@ -1,36 +1,81 @@
-import React from 'react'
-import Plant from "../../Images/Plant.svg";
-import Plant2 from "../../Images/Plant2.svg";
-import '../Landing/Landing.css'
-import Footer from "../../Footer/Footer.jsx"
-import Header from '../Header/Header.jsx';
+import React from "react";
+import Footer from "../../Footer/Footer.jsx";
+import Header from "../Header/Header.jsx";
+import {
+  FaAtom, FaFlask, FaLeaf, FaSquare, FaLaptopCode,
+} from "react-icons/fa";
 
-function About({backgroundC}) {
+function About() {
+  const features = [
+    { icon: <FaAtom size={32} />, label: "Physics" },
+    { icon: <FaFlask size={32} />, label: "Chemistry" },
+    { icon: <FaLeaf size={32} />, label: "Biology" },
+    { icon: <FaSquare size={32} />, label: "Math" },
+    { icon: <FaLaptopCode size={32} />, label: "Computer" },
+  ];
+
   return (
     <>
-    <Header/>
-    <div className="about" style={{backgroundColor: backgroundC}}>
-        <h4>About Us</h4>
-        <hr className="underLine"/>
-        <div className="content">
-          <div className="left-svg">
-            <img src={Plant2} className="w-[22rem]" alt="" />
+      <Header />
+
+      {/* Flash card background */}
+      <div className="bg-gray-50 py-16">
+        <div className="container mx-auto px-6 lg:px-0">
+          
+          {/* Blue flash card */}
+          <br />
+          <div className="bg-blue-600 text-white rounded-2xl shadow-2xl p-8 md:p-12 lg:p-16 mb-8">
+            
+            {/* About content */}
+            <div className="space-y-4 text-center md:text-left">
+              <h2 className="text-4xl font-bold">About Us</h2>
+              <p className="text-blue-100">
+                At <strong>DTU E‑Learning</strong>, we believe in the power of education to transform lives...
+              </p>
+            </div>
+
+            {/* Story & Mission */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <h3 className="inline-block bg-white text-blue-600 px-4 py-1 rounded-full">
+                  Our Story
+                </h3>
+                <p className="text-blue-100">
+                  DTU E‑Learning was born out of a passion for learning and a desire...
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="inline-block bg-white text-blue-600 px-4 py-1 rounded-full">
+                  Our Mission
+                </h3>
+                <p className="text-blue-100">
+                  Our mission is simple yet profound: to empower individuals through education...
+                </p>
+              </div>
+            </div>
           </div>
-          <p>
-            At DTU E-Learning, we believe in the power of education to transform lives. Our platform is designed to be a gateway to knowledge, offering a diverse range of courses and learning experiences for students.
-            <h1 className=" bg-blue-700 w-fit py-1 px-3 rounded-sm my-2">Our Story</h1>
-            DTU E-Learning was born out of a passion for learning and a desire to make quality education accessible to everyone. We understand the challenges faced by modern learners and strive to provide a solution that is both convenient and effective.
-            <h1 className=" bg-blue-700 w-fit py-1 px-3 rounded-sm my-2">Our Mission</h1>
-            Our mission is simple yet profound: to empower individuals through education. We aim to create a global learning community where students can discover new passions, enhance their skills, and achieve their academic and professional goals. By leveraging technology and innovative teaching methods, we strive to make learning engaging, interactive, and enjoyable.
-          </p>
-          <div className="right-svg">
-            <img src={Plant} className="w-[30rem]" alt="" />
+
+          {/* Faculty List */}
+          <h2 className="mt-16 text-3xl font-semibold text-center text-white-800">
+            Faculty List
+          </h2>
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 place-items-center">
+            {features.map(f => (
+              <div
+                key={f.label}
+                className="bg-blue-600 text-white rounded-xl p-6 flex flex-col items-center space-y-2 shadow-lg transform hover:-translate-y-1 transition"
+              >
+                {f.icon}
+                <span className="font-medium">{f.label}</span>
+              </div>
+            ))}
           </div>
         </div>
-    </div>
-    <Footer/>
+      </div>
+
+      <Footer />
     </>
-  )
+  );
 }
 
-export default About
+export default About;

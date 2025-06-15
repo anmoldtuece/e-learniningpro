@@ -1,94 +1,90 @@
-.main{
-  margin-top: 10vh;
-  margin-left: 10vh;
-  color:white;
+.main {
+  margin-top: full-screen;
+  margin-left: full-screen;
   font-family: sans-serif;
   display: flex;
-  gap: 10rem;
+  gap: 6rem;
   align-items: center;
   justify-content: center;
+  background-color: white;
+  height: 100vh;
 }
 
-.main::-webkit-scrollbar {
-  width: 0 !important;
+.container {
+  width: 400px;
+  background-color: #0E3A59; /* Deep blue */
+  color: white;
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
-.container{
- min-height: auto; 
- width:380px;
- background-color: #0E3A59;
- text-align: center;
- border-radius: 15px;
+.para1 h2 {
+  font-size: 28px;
+  margin-bottom: 5px;
 }
 
-.para1{
-  font-size: large;
-  margin-top: 10px;
-}
-
-.logo{
- padding: 15px;
-}
-
-.para{
-   margin-top: 20px;
-   font-size: 16px;
-   letter-spacing: 1px;
-}
-.form{
-  margin-top:40px;
-}
-.input-0{
-    border:0;
-    outline: 0;
-    background: transparent;
-    border: 2px solid gray;
-    width: 70%;
-    padding-block: 17px ;
-    border-radius: 15px;
-    padding-left: 1rem;
-    color: white;
-}
-
-.input-0::placeholder{
+.para h5 {
   font-size: 16px;
-  padding-left: 20px;
+  color: #e0e0e0;
 }
 
-.input-2{
-  margin-top:20px;
+.input-0 {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1.5px solid #ccc;
+  background: transparent;
+  color: white;
+  margin-top: 10px;
+  font-size: 16px;
 }
 
-.btns{
- margin-top: 2rem;
- display: flex;
- justify-content: center;
- gap: 80px;
- margin-bottom: 1rem;
+.input-0::placeholder {
+  color: #ccc;
+  padding-left: 5px;
 }
 
-.btns-1{
-  background-color: #157776;
-  padding: 10px;
-  width: 200px;
-}
-
-.radio-btn{
+.radio-btn {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
 }
 
-.signup-link{
+.btns {
+  margin-top: 1.5rem;
+}
+
+.btns-1 {
+  background-color: #1e90ff; /* Blue */
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.signup-link, .signup-link a {
+  color: #ffcc00;
   margin-top: 20px;
-  font-size: small;
+  display: block;
 }
 
-.signup-link p{
-  color: #fff; 
+.text-yellow-400 {
+  color: #ffcc00;
 }
 
-/* .signup-link .link{
-  color: green;
-  font-size: medium;
-} */
+.error-message {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Image container */
+.img-3 img {
+  max-width: 500px;
+  height: auto;
+}

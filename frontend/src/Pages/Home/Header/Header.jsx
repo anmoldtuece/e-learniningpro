@@ -70,6 +70,14 @@ function Header() {
                   Contact
                 </NavLink>
               </li>
+              <li>
+                <NavLink 
+                  to='/adminlogin' 
+                  className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}
+                >
+                  Admin Login
+                </NavLink>
+              </li>
             </ul>
           </nav>
 
@@ -139,6 +147,15 @@ function Header() {
                 Contact
               </NavLink>
             </li>
+            <li>
+              <NavLink 
+                to='/adminlogin' 
+                className={({isActive}) => `mobile-nav-link ${isActive ? 'active' : ''}`}
+                onClick={closeMobileMenu}
+              >
+                Admin Login
+              </NavLink>
+            </li>
           </ul>
           
           <div className="mobile-auth">
@@ -156,4 +173,4 @@ function Header() {
   )
 }
 
-export default Header
+export default Header;

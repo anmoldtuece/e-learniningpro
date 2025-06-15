@@ -4,18 +4,19 @@ import { NavLink } from "react-router-dom";
 
 function Pending() {
   return (
-    <>
-      <div className="flex flex-col gap-6 items-center py-5">
-        <img src={pending} width={350} alt="" />
-        <h1 className="text-[#EDF051] text-4xl font-bold">Response Pending</h1>
-        <p className="text-[#fadcb6] text-xl w-[35rem] text-center">
-        We take your response, now wait a little bit. when your Admin check your response and approve it or reject any reason we will notify you by your email it.
-        </p>
-        <NavLink to="/">
-          <p className="text-[#6DD15D] text-xl">◀ go to home</p>
-        </NavLink>
-      </div>
-    </>
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-10">
+      <img src={pending} width={350} alt="Pending Illustration" className="mb-6" />
+
+      <h1 className="text-[#0D286F] text-4xl font-bold mb-4">Response Pending</h1>
+
+      <p className="text-gray-700 text-lg w-full max-w-xl text-center mb-6">
+        We have received your response. Please wait a little while. Once the admin reviews and approves (or rejects) your submission, you will be notified via email.
+      </p>
+
+      <NavLink to="/" className="text-[#0D286F] hover:text-blue-700 text-lg font-medium underline">
+        ◀ Go to Home
+      </NavLink>
+    </div>
   );
 }
 

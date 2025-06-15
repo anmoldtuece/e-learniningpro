@@ -9,33 +9,23 @@ import { course } from "../models/course.model.js";
 import {Sendmail} from "../utils/Nodemailer.js"
 
 
-const adminSignUp = asyncHandler(async(req,res)=>{
-    const {username, password} = req.body
+// Call this ONCE then delete it
+const createHardcodedAdmin = async () => {
+    const username = "admin";
+    const password = "admin123"; // You can hash this before storing
 
-    if([username, password].some((field) => field?.trim() === "")) {
-        throw new ApiError(400, "All fields are required");
+    const exists = await admin.findOne({ username });
+    if (!exists) {
+        const newAdmin = await admin.create({ username, password });
+        console.log("Hardcoded admin created successfully:", newAdmin);
+    } else {
+        console.log("Admin already exists");
     }
+};
 
-    const existedAdmin = await admin.findOne({ username})
+// Call it once here (wrap in async if needed)
+createHardcodedAdmin();
 
-    if(existedAdmin){
-        throw new ApiError(400, "admin already exist")
-    }
-
-    const newAdmin = await admin.create({
-        username,
-        password,
-    })
-
-    if(!newAdmin){
-        throw new ApiError(400, "failed to add admin")
-    }
-
-    return res 
-    .status(200)
-    .json(new ApiResponse(400,{}, "admin added successfully"))
-
-})
 
 const generateAccessAndRefreshTokens = async (admindID) =>{ 
     try {
@@ -525,4 +515,4 @@ const approveCourse = asyncHandler(async(req,res)=>{
    
 
 })
-export {adminSignUp, adminLogin, forApproval, approveStudent, approveTeacher, checkStudentDocuments, checkTeacherDocuments, adminLogout, sendmessage, allmessages,readMessage, toapproveCourse, approveCourse}
+export { createHardcodedAdmin, adminLogin, forApproval, approveStudent, approveTeacher, checkStudentDocuments, checkTeacherDocuments, adminLogout, sendmessage, allmessages, readMessage, toapproveCourse, approveCourse }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Mail from '../../Images/Meet-the-team.svg';
 import Header from '../Header/Header';
 
 function Contact() {
@@ -7,24 +6,21 @@ function Contact() {
   const [email, setEmail] = useState('');
   const [msg, setMsg] = useState('');
 
-  const handlemsg = async (e) => {
+  const handleMsg = async (e) => {
     e.preventDefault();
     if (!name || !email || !msg) {
       alert('All fields are required!');
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       alert('Enter a valid email!');
     } else {
-      const data = await fetch('/api/admin/contact-us', {
+      const res = await fetch('/api/admin/contact-us', {
         method: 'POST',
         credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, message: msg }),
       });
-
-      const response = await data.json();
-      alert(response.message);
+      const { message } = await res.json();
+      alert(message);
       setName('');
       setEmail('');
       setMsg('');
@@ -34,46 +30,35 @@ function Contact() {
   return (
     <>
       <Header />
-      <div className="bg-slate-50 py-12 px-4">
-        <h4 className="text-4xl font-bold text-slate-800 text-center mb-4 font-inter">Contact Us</h4>
-        <hr className="w-20 h-1 bg-blue-600 mx-auto rounded-full mb-10" />
-        <div className="flex flex-col md:flex-row justify-center items-center gap-10">
-          <div className="w-full max-w-md md:max-w-lg">
-            <img src={Mail} alt="Contact Illustration" className="w-full h-auto rounded-xl shadow-md" />
-          </div>
-
-          <form
-            onSubmit={handlemsg}
-            className="w-full max-w-md bg-white shadow-lg rounded-xl p-6 space-y-5"
-          >
-            <h4 className="text-xl font-semibold text-slate-900 text-center">Send Message</h4>
-
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-20">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-gray-200 p-8">
+          <h2 className="text-2xl font-semibold text-gray-900 text-center mb-6">
+            Contact Us
+          </h2>
+          <form onSubmit={handleMsg} className="space-y-5">
             <input
               type="text"
               placeholder="Name"
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-
             <input
-              type="text"
+              type="email"
               placeholder="Email Address"
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-
             <textarea
               placeholder="Message"
-              className="w-full px-4 py-3 min-h-[120px] border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700 resize-y"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 min-h-[140px] resize-y"
               value={msg}
               onChange={(e) => setMsg(e.target.value)}
             />
-
             <button
               type="submit"
-              className="w-full py-3 text-white font-semibold rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 shadow-md hover:shadow-xl transition duration-300"
+              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 shadow-md transition"
             >
               Send A Message
             </button>

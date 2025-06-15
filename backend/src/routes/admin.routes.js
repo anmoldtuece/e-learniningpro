@@ -1,35 +1,53 @@
 import { Router } from "express";
-import { adminLogin, adminLogout, adminSignUp, approveStudent, approveTeacher, checkStudentDocuments, checkTeacherDocuments, forApproval, sendmessage, allmessages, readMessage, toapproveCourse, approveCourse } from "../controllers/admin.controller.js";
+import {
+  createHardcodedAdmin,
+  adminLogin,
+  adminLogout,
+  approveStudent,
+  approveTeacher,
+  checkStudentDocuments,
+  checkTeacherDocuments,
+  forApproval,
+  sendmessage,
+  allmessages,
+  readMessage,
+  toapproveCourse,
+  approveCourse
+} from "../controllers/admin.controller.js";
 import { authAdmin } from "../middlewares/adminAuth.middleware.js";
 
-const router = Router()
+const router = Router();
 
-router.route("/signup").post(adminSignUp)
+// Admin registration (hardcoded or signup)
+router.route("/createHardcodedAdmin").post(createHardcodedAdmin)
+// Can also use createHardcodedAdmin if needed
 
-router.route("/login").post(adminLogin)
+// Admin login
+router.route("/login").post(adminLogin);
 
-router.route("/:adminID/approve").post(authAdmin, forApproval)
+// Approve pending users
+router.route("/:adminID/approve").post(authAdmin, forApproval);
 
-router.route("/:adminID/approve/student/:studentID").post(authAdmin, approveStudent)
+// Approve specific student or teacher
+router.route("/:adminID/approve/student/:studentID").post(authAdmin, approveStudent);
+router.route("/:adminID/approve/teacher/:teacherID").post(authAdmin, approveTeacher);
 
-router.route("/:adminID/approve/teacher/:teacherID").post(authAdmin,approveTeacher)
+// Check documents of student or teacher
+router.route("/:adminID/documents/student/:studentID").get(authAdmin, checkStudentDocuments);
+router.route("/:adminID/documents/teacher/:teacherID").get(authAdmin, checkTeacherDocuments);
 
-router.route("/:adminID/documents/student/:studentID").get(authAdmin, checkStudentDocuments)
+// Admin logout
+router.route("/logout").post(authAdmin, adminLogout);
 
-router.route("/:adminID/documents/teacher/:teacherID").get(authAdmin, checkTeacherDocuments)
+// Contact us message (no auth needed)
+router.route("/contact-us").post(sendmessage);
 
-router.route("/logout").post(authAdmin, adminLogout)
+// Admin read all messages
+router.route("/messages/all").get(authAdmin, allmessages);
+router.route("/message/read").patch(authAdmin, readMessage);
 
-router.route("/contact-us").post(sendmessage)
-
-router.route("/messages/all").get(authAdmin, allmessages)
-
-router.route("/message/read").patch(authAdmin, readMessage)
-
-router.route("/:adminID/approve/course").get(authAdmin, toapproveCourse)
-
-router.route("/:adminID/approve/course/:courseID").post(authAdmin, approveCourse)
+// Courses waiting for approval
+router.route("/:adminID/approve/course").get(authAdmin, toapproveCourse);
+router.route("/:adminID/approve/course/:courseID").post(authAdmin, approveCourse);
 
 export default router;
-
-//testing
