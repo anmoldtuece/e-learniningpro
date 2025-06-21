@@ -56,7 +56,7 @@ const addCourseTeacher = asyncHandler(async(req,res)=>{
 
     
 
-    const{coursename,description, schedule} = req.body
+    const { coursename, description, schedule, price } = req.body; // <-- Add price
 
     console.log(schedule)
 
@@ -65,7 +65,7 @@ const addCourseTeacher = asyncHandler(async(req,res)=>{
       throw new ApiError(400, "Schedule of the course is required.")
     }
 
-    if ([coursename,description].some((field) => field?.trim() === "")) {
+    if ([coursename, description, price].some((field) => field?.toString().trim() === "")) {
       throw new ApiError(400, "All fields are required");
     }
 
@@ -109,6 +109,7 @@ const addCourseTeacher = asyncHandler(async(req,res)=>{
       coursename,
       description,
       schedule,
+      price, // <-- Save price
       enrolledteacher: loggedTeacher._id,
     })
 
@@ -522,7 +523,37 @@ const canStudentEnroll = asyncHandler(async(req,res)=>{
   return res.status(200).json(new ApiResponse(200, {}, "student can enroll"))
 })
 
-export {getCourse, getcourseTeacher, addCourseTeacher, addCourseStudent, enrolledcourseSTD, enrolledcourseTeacher, addClass, stdEnrolledCoursesClasses, teacherEnrolledCoursesClasses, canStudentEnroll} 
+export {getCourse, getcourseTeacher, addCourseTeacher, addCourseStudent, enrolledcourseSTD, enrolledcourseTeacher, addClass, stdEnrolledCoursesClasses, teacherEnrolledCoursesClasses, canStudentEnroll}
+
+// Add or update this controller function
+
+export const getStudentClasses = async (req, res) => {
+  try {
+    const studentId = req.params.ID;
+    // Find all courses the student is enrolled in
+    const courses = await Course.find({ students: studentId })
+      .populate('teacher', 'Firstname Lastname') // populate teacher info
+      .lean();
+
+    // For each course, attach course name and instructor to each liveClass
+    const classes = [];
+    courses.forEach(course => {
+      if (course.liveClasses && course.liveClasses.length > 0) {
+        course.liveClasses.forEach(liveClass => {
+          classes.push({
+            ...liveClass,
+            coursename: course.coursename,
+            instructor: course.teacher ? `${course.teacher.Firstname} ${course.teacher.Lastname}` : "N/A"
+          });
+        });
+      }
+    });
+
+    res.json({ success: true, data: { classes } });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 
 

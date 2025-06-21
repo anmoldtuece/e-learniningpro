@@ -140,6 +140,7 @@ import { useParams } from 'react-router-dom';
 
 function Popup({ onClose, subject }) {
   const [desc, setDesc] = useState('');
+  const [price, setPrice] = useState('');
   const { ID } = useParams();
   const dateGap = 3; // 3 hours
 
@@ -221,12 +222,18 @@ function Popup({ onClose, subject }) {
       return;
     }
 
+    if (price === '' || isNaN(price) || parseFloat(price) <= 0) {
+      alert('Please enter a valid price.');
+      return;
+    }
+
     onClose();
 
     const data = {
       coursename: subject.toLowerCase(),
       description: desc,
       schedule: selectedDays,
+      price: price, // <-- Add this
     };
 
     console.log(data);
@@ -322,6 +329,19 @@ function Popup({ onClose, subject }) {
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
               className='bg-[#32B0AE] p-2 rounded-md w-52 ml-3 border-0 outline-0'
+            />
+          </div>
+
+          <div className='flex flex-col gap-3'>
+            <label className='text-blue-700'>Course Price (per month, per student):</label>
+            <input
+              type="number"
+              min="0"
+              className="p-2 rounded border text-black"
+              value={price}
+              onChange={e => setPrice(e.target.value)}
+              placeholder="Enter price in INR"
+              required
             />
           </div>
         </div>

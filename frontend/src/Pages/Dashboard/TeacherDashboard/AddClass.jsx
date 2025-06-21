@@ -127,7 +127,7 @@ function AddClass({ onClose }) {
 
   return (
     <div className='fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center'>
-      <div className='w-[60%] h-[70%] bg-blue-gray-700 text-white rounded-md'>
+      <div className='w-[60%] h-[70%] bg-white text-blue-700 rounded-md'>
         <div className='absolute w-9 h-9 bg-[#E2B659] rounded-xl cursor-pointer flex items-center justify-center m-2' onClick={onClose}>✖️</div>
         
         <div className='flex justify-center mt-5 gap-10 border-b-2 py-5'>
@@ -143,22 +143,21 @@ function AddClass({ onClose }) {
         </div>
 
         <div className='flex items-center justify-around my-20 mx-5'>
-
-          <div className='flex gap-5 text-black'>
-            <label htmlFor="" className='text-xl text-white'>Date & Time:</label>
+          <div className='flex gap-5'>
+            <label htmlFor="datetime" className='text-xl text-blue-700'>Date & Time:</label>
             <DateTime setDate={setDate} allowedDays={allowedDays}/>
           </div>
         </div>
 
         <div className='m-10 flex items-center justify-center gap-20 mb-20'>
           <div className='flex gap-5'>
-            <label htmlFor="" className='text-xl'>Link:</label>
-            <input value={link} onChange={(e) => setLink(e.target.value)} type="url" className='border-0 outline-0 text-gray-900 py-1 px-3 rounded-sm' />
+            <label htmlFor="link" className='text-xl text-blue-700'>Link:</label>
+            <input id="link" value={link} onChange={(e) => setLink(e.target.value)} type="url" className='border-0 outline-0 text-gray-900 py-1 px-3 rounded-sm' />
           </div>
 
           <div className='flex gap-5'>
-            <label htmlFor="" className='text-xl'>Title:</label>
-            <input value={note} onChange={(e) => setNote(e.target.value)} type="text" className='border-0 outline-0 text-gray-900 py-1 px-3 rounded-sm' />
+            <label htmlFor="title" className='text-xl text-blue-700'>Title:</label>
+            <input id="title" value={note} onChange={(e) => setNote(e.target.value)} type="text" className='border-0 outline-0 text-gray-900 py-1 px-3 rounded-sm' />
           </div>
         </div>
 

@@ -17,6 +17,11 @@ isapproved: {
     default: false
 },
 
+price: { 
+    type: Number,
+    required: true 
+},
+
 liveClasses: [{
     title: String,
     timing: Number,

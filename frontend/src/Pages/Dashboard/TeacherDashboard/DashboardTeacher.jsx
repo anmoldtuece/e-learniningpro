@@ -3,6 +3,14 @@ import { useParams } from "react-router-dom";
 import Withdrawal from "./Withdrawal";
 import { TbMessage2Star } from "react-icons/tb";
 
+const fallbackPrice = {
+  math: 700,
+  physics: 800,
+  computer: 1000,
+  chemistry: 600,
+  biology: 500,
+};
+
 function DashboardTeacher() {
   const { ID } = useParams();
   const [data, setdata] = useState([]);
@@ -16,14 +24,6 @@ function DashboardTeacher() {
   const [starCount, setStar] = useState(5);
 
   const [formPopup, setFormPopup] = useState(false);
-
-  const price = {
-    math: 700,
-    physics: 800,
-    computer: 1000,
-    chemistry: 600,
-    biology: 500,
-  };
 
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -140,23 +140,31 @@ function DashboardTeacher() {
         <hr />
         <div className="flex gap-32">
           <div className="flex flex-col gap-5">
-            <p>Name: <span className="text-black">{data.Firstname} {data.Lastname}</span></p>
-            {/* <p>Name: {data.Firstname} {data.Lastname} {'⭐'.repeat(starCount)}</p> */}
-            <p>Email: <span className="text-black">{data.Email}</span></p>
-            <p>Phone: <span className="text-black">{Tdec?.Phone}</span></p>
-            <p>Address: <span className="text-black">{Tdec?.Address}</span></p>
-            <p>Experience: <span className="text-black">{Tdec?.Experience} years</span></p>
+            <p className="text-gray-700">
+              Name: <span className="text-black">{data.Firstname} {data.Lastname}</span>
+            </p>
+            <p className="text-gray-700">
+              Email: <span className="text-black">{data.Email}</span>
+            </p>
+            <p className="text-gray-700">
+              Phone: <span className="text-black">{Tdec?.Phone}</span>
+            </p>
+            <p className="text-gray-700">
+              Address: <span className="text-black">{Tdec?.Address}</span>
+            </p>
+            <p className="text-gray-700">
+              Experience: <span className="text-black">{Tdec?.Experience} years</span>
+            </p>
           </div>
           <div>
             <div className="flex gap-3 flex-col">
-              <p className="bg-[#1671D8] py-1 px-2 w-fit">Courses</p>
+              <p className="bg-[#1671D8] py-1 px-2 w-fit text-white">Courses</p>
               {courses &&
                 courses.filter((course) => course.isapproved)
                 .map((course) => (
                   <p
                     key={course._id}
-                    // className=" bg-[#1671D8] py-1 px-2 rounded-xl w-fit"
-                    className="py-1 px-2 rounded-xl w-fit"
+                    className="py-1 px-2 rounded-xl w-fit text-gray-700"
                   >
                     {course.coursename} :{" "}
                     <span className="text-black">
@@ -164,7 +172,7 @@ function DashboardTeacher() {
                     </span>
                     <span className="text-black font-bold">
                       {" => "}
-                      Rs. {price[course.coursename]} per student / per month
+                      Rs. {course.price ?? fallbackPrice[course.coursename?.toLowerCase()] ?? "N/A"} per student / per month
                     </span>
                   </p>
                 ))}
@@ -195,14 +203,11 @@ function DashboardTeacher() {
               <p className=' border-b-2 py-2'>We highly appreciate your involvement. Please help us improve by filling out this teacher feedback form. Thank you!</p>
 
               <div className='flex flex-col gap-3 my-5 pb-5 border-b-2'>
-                <label>Full Name</label>
+                <label className="text-gray-700">Full Name</label>
                 <input type="text" className='p-2'  placeholder='Teacher / Instructor Name'/>
-                <label>Course Name</label>
-
+                <label className="text-gray-700">Course Name</label>
                 <input type="text" className='p-2'  placeholder='Course Name'/>
-                {/* <input type="text" value={subjectForm} readOnly className='p-2'  placeholder='Course Name'/> */}
-
-                <label>Number of Years Teaching ?</label>
+                <label className="text-gray-700">Number of Years Teaching ?</label>
                 <input type="text" className='p-2'  placeholder='in years'/>
               </div>
 
@@ -219,6 +224,22 @@ function DashboardTeacher() {
           </div>
         )}
       </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="bg-blue-50 rounded-lg p-6 shadow text-blue-700 font-semibold">
+          <span className="text-4xl">📚</span>
+          <div>Manage Classes</div>
+        </div>
+        <div className="bg-blue-50 rounded-lg p-6 shadow text-blue-700 font-semibold">
+          <span className="text-4xl">🎓</span>
+          <div>Manage Courses</div>
+        </div>
+        <div className="bg-blue-50 rounded-lg p-6 shadow text-blue-700 font-semibold">
+          <span className="text-4xl">👤</span>
+          <div>Profile</div>
+        </div>
+      </div>
+  
     </>
   );
 }

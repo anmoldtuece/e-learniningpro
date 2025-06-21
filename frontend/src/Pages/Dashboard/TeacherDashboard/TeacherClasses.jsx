@@ -9,31 +9,26 @@ function TeacherClasses() {
     const { ID } = useParams();
     const [data, setData] = useState([]);
     const [error, setError] = useState('');
+    const [courses, setCourses] = useState([]);
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     useEffect(() => {
-        const getData = async () => {
+        // Fetch courses for weekly schedule
+        const getCourses = async () => {
             try {
-                const response = await fetch(`/api/course/classes/teacher/${ID}`, {
+                const response = await fetch(`/api/course/Teacher/${ID}/enrolled`, {
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                 });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-
-                const user = await response.json();
-                setData(user.data.classes[0]?.liveClasses || []);
-                console.log(user.data);
-
+                if (!response.ok) throw new Error('Failed to fetch data');
+                const res = await response.json();
+                setCourses(res.data);
             } catch (error) {
-                setError(error.message);
+                // handle error
             }
         };
-        getData();
-
-    }, [showPopup, ID]);
+        getCourses();
+    }, [ID]);
 
     if (error) {
         return <div>Error: {error}</div>;
@@ -97,6 +92,47 @@ function TeacherClasses() {
             {showPopup && (
                 <AddClass onClose={() => setShowPopup(false)} />
             )}
+
+            <div className="bg-blue-50 rounded-lg p-6 shadow mb-8">
+                {courses && courses.length > 0 ? (
+                    <ul className="space-y-4">
+                        {courses
+                            .filter(course => course.isapproved)
+                            .map(course => (
+                                <li key={course._id} className="border-b pb-3">
+                                    <div className="font-semibold text-blue-700 text-lg">{course.coursename}</div>
+                                    <div className="text-gray-700">
+                                        {course.schedule && course.schedule.length > 0 ? (
+                                            <ul>
+                                                {course.schedule.map((days, idx) => (
+                                                    <li key={idx}>
+                                                        {daysOfWeek[days.day]}:{" "}
+                                                        {`${Math.floor(days.starttime/60)}:${days.starttime%60 === 0 ? "00" : days.starttime%60}`} - 
+                                                        {` ${Math.floor(days.endtime/60)}:${days.endtime%60 === 0 ? "00" : days.endtime%60}`}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <span>No schedule available</span>
+                                        )}
+                                    </div>
+                                    {course.meetLink && (
+                                        <a
+                                            href={course.meetLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-block mt-2 text-blue-600 underline hover:text-blue-800"
+                                        >
+                                            Google Meet Link
+                                        </a>
+                                    )}
+                                </li>
+                            ))}
+                    </ul>
+                ) : (
+                    <div className="text-gray-500">No scheduled classes.</div>
+                )}
+            </div>
         </div>
     );
 }

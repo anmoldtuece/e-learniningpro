@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addClass, addCourseStudent, addCourseTeacher, canStudentEnroll, enrolledcourseSTD, enrolledcourseTeacher, getCourse, getcourseTeacher, stdEnrolledCoursesClasses, teacherEnrolledCoursesClasses } from "../controllers/course.controller.js";
+import { addClass, addCourseStudent, addCourseTeacher, canStudentEnroll, enrolledcourseSTD, enrolledcourseTeacher, getCourse, getcourseTeacher, stdEnrolledCoursesClasses, teacherEnrolledCoursesClasses, getStudentClasses } from "../controllers/course.controller.js";
 import { authSTD } from "../middlewares/stdAuth.middleware.js";
 import { authTeacher } from "../middlewares/teacherAuth.middleware.js";
 
@@ -26,5 +26,7 @@ router.route("/:courseId/teacher/:teacherId/add-class").post(authTeacher, addCla
 router.route("/classes/student/:studentId").get(authSTD, stdEnrolledCoursesClasses)
 
 router.route("/classes/teacher/:teacherId").get(authTeacher, teacherEnrolledCoursesClasses)
+
+router.get('/classes/student/:ID', getStudentClasses);
 
 export default router;
