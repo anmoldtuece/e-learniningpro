@@ -197,67 +197,89 @@ function Search() {
 
   return (
     <>
-      <div className="search mb-4">
-        <img
-          src="https://www.figma.com/file/6b4R8evBkii6mI53IA4vSS/image/6c476f454537d7f27cae2b4d0f31e2b59b3020f5"
-          width={30}
-          alt=""
-        />
-        <input
-          type="text"
-          placeholder="Ex: Math ..."
-          value={data}
-          onChange={(e) => setData(e.target.value)}
-        />
-        <button className="w-32" onClick={() => SearchTeacher(data)}>
-          Find Teacher
-        </button>
-      </div>
-      <div className="overflow-auto">
-        {course &&
-          course.map((Data) => (
-            <div
-              key={Data._id}
-              className="relative bg-blue-600 p-4 gap-6 mb-3 flex  rounded-sm max-w-4xl h-20 items-start"
-            >
-              <div className="h-fit font-bold text-blue-900">
-                {Data.coursename.toUpperCase()}
-              </div>
-              <div onClick={()=>openTeacherDec(Data.enrolledteacher.Teacherdetails, Data.enrolledteacher.Firstname, Data.enrolledteacher.Lastname, Data.coursename)} className="text-gray-300 cursor-pointer font-bold">
-                {Data.enrolledteacher.Firstname} {Data.enrolledteacher.Lastname}
-              </div>
-              <div className="text-gray-900">
-                <span className="text-black">Desc :</span> {Data.description}
-              </div>
-              <div>{Data.enrolledStudent.length}/20</div>
-              { idArray.includes(Data._id) ? (
-                <div onClick={()=> alert("You Already enrolled, pls find other course")}
-                  className="text-white bg-green-900 py-2 px-3 absolute right-4 cursor-not-allowed">
-                  Already Enrolled
+      <div className="flex flex-col items-center w-full max-w-4xl mx-auto">
+        <div className="search mb-8 w-full">
+          {/* Removed the search image */}
+          <input
+            type="text"
+            placeholder="Ex: Math ..."
+            value={data}
+            onChange={(e) => setData(e.target.value)}
+          />
+          <button className="w-32" onClick={() => SearchTeacher(data)}>
+            Find Teacher
+          </button>
+        </div>
+        <div className="flex flex-col gap-6 items-center w-full">
+          {course &&
+            course.map((Data) => (
+              <div
+                key={Data._id}
+                className="relative bg-white border border-gray-200 shadow-lg rounded-2xl p-6 flex flex-col md:flex-row md:items-center gap-4 w-full transition hover:shadow-2xl"
+              >
+                <div className="flex-1">
+                  <div className="text-lg font-bold text-teal-700 mb-1">
+                    {Data.coursename.toUpperCase()}
+                  </div>
+                  <div
+                    onClick={() =>
+                      openTeacherDec(
+                        Data.enrolledteacher.Teacherdetails,
+                        Data.enrolledteacher.Firstname,
+                        Data.enrolledteacher.Lastname,
+                        Data.coursename
+                      )
+                    }
+                    className="text-gray-700 cursor-pointer font-semibold hover:underline"
+                  >
+                    {Data.enrolledteacher.Firstname} {Data.enrolledteacher.Lastname}
+                  </div>
+                  <div className="text-gray-500 mt-1">
+                    <span className="font-medium text-gray-700">Desc:</span> {Data.description}
+                  </div>
+                  <div className="text-sm text-gray-400 mt-2">
+                    <span className="font-semibold">Timing:</span>{" "}
+                    {Data.schedule
+                      .map((daytime) => {
+                        return `${daysName[daytime.day]} ${Math.floor(daytime.starttime / 60)}:${
+                          daytime.starttime % 60 === 0 ? "00" : daytime.starttime % 60
+                        } - ${Math.floor(daytime.endtime / 60)}:${
+                          daytime.endtime % 60 === 0 ? "00" : daytime.endtime % 60
+                        }`;
+                      })
+                      .join(", ")}
+                  </div>
                 </div>
-              ) : Data.enrolledStudent.length < 20 ? (
-                <div
-                  onClick={() => handleEnroll(Data.coursename, Data._id)}
-                  className="text-white bg-blue-900 py-2 px-3 absolute right-4 cursor-pointer"
-                >
-                  Enroll Now
+                <div className="flex flex-col items-end gap-2 min-w-[120px]">
+                  <div className="text-gray-600 text-sm">
+                    <span className="font-semibold">{Data.enrolledStudent.length}</span>/20 students
+                  </div>
+                  {idArray.includes(Data._id) ? (
+                    <div
+                      onClick={() => alert("You Already enrolled, pls find other course")}
+                      className="text-white bg-green-500 py-2 px-4 rounded-full cursor-not-allowed font-semibold"
+                    >
+                      Already Enrolled
+                    </div>
+                  ) : Data.enrolledStudent.length < 20 ? (
+                    <div
+                      onClick={() => handleEnroll(Data.coursename, Data._id)}
+                      className="text-white bg-teal-600 hover:bg-teal-700 py-2 px-4 rounded-full cursor-pointer font-semibold transition"
+                    >
+                      Enroll Now
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => alert("Already Full, pls find other course")}
+                      className="text-white bg-red-500 py-2 px-4 rounded-full cursor-not-allowed font-semibold"
+                    >
+                      Already Full
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div onClick={()=> alert("Already Full, pls find other course")}
-                  className="text-white bg-red-900 py-2 px-3 absolute right-4 cursor-not-allowed">
-                  Already Full
-                </div>
-              )}
-              <div className="absolute bottom-2">
-                <span className='mt-2 font-bold'>Timing : </span>
-                {'[ '}
-                {Data.schedule.map(daytime => {
-                  return `${daysName[daytime.day]} ${Math.floor(daytime.starttime / 60)}:${daytime.starttime % 60 === 0 ? "00" : daytime.starttime % 60} - ${Math.floor(daytime.endtime/60)}:${daytime.endtime % 60 === 0 ? "00" : daytime.endtime % 60}`;
-                }).join(', ')}
-                {' ]'}
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
 
       {openTM && (

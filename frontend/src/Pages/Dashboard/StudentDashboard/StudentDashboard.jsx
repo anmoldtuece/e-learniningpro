@@ -121,7 +121,7 @@ function StudentDashboard() {
         <main className="flex-1 p-10 text-center text-gray-500 text-lg bg-white">
           <Outlet />
           <div>
-            Select an option from the sidebar to begin.
+           
           </div>
         </main>
       </div>

@@ -62,32 +62,39 @@ function StudentCourses() {
 
   return (
     <>
-    <div className='flex gap-10 pl-[12rem] mt-12 flex-wrap justify-center mb-2'>
-        {data.map(sub => (
-          <div key={sub._id} className="text-white rounded-md bg-[#042439] cursor-pointer text-center p-3 w-[15rem]" onClick={()=>openpopup(sub)}>
-            <div className='flex justify-center items-center'>
-              <img src={Image[sub.coursename]} alt={sub.coursename} width={60}/>
-              <p>{sub.coursename.toUpperCase()}</p>
-            </div>
-            <p className='mt-5 text-gray-300 text-sm text-center px-2 '>{sub.description}</p>
-
+    <div className="flex flex-col gap-8 justify-center mt-12 px-4 max-w-4xl mx-auto">
+      {data.map(sub => (
+        <div
+          key={sub._id}
+          className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-200 cursor-pointer w-full flex flex-row items-center border border-gray-100 group"
+          onClick={() => openpopup(sub)}
+        >
+          <div className="flex-shrink-0 w-40 h-40 rounded-l-2xl overflow-hidden flex items-center justify-center bg-gradient-to-br from-teal-50 to-cyan-50">
+            <img
+              src={Image[sub.coursename]}
+              alt={sub.coursename}
+              className="object-contain h-28 transition-transform duration-200 group-hover:scale-105"
+            />
+          </div>
+          <div className="flex-1 flex flex-col justify-center px-6 py-6">
+            <h3 className="text-xl font-bold text-teal-700 mb-1 tracking-wide">{sub.coursename.toUpperCase()}</h3>
+            <p className="text-gray-500 text-base mb-3 min-h-[48px]">{sub.description}</p>
             {sub.schedule && (
-              <div>
-                <p className='mt-2 text-blue-700 font-bold'>Timing:</p>
-                {'[ '}
-                {sub.schedule.map(daytime => {
-                  return `${daysName[daytime.day]} ${Math.floor(daytime.starttime / 60)}:${daytime.starttime % 60 === 0 ? "00" : daytime.starttime % 60} - ${Math.floor(daytime.endtime/60)}:${daytime.endtime % 60 === 0 ? "00" : daytime.endtime % 60}`;
-                }).join(', ')}
-                {' ]'}
+              <div className="w-full mt-2">
+                <p className="text-lg font-bold text-blue-700 mb-1">Timing:</p>
+                <p className="text-base font-semibold text-gray-700">
+                  {sub.schedule.map(daytime => {
+                    return `${daysName[daytime.day]} ${Math.floor(daytime.starttime / 60)}:${daytime.starttime % 60 === 0 ? "00" : daytime.starttime % 60} - ${Math.floor(daytime.endtime/60)}:${daytime.endtime % 60 === 0 ? "00" : daytime.endtime % 60}`;
+                  }).join(', ')}
+                </p>
               </div>
             )}
-        
-            {/* <p className='mt-5 text-gray-300 text-sm text-center px-2 '>Fees : Rs. {price[sub.coursename]}</p> */}
           </div>
-        ))}
+        </div>
+      ))}
     </div>
     {popup && (
-      <Popup onClose={()=> setPopup(false)} subject={subDetails} allSubject={subD}/>
+      <Popup onClose={() => setPopup(false)} subject={subDetails} allSubject={subD} />
     )}
     </>
   )
