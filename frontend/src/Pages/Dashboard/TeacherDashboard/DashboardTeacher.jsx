@@ -156,28 +156,7 @@ function DashboardTeacher() {
               Experience: <span className="text-black">{Tdec?.Experience} years</span>
             </p>
           </div>
-          <div>
-            <div className="flex gap-3 flex-col">
-              <p className="bg-[#1671D8] py-1 px-2 w-fit text-white">Courses</p>
-              {courses &&
-                courses.filter((course) => course.isapproved)
-                .map((course) => (
-                  <p
-                    key={course._id}
-                    className="py-1 px-2 rounded-xl w-fit text-gray-700"
-                  >
-                    {course.coursename} :{" "}
-                    <span className="text-black">
-                      {" [ "}{course.schedule.map(days => `${daysOfWeek[days.day]} ${Math.floor(days.starttime/60)}:${(days.starttime%60 === 0 ? "00":days.starttime%60)} - ${Math.floor(days.endtime/60)}:${(days.endtime%60 === 0 ? "00" : days.endtime%60)}`).join(', ')}{" ] "}
-                    </span>
-                    <span className="text-black font-bold">
-                      {" => "}
-                      Rs. {course.price ?? fallbackPrice[course.coursename?.toLowerCase()] ?? "N/A"} per student / per month
-                    </span>
-                  </p>
-                ))}
-            </div>
-          </div>
+      
           <div className="ml-28">
             {/* {notification && (
               show all notifications

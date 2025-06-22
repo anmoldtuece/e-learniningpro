@@ -13,7 +13,6 @@ function TeacherClasses() {
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     useEffect(() => {
-        // Fetch courses for weekly schedule
         const getCourses = async () => {
             try {
                 const response = await fetch(`/api/course/Teacher/${ID}/enrolled`, {
@@ -24,115 +23,136 @@ function TeacherClasses() {
                 const res = await response.json();
                 setCourses(res.data);
             } catch (error) {
-                // handle error
+                setError('Unable to load schedule.');
             }
         };
         getCourses();
     }, [ID]);
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    const formatTime = (mins) =>
+        `${Math.floor(mins / 60)}:${mins % 60 === 0 ? "00" : mins % 60}`;
+
+    const weeklySchedule = Array(7).fill(0).map((_, dayIndex) => {
+        const classes = [];
+
+        courses.forEach(course => {
+            if (course.isapproved && course.schedule?.length > 0) {
+                course.schedule.forEach(slot => {
+                    if (slot.day === dayIndex) {
+                        classes.push({
+                            coursename: course.coursename,
+                            starttime: formatTime(slot.starttime),
+                            endtime: formatTime(slot.endtime),
+                            meetLink: course.meetLink,
+                        });
+                    }
+                });
+            }
+        });
+
+        return { day: daysOfWeek[dayIndex], classes };
+    });
+
+    if (error) return <div className="text-red-500">{error}</div>;
 
     return (
-        <div className='ml-60 mt-20 text-white flex justify-between mr-80'>
-            <h1 className='absolute bottom-72 left-60 text-[#1671D8] text-2xl mt-4 mb-4 font-semibold'>Weekly Schedule</h1>
+        <div className="ml-60 mt-20 mr-80 text-white">
+            <h1 className="text-[#1671D8] text-3xl font-bold mb-6">Weekly Timetable</h1>
 
-            <div className='h-[17rem] w-[30rem] overflow-auto '>
-            {data.filter(clas => {
-            const classDate = new Date(clas.date.slice(0, 10));
-            const today = new Date();
-            const oneWeekFromNow = new Date();
-            oneWeekFromNow.setDate(today.getDate() + 7);
-
-            return classDate >= today && classDate <= oneWeekFromNow;
-            }).map(clas => (
-                <div key={clas.timing} className='flex items-center mb-5'>
-                    <img src="https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png" alt="profile_img" width={30} />
-                    <div className='ml-5 mr-10 font-bold'>
-                        <p className=' text-lg'>
-                            {clas.coursename}
-                            <span className='text-black text-sm ml-3'>
-                                {clas.date.slice(0, 10)}  {Math.floor(clas.timing / 60)}:{clas.timing % 60 === 0 ? "00" : clas.timing % 60}
-                            </span>
-                        </p>
-                        <span className='text-blue-500 text-sm ml-3'>{clas.title.slice(0, 35)} ...</span>
+            {/* Weekly Timetable Format */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                {weeklySchedule.map((day, index) => (
+                    <div key={index} className="bg-white text-black rounded-xl shadow p-5">
+                        <h2 className="text-xl font-semibold text-blue-600 mb-4">{day.day}</h2>
+                        {day.classes.length > 0 ? (
+                            <ul className="space-y-3">
+                                {day.classes.map((cls, i) => (
+                                    <li key={i} className="flex justify-between items-center text-sm border-b pb-2">
+                                        <div>
+                                            <p className="font-medium">{cls.coursename}</p>
+                                            <p className="text-gray-600">
+                                                {cls.starttime} - {cls.endtime}
+                                            </p>
+                                            {cls.meetLink && (
+                                                <a
+                                                    href={cls.meetLink}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="text-blue-500 hover:underline text-xs"
+                                                >
+                                                    Google Meet
+                                                </a>
+                                            )}
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="text-gray-500">No classes</p>
+                        )}
                     </div>
-                    <p className='text-sm bg-[#4E84C1] p-2 rounded-lg'>{clas.status}</p>
-                </div>
-            ))}
-
+                ))}
             </div>
 
-            {data.length > 0 && (
-                <NavLink to={data[0]?.link} target='_blank'>
-                    <div className='bg-white p-5 h-52 cursor-pointer rounded-lg text-black'>
-                        <div className='flex gap-3 items-center mb-5 mt-2'>
-                            <img src={Clock} alt="clock" width={50} />
-                            <span className='text-[#4E84C1] text-2xl font-semibold'>{typeof data[0]?.date === 'string' ? data[0]?.date.slice(0,10) : ''}</span> 
-                            <span className='text-[#018280] text-2xl ml-2'>
-                                {typeof data[0]?.timing === 'number' ? `${Math.floor(data[0]?.timing / 60)}:${data[0]?.timing % 60 === 0 ?"00":data[0]?.timing % 60}` :''}
-                            </span>
-                        </div>
-                        <div className='flex gap-12 items-center'>
-                            <div className='ml-3'>
-                                <p>Your next Class</p>
-                                <p className='text-[#018280] text-3xl font-semibold'>{data[0]?.coursename.toUpperCase()}</p>
-                                <p className=' text-light-blue-700'>{data[0]?.title.slice(0, 25)} ...</p>
+            {/* Upcoming Classes */}
+            <div className='flex justify-between items-start'>
+                <div className='w-[60%] h-[17rem] overflow-y-auto pr-4'>
+                    {data.filter(clas => {
+                        const classDate = new Date(clas.date.slice(0, 10));
+                        const today = new Date();
+                        const oneWeekFromNow = new Date();
+                        oneWeekFromNow.setDate(today.getDate() + 7);
+                        return classDate >= today && classDate <= oneWeekFromNow;
+                    }).map(clas => (
+                        <div key={clas.timing} className='flex items-center mb-5'>
+                            <img src="https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png" alt="profile_img" width={30} />
+                            <div className='ml-5 mr-10 font-bold'>
+                                <p className='text-lg'>
+                                    {clas.coursename}
+                                    <span className='text-black text-sm ml-3'>
+                                        {clas.date.slice(0, 10)}  {formatTime(clas.timing)}
+                                    </span>
+                                </p>
+                                <span className='text-blue-500 text-sm ml-3'>{clas.title.slice(0, 35)} ...</span>
                             </div>
-                            <img src={Camera} alt="Camera" width={70} />
+                            <p className='text-sm bg-[#4E84C1] p-2 rounded-lg'>{clas.status}</p>
                         </div>
-                    </div>
-                </NavLink>
-            )}
+                    ))}
+                </div>
 
-            <div onClick={() => setShowPopup(true)} className='absolute right-10 bg-blue-900 p-2 rounded-sm cursor-pointer'>
+                {/* Next Class Card */}
+                {data.length > 0 && (
+                    <NavLink to={data[0]?.link} target='_blank'>
+                        <div className='bg-white p-5 h-52 rounded-lg text-black shadow-md'>
+                            <div className='flex gap-3 items-center mb-5'>
+                                <img src={Clock} alt="clock" width={40} />
+                                <span className='text-[#4E84C1] text-xl font-semibold'>
+                                    {typeof data[0]?.date === 'string' ? data[0]?.date.slice(0, 10) : ''}
+                                </span>
+                                <span className='text-[#018280] text-xl ml-2'>
+                                    {typeof data[0]?.timing === 'number' ? formatTime(data[0].timing) : ''}
+                                </span>
+                            </div>
+                            <div className='flex justify-between items-center'>
+                                <div>
+                                    <p className='text-sm'>Your next Class</p>
+                                    <p className='text-[#018280] text-2xl font-semibold'>{data[0]?.coursename?.toUpperCase()}</p>
+                                    <p className='text-blue-700 text-sm'>{data[0]?.title.slice(0, 25)} ...</p>
+                                </div>
+                                <img src={Camera} alt="Camera" width={60} />
+                            </div>
+                        </div>
+                    </NavLink>
+                )}
+            </div>
+
+            {/* Add Class Button */}
+            <div onClick={() => setShowPopup(true)} className='fixed bottom-10 right-10 bg-blue-900 px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-800 transition'>
                 + ADD CLASS
             </div>
             {showPopup && (
                 <AddClass onClose={() => setShowPopup(false)} />
             )}
-
-            <div className="bg-blue-50 rounded-lg p-6 shadow mb-8">
-                {courses && courses.length > 0 ? (
-                    <ul className="space-y-4">
-                        {courses
-                            .filter(course => course.isapproved)
-                            .map(course => (
-                                <li key={course._id} className="border-b pb-3">
-                                    <div className="font-semibold text-blue-700 text-lg">{course.coursename}</div>
-                                    <div className="text-gray-700">
-                                        {course.schedule && course.schedule.length > 0 ? (
-                                            <ul>
-                                                {course.schedule.map((days, idx) => (
-                                                    <li key={idx}>
-                                                        {daysOfWeek[days.day]}:{" "}
-                                                        {`${Math.floor(days.starttime/60)}:${days.starttime%60 === 0 ? "00" : days.starttime%60}`} - 
-                                                        {` ${Math.floor(days.endtime/60)}:${days.endtime%60 === 0 ? "00" : days.endtime%60}`}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        ) : (
-                                            <span>No schedule available</span>
-                                        )}
-                                    </div>
-                                    {course.meetLink && (
-                                        <a
-                                            href={course.meetLink}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-block mt-2 text-blue-600 underline hover:text-blue-800"
-                                        >
-                                            Google Meet Link
-                                        </a>
-                                    )}
-                                </li>
-                            ))}
-                    </ul>
-                ) : (
-                    <div className="text-gray-500">No scheduled classes.</div>
-                )}
-            </div>
         </div>
     );
 }
