@@ -42,5 +42,7 @@ app.use("/api/admin", adminRouter)
 import paymentRouter from "./routes/payment.routes.js"
 app.use("/api/payment", paymentRouter)
 
+import chatRouter from "./routes/chat.routes.js";
+app.use("/api/chat", chatRouter);
 
 export {app}

@@ -5,7 +5,7 @@ import DateTime from './DateTime';
 function AddClass({ onClose }) {
   const { ID } = useParams();
   const [courses, setCourses] = useState([]);
-  const [error, setError] = useState([]);
+  const [error, setError] = useState('');
   const [date, setDate] = useState("");
   const [link, setLink] = useState("");
   const [note, setNote] = useState("");
@@ -50,17 +50,15 @@ function AddClass({ onClose }) {
           },
         });
 
-        // console.log(response);
-
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
 
         const res = await response.json();
-
-        // console.log(res.data);
         setCourses(res.data);
-        setCourseId(res.data[0]._id);
+        if (res.data && res.data.length > 0) {
+          setCourseId(res.data[0]._id);
+        }
       } catch (error) {
         setError(error.message);
       }
@@ -71,10 +69,8 @@ function AddClass({ onClose }) {
   useEffect(() => {
     const filteredData = courses.filter(course => course._id === CourseId);
     setCurrData(filteredData[0]?.schedule);
-    // console.log("output:", filteredData[0]?.schedule);
-  }, [CourseId]);
+  }, [CourseId, courses]);
   
-
   const addCourses = async () => {
     const currentDate = new Date();
     const givenDate = new Date(date);
@@ -89,11 +85,8 @@ function AddClass({ onClose }) {
       status: 'upcoming',
     };
 
-    // console.log("add classes",data)
-
-
     if (currentDate > givenDate) {
-      alert('choose a valid Date!');
+      alert('Choose a valid date!');
     } else if (note === '' || date === '' || link === '') {
       alert('All fields are required!');
     } else {
@@ -113,9 +106,6 @@ function AddClass({ onClose }) {
           throw new Error('Failed to fetch data');
         }
 
-        
-        
-
         if (res.statusCode === 200) {
           onClose();
         }
@@ -126,43 +116,125 @@ function AddClass({ onClose }) {
   };
 
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center'>
-      <div className='w-[60%] h-[70%] bg-white text-blue-700 rounded-md'>
-        <div className='absolute w-9 h-9 bg-[#E2B659] rounded-xl cursor-pointer flex items-center justify-center m-2' onClick={onClose}>✖️</div>
+    <div className='fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center p-4 z-50'>
+      <div className='w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden'>
         
-        <div className='flex justify-center mt-5 gap-10 border-b-2 py-5'>
-          <p className='text-2xl'>Create next class</p>
-          <select value={CourseId} onChange={(e) => setCourseId(e.target.value)} className='text-gray-900 rounded-md w-28 px-2 border-0 outline-0'>
-            {courses && (
-              courses.filter((course) => course.isapproved)
-              .map((course) => (
-                <option key={course._id} value={course._id}>{course.coursename.toUpperCase()} {'['} {course.schedule.map(day => DAY[day.day]).join(', ')} {']'}</option>
-              ))
-            )}
-          </select>
-        </div>
-
-        <div className='flex items-center justify-around my-20 mx-5'>
-          <div className='flex gap-5'>
-            <label htmlFor="datetime" className='text-xl text-blue-700'>Date & Time:</label>
-            <DateTime setDate={setDate} allowedDays={allowedDays}/>
+        {/* Header Section */}
+        <div className='bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-5 relative'>
+          <button 
+            onClick={onClose}
+            className='absolute top-4 right-4 w-10 h-10 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-105 text-white text-xl font-bold'
+          >
+            ✖
+          </button>
+          
+          <div className='flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4'>
+            <div>
+              <h2 className='text-3xl font-bold text-white'>Create New Class</h2>
+              <p className='text-blue-100 mt-1'>Schedule your next teaching session</p>
+            </div>
+            
+            {/* Course Selection */}
+            <div className='bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 min-w-fit'>
+              <label className='block text-blue-100 text-sm font-medium mb-2'>Select Course</label>
+              <select 
+                value={CourseId} 
+                onChange={(e) => setCourseId(e.target.value)} 
+                className='w-full px-4 py-3 bg-white text-gray-800 rounded-lg border-0 outline-none focus:ring-2 focus:ring-blue-300 font-medium cursor-pointer min-w-[250px]'
+              >
+                {courses && courses.length > 0 ? (
+                  courses.filter((course) => course.isapproved)
+                  .map((course) => (
+                    <option key={course._id} value={course._id}>
+                      {course.coursename.toUpperCase()} [{course.schedule?.map(day => DAY[day.day]).join(', ') || 'No schedule'}]
+                    </option>
+                  ))
+                ) : (
+                  <option value="">No courses available</option>
+                )}
+              </select>
+            </div>
           </div>
         </div>
 
-        <div className='m-10 flex items-center justify-center gap-20 mb-20'>
-          <div className='flex gap-5'>
-            <label htmlFor="link" className='text-xl text-blue-700'>Link:</label>
-            <input id="link" value={link} onChange={(e) => setLink(e.target.value)} type="url" className='border-0 outline-0 text-gray-900 py-1 px-3 rounded-sm' />
+        {/* Form Content */}
+        <div className='p-8 space-y-8'>
+          
+          {/* Date & Time Section */}
+          <div className='bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100'>
+            <h3 className='text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2'>
+              <span className='text-2xl'>🕒</span>
+              Schedule Details
+            </h3>
+            
+            <div className='flex flex-col lg:flex-row lg:items-center gap-4'>
+              <label htmlFor="datetime" className='text-lg font-medium text-black min-w-fit'>
+                Date & Time:
+              </label>
+              <div className='flex-1'>
+                <DateTime setDate={setDate} allowedDays={allowedDays}/>
+              </div>
+            </div>
           </div>
 
-          <div className='flex gap-5'>
-            <label htmlFor="title" className='text-xl text-blue-700'>Title:</label>
-            <input id="title" value={note} onChange={(e) => setNote(e.target.value)} type="text" className='border-0 outline-0 text-gray-900 py-1 px-3 rounded-sm' />
-          </div>
-        </div>
+          {/* Class Information Section */}
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+            
+            {/* Meeting Link */}
+            <div className='space-y-3'>
+              <label htmlFor="link" className='flex items-center gap-2 text-lg font-medium text-gray-700'>
+                <span className='text-xl'>🔗</span>
+                Meeting Link
+              </label>
+              <input 
+                id="link" 
+                value={link} 
+                onChange={(e) => setLink(e.target.value)} 
+                type="url" 
+                placeholder="https://meet.google.com/..."
+                className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-800 placeholder-gray-400'
+              />
+            </div>
 
-        <div className='flex items-center justify-center'>
-          <div onClick={addCourses} className='bg-[#E2B659] w-32 text-center py-2 rounded-sm text-brown-900 text-xl cursor-pointer'>Submit</div>
+            {/* Class Title */}
+            <div className='space-y-3'>
+              <label htmlFor="title" className='flex items-center gap-2 text-lg font-medium text-gray-700'>
+                <span className='text-xl'>📝</span>
+                Class Title
+              </label>
+              <input 
+                id="title" 
+                value={note} 
+                onChange={(e) => setNote(e.target.value)} 
+                type="text" 
+                placeholder="Enter class topic or title..."
+                className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 text-gray-800 placeholder-gray-400'
+              />
+            </div>
+          </div>
+
+          {/* Error Display */}
+          {error && (
+            <div className='bg-red-50 border border-red-200 rounded-lg p-4'>
+              <p className='text-red-700 font-medium'>Error: {error}</p>
+            </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className='flex flex-col sm:flex-row gap-4 justify-center pt-6'>
+            <button 
+              onClick={onClose}
+              className='px-8 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-all duration-200 border border-gray-300'
+            >
+              Cancel
+            </button>
+            <button 
+              onClick={addCourses}
+              className='px-12 py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5'
+            >
+              Create Class
+            </button>
+          </div>
         </div>
       </div>
     </div>

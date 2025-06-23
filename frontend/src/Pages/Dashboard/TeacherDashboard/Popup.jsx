@@ -1,142 +1,6 @@
-// import React, { useState } from 'react'
-// import { useParams } from 'react-router-dom';
-
-// function Popup({onClose, subject}) {
-//   const [desc, setDesc] = useState('');
-//   const { ID } = useParams();
-//   const dateGap = 3;
-
-//   const [day, setDay] = useState({
-//       "sun": false,
-//       "mon": false,
-//       "tue": false,
-//       "wed": false,
-//       "thu": false,
-//       "fri": false,
-//       "sat": false,
-//   });
-
-//   const [dayValue, setDayValue] = useState({
-//       "sun": "",
-//       "mon": "",
-//       "tue": "",
-//       "wed": "",
-//       "thu": "",
-//       "fri": "",
-//       "sat": "",
-//   });
-
-//   const dayIndex = {
-//       "sun": 0,
-//       "mon": 1,
-//       "tue": 2,
-//       "wed": 3,
-//       "thu": 4,
-//       "fri": 5,
-//       "sat": 6,
-//   };
-
-//   const handleCheckboxChange = (dayName) => {
-//     setDay(prevDay => ({ ...prevDay, [dayName]: !prevDay[dayName] }));
-//   };
-
-//   const addCourse = async()=>{
-//     const selectedDays = Object.keys(day)
-//         .filter(d => day[d])
-//         .map(d => ({
-//             "Day": dayIndex[d],
-//             "Start Time": dayValue[d] ? dayValue[d] * 60 : null,
-//             "End Time": dayValue[d] ? (parseInt(dayValue[d], 10) + dateGap) * 60 : null,
-//           }));
-
-//     const hasMissingTime = selectedDays.some(d => d["Start Time"] === null);
-
-//     if (hasMissingTime) {
-//       alert("Please fill in the time for all selected days.");
-//       return;
-//     }
-
-//     ///////////////////////
-//     if(desc == ''){
-//       alert('Fill The Description');
-//     }else{
-//       onClose();
-
-//       const data = {
-//         coursename: subject.toLowerCase(),
-//         description: desc,
-//         time: selectedDays,
-//       }
-
-//       //call api 
-
-//       const response = await fetch(`/api/course/${subject}/create/${ID}`, {
-//         method: 'POST',
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(data),
-//       });
-
-//       const responesData = await response.json();
-
-//       console.log(responesData);
-//       alert(responesData.message);
-
-//     }
-//   }
-
-//   return (
-//     <div className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center'>
-//         <div className='bg-[#008280] w-[30rem] h-fit py-4 mt-1 rounded-md'>
-//           <div className=' absolute w-9 h-9 bg-white rounded-xl cursor-pointer flex items-center justify-center m-2' onClick={onClose}>✖️</div>
-//           <div className=' text-center my-10 text-white text-3xl font-semibold'>
-//             <p>{subject}</p>
-//           </div>
-//           <div className='m-5 flex flex-col gap-4 text-white text-xl'>
-//             <div>
-//               <label htmlFor="">Coursename : </label>
-//               <input 
-//                 type="text" 
-//                 className="bg-[#32B0AE] p-2 rounded-md w-52 border-0 outline-0"
-//                 value={subject}
-//                 readOnly
-//               />
-//             </div>
-            
-//             <label>Timing : </label>
-//             {Object.keys(day).map((d) => (
-//                 <div key={d} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px"}}>
-//                     <input type="checkbox" checked={day[d]} onChange={() => handleCheckboxChange(d)} />
-//                     <label>{d.charAt(0).toUpperCase() + d.slice(1)}</label>
-//                     <input className='w-[7rem] rounded-sm text-black placeholder:text-gray pl-2' type="time" rounded-sme="text" placeholder='Start Time' value={dayValue[d]} onChange={(e) => setDayValue({ ...dayValue, [d]: e.target.value })} />
-//                     <input className='w-[7rem] rounded-sm text-black placeholder:text-gray pl-2' type="time"  placeholder="End Time" value={(parseInt(dayValue[d], 10) + dateGap)} />
-//                 </div>
-//             ))}
-
-//             <div>
-//               <label htmlFor="">Description : </label>
-//               <input type="text"
-//               value={desc}
-//               onChange={(e) => setDesc(e.target.value)}
-//               className="bg-[#32B0AE] p-2 rounded-md w-52 ml-3 border-0 outline-0" 
-//               />
-//             </div>
-//           </div>
-
-//           <div className='flex items-center justify-center mt-7'>
-//             <span onClick={addCourse} className='bg-[#335699] text-white px-10 py-3 rounded-md text-xl cursor-pointer'>
-//               Create Course
-//             </span>
-//           </div>
-//         </div>
-//     </div>
-//   )
-// }
-
-// export default Popup
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { TbX, TbBook, TbClock, TbFileText, TbCurrencyRupee, TbCalendarEvent } from 'react-icons/tb';
 
 function Popup({ onClose, subject }) {
   const [desc, setDesc] = useState('');
@@ -172,6 +36,16 @@ function Popup({ onClose, subject }) {
     thu: 4,
     fri: 5,
     sat: 6,
+  };
+
+  const dayNames = {
+    sun: 'Sunday',
+    mon: 'Monday',
+    tue: 'Tuesday',
+    wed: 'Wednesday',
+    thu: 'Thursday',
+    fri: 'Friday',
+    sat: 'Saturday',
   };
 
   const handleCheckboxChange = (dayName) => {
@@ -218,7 +92,7 @@ function Popup({ onClose, subject }) {
     }
 
     if(selectedDays.length === 0){
-      alert('pls! select any day and time.');
+      alert('Please select any day and time.');
       return;
     }
 
@@ -233,7 +107,7 @@ function Popup({ onClose, subject }) {
       coursename: subject.toLowerCase(),
       description: desc,
       schedule: selectedDays,
-      price: price, // <-- Add this
+      price: price,
     };
 
     console.log(data);
@@ -264,95 +138,148 @@ function Popup({ onClose, subject }) {
   };
 
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center'>
-      <div className='bg-[#008280] w-[30rem] h-fit py-4 mt-1 rounded-md'>
-        <div
-          className='absolute w-9 h-9 bg-white rounded-xl cursor-pointer flex items-center justify-center m-2'
-          onClick={onClose}
-        >
-          ✖️
-        </div>
-        <div className='text-center my-10 text-white text-3xl font-semibold'>
-          <p>{subject}</p>
-        </div>
-        <div className='m-5 flex flex-col gap-4 text-white text-xl'>
-          <div>
-            <label htmlFor=''>Coursename: </label>
-            <input
-              type='text'
-              className='bg-[#32B0AE] p-2 rounded-md w-52 border-0 outline-0'
-              value={subject}
-              readOnly
-            />
+    <div className='fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50'>
+      <div className='bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl'>
+        
+        {/* Header Section */}
+        <div className='bg-gradient-to-r from-teal-600 to-cyan-700 px-8 py-6 relative rounded-t-2xl'>
+          <button
+            onClick={onClose}
+            className='absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-105'
+          >
+            <TbX className='text-white text-xl' />
+          </button>
+          
+          <div className='flex items-center gap-3'>
+            <div className='bg-white/20 p-3 rounded-xl'>
+              <TbBook className='text-white text-2xl' />
+            </div>
+            <div>
+              <h2 className='text-3xl font-bold text-white'>Create New Course</h2>
+              <p className='text-teal-100 mt-1'>Set up your {subject} course</p>
+            </div>
           </div>
+        </div>
 
-          <label>Timing: </label>
-          {Object.keys(day).map((d) => (
-            <div
-              key={d}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '10px',
-              }}
-            >
+        {/* Form Content */}
+        <div className='p-8 space-y-8'>
+          
+          {/* Course Information */}
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+            <div className='space-y-3'>
+              <label className='flex items-center gap-2 text-lg font-semibold text-gray-700'>
+                <TbBook className='text-teal-600' />
+                Course Name
+              </label>
               <input
-                type='checkbox'
-                checked={day[d]}
-                onChange={() => handleCheckboxChange(d)}
-              />
-              <label>{d.charAt(0).toUpperCase() + d.slice(1)}</label>
-              <input
-                className='w-[7rem] rounded-sm text-black placeholder:text-gray pl-2'
-                type='time'
-                placeholder='Start Time'
-                value={dayValue[d]}
-                onChange={(e) =>
-                  setDayValue({ ...dayValue, [d]: e.target.value })
-                }
-              />
-              <input
-                className='w-[7rem] rounded-sm text-black placeholder:text-gray pl-2'
-                type='time'
+                type='text'
+                className='w-full p-4 bg-gray-100 rounded-lg border-0 outline-none text-gray-800 font-medium'
+                value={subject}
                 readOnly
-                placeholder='End Time'
-                value={dayValue[d] ? convertMinutesToTime(convertTimeToMinutes(dayValue[d]) + dateGap * 60) : ''}
               />
             </div>
-          ))}
 
-          <div>
-            <label htmlFor=''>Description: </label>
-            <input
-              type='text'
+            <div className='space-y-3'>
+              <label className='flex items-center gap-2 text-lg font-semibold text-gray-700'>
+                <TbCurrencyRupee className='text-green-600' />
+                Course Price (per month)
+              </label>
+              <input
+                type="number"
+                min="0"
+                className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-gray-800"
+                value={price}
+                onChange={e => setPrice(e.target.value)}
+                placeholder="Enter price in INR"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className='space-y-3'>
+            <label className='flex items-center gap-2 text-lg font-semibold text-gray-700'>
+              <TbFileText className='text-blue-600' />
+              Course Description
+            </label>
+            <textarea
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
-              className='bg-[#32B0AE] p-2 rounded-md w-52 ml-3 border-0 outline-0'
+              className='w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-gray-800 resize-none h-24'
+              placeholder="Describe your course content and objectives..."
             />
           </div>
 
-          <div className='flex flex-col gap-3'>
-            <label className='text-blue-700'>Course Price (per month, per student):</label>
-            <input
-              type="number"
-              min="0"
-              className="p-2 rounded border text-black"
-              value={price}
-              onChange={e => setPrice(e.target.value)}
-              placeholder="Enter price in INR"
-              required
-            />
+          {/* Schedule Section */}
+          <div className='space-y-6'>
+            <div className='flex items-center gap-2'>
+              <TbCalendarEvent className='text-purple-600 text-xl' />
+              <h3 className='text-xl font-semibold text-gray-800'>Weekly Schedule</h3>
+            </div>
+            
+            <div className='bg-gray-50 rounded-xl p-6 space-y-4'>
+              <p className='text-gray-600 text-sm mb-4'>Select days and times for your classes (3-hour duration)</p>
+              
+              {Object.keys(day).map((d) => (
+                <div key={d} className='flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-200'>
+                  <div className='flex items-center gap-3 min-w-[120px]'>
+                    <input
+                      type='checkbox'
+                      checked={day[d]}
+                      onChange={() => handleCheckboxChange(d)}
+                      className='w-5 h-5 text-teal-600 rounded focus:ring-teal-500'
+                    />
+                    <label className='font-medium text-gray-700'>
+                      {dayNames[d]}
+                    </label>
+                  </div>
+                  
+                  <div className='flex items-center gap-3 flex-1'>
+                    <div className='space-y-1'>
+                      <label className='text-sm text-gray-600'>Start Time</label>
+                      <input
+                        className='w-32 p-2 border border-gray-300 rounded-lg text-gray-800 focus:ring-2 focus:ring-teal-500 focus:border-transparent'
+                        type='time'
+                        value={dayValue[d]}
+                        onChange={(e) =>
+                          setDayValue({ ...dayValue, [d]: e.target.value })
+                        }
+                        disabled={!day[d]}
+                      />
+                    </div>
+                    
+                    <div className='text-gray-400 text-xl'>→</div>
+                    
+                    <div className='space-y-1'>
+                      <label className='text-sm text-gray-600'>End Time</label>
+                      <input
+                        className='w-32 p-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-600'
+                        type='time'
+                        readOnly
+                        value={dayValue[d] ? convertMinutesToTime(convertTimeToMinutes(dayValue[d]) + dateGap * 60) : ''}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className='flex items-center justify-center mt-7'>
-          <span
-            onClick={addCourse}
-            className='bg-[#335699] text-white px-10 py-3 rounded-md text-xl cursor-pointer'
-          >
-            Create Course
-          </span>
+          {/* Action Buttons */}
+          <div className='flex flex-col sm:flex-row gap-4 justify-center pt-6'>
+            <button
+              onClick={onClose}
+              className='px-8 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-all duration-200 border border-gray-300'
+            >
+              Cancel
+            </button>
+            <button
+              onClick={addCourse}
+              className='px-12 py-3 bg-gradient-to-r from-teal-600 to-cyan-700 hover:from-teal-700 hover:to-cyan-800 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5'
+            >
+              Create Course
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -360,4 +287,3 @@ function Popup({ onClose, subject }) {
 }
 
 export default Popup;
-

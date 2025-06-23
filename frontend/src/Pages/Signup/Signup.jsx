@@ -179,7 +179,6 @@ const Signup = () => {
         <img src={Images} alt="" className="imgs" />
       </div>
     </div>
-    <p className='text-sm text-red-400 absolute bottom-3 left-3'>* Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.</p>
     </>
   );
 };

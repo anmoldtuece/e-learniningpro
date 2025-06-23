@@ -1,8 +1,14 @@
 import React from 'react'
-import TeacherDashboard from './TeacherDashboard'
+import DashboardTeacher from './DashboardTeacher'
+import { Outlet } from 'react-router-dom'
 
 function TeacherLayout() {
-  return <TeacherDashboard />;
+  return (
+    <>
+    <DashboardTeacher/>
+    <Outlet/>
+    </>
+  )
 }
 
 export default TeacherLayout

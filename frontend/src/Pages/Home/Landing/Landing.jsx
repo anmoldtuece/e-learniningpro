@@ -4,12 +4,12 @@ import image from "../../Images/image.png";
 import Plant from "../../Images/Plant.svg";
 import Plant2 from "../../Images/Plant2.svg"
 import Contact from "../Contact/Contact.jsx";
-import Footer from "../../Footer/Footer.jsx";
 import Header from "../Header/Header.jsx";
 import { CgProfile } from "react-icons/cg";
 import { IoSchoolSharp } from "react-icons/io5";
 import { FaSchool } from "react-icons/fa";
 import { NavLink , useNavigate} from "react-router-dom";
+import Bot from "../Bot";
 
 function Landing() {
   const [LClass, setLClass] = useState(false);
@@ -317,7 +317,7 @@ function Landing() {
           Our Story
         </h3>
         <p className="mt-4 text-gray-700 leading-relaxed">
-          Born out of a passion for learning, DTU-E-Learning aims to make quality education accessible for everyone. We recognize the needs of today’s learners and deliver flexible, effective solutions.
+          Born out of a passion for learning, DTU-E-Learning aims to make quality education accessible for everyone. We recognize the needs of today's learners and deliver flexible, effective solutions.
         </p>
       </div>
 
@@ -344,8 +344,8 @@ function Landing() {
         <Contact/>
       </div>
 
-      {/* Footer */}
-      <Footer/>
+      {/* Floating Chat Bot */}
+      <Bot />
     </>
   );
 }

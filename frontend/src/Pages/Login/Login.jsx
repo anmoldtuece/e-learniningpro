@@ -83,7 +83,7 @@ export default function Login() {
           if(userType === 'student'){
             navigate(`/Student/Dashboard/${userid}/Search`)
           }else if(userType === 'teacher'){
-            navigate(`/Teacher/Dashboard/${userid}/Home`)
+            navigate(`/Teacher/Dashboard/${userid}`)
           }
         }else if(responesData.data.user.Isapproved === "reupload"){
           if(userType === 'teacher'){

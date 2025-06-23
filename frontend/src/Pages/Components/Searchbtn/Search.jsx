@@ -130,7 +130,7 @@ function Search() {
       name: "DTU E-Learning",
       description: "Enroll in a course",
       image: logo,
-      order_id: DATA.data.id, // Include the order_id from the response
+      order_id: response.data.id, // Include the order_id from the response
       handler: async (response) => {
         const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
           response;

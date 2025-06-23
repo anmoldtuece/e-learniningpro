@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import '../Landing/Landing.css'
-import Footer from '../../Footer/Footer'
 import Header from '../Header/Header'
 
 function Courses() {
@@ -76,7 +75,6 @@ function Courses() {
       </div>
 
       </div>
-    <Footer/>
     </>
   )
 }
