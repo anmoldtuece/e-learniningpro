@@ -135,6 +135,21 @@ function TeacherClasses() {
                                                             <p className='text-blue-600 text-sm mt-1'>
                                                                 {clas.title.slice(0, 35)}{clas.title.length > 35 ? '...' : ''}
                                                             </p>
+                                                            {/* Show Meet Link or Alert */}
+                                                            <div className='mt-2'>
+                                                                {clas.link ? (
+                                                                    <a
+                                                                        href={clas.link}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="text-blue-700 underline font-semibold"
+                                                                    >
+                                                                        Join Google Meet
+                                                                    </a>
+                                                                ) : (
+                                                                    <span className="text-red-500 font-semibold">No link provided by teacher</span>
+                                                                )}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(clas.status)}`}>
@@ -155,66 +170,6 @@ function TeacherClasses() {
                         </div>
                     </div>
 
-                    {/* Next Class Card */}
-                    <div className='lg:col-span-1'>
-                        {data.length > 0 ? (
-                            <NavLink to={data[0]?.link} target='_blank' className='block'>
-                                <div className='bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group'>
-                                    <div className='text-center space-y-4'>
-                                        <div className='bg-gradient-to-r from-green-400 to-teal-500 p-4 rounded-full w-20 h-20 mx-auto flex items-center justify-center group-hover:scale-110 transition-transform duration-300'>
-                                            <TbVideo className='text-white text-3xl' />
-                                        </div>
-                                        
-                                        <div>
-                                            <p className='text-gray-600 text-sm font-medium'>Your Next Class</p>
-                                            <h3 className='text-2xl font-bold text-gray-800 mt-1'>
-                                                {data[0]?.coursename?.toUpperCase()}
-                                            </h3>
-                                        </div>
-
-                                        <div className='bg-gray-50 rounded-lg p-4 space-y-2'>
-                                            <div className='flex items-center justify-center gap-2 text-blue-600'>
-                                                <TbCalendarEvent className='text-lg' />
-                                                <span className='font-semibold'>
-                                                    {typeof data[0]?.date === 'string' ? data[0]?.date.slice(0,10) : ''}
-                                                </span>
-                                            </div>
-                                            <div className='flex items-center justify-center gap-2 text-teal-600'>
-                                                <TbClock className='text-lg' />
-                                                <span className='font-semibold text-xl'>
-                                                    {typeof data[0]?.timing === 'number' ? formatTime(data[0]?.timing) : ''}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <div className='text-center'>
-                                            <p className='text-gray-600 text-sm'>
-                                                {data[0]?.title?.slice(0, 25)}{data[0]?.title?.length > 25 ? '...' : ''}
-                                            </p>
-                                        </div>
-
-                                        <div className='bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-3 px-6 rounded-lg font-semibold group-hover:from-blue-700 group-hover:to-indigo-800 transition-all duration-200'>
-                                            Join Class
-                                        </div>
-                                    </div>
-                                </div>
-                            </NavLink>
-                        ) : (
-                            <div className='bg-white rounded-2xl shadow-lg border border-gray-100 p-8'>
-                                <div className='text-center space-y-4'>
-                                    <div className='text-6xl'>🎓</div>
-                                    <h3 className='text-xl font-semibold text-gray-600'>No Classes Scheduled</h3>
-                                    <p className='text-gray-500 text-sm'>Create your first class to start teaching</p>
-                                    <button 
-                                        onClick={() => setShowPopup(true)}
-                                        className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200'
-                                    >
-                                        Schedule Class
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    </div>
                 </div>
             </div>
 

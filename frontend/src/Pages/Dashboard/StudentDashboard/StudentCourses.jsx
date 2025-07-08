@@ -2,6 +2,7 @@ import React,{ useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Popup from './Popup';
 import axios from 'axios';
+import { TbCalendarEvent, TbClock } from 'react-icons/tb';
 
 function StudentCourses() {
   const { ID } = useParams();
@@ -9,6 +10,7 @@ function StudentCourses() {
   const [popup, setPopup] = useState(false);
   const [subDetails, setsubDetails] = useState({});
   const [subD, setsubD] = useState();
+  const [weeklyClasses, setWeeklyClasses] = useState([]);
 
   useEffect(() => {
       const getData = async () => {
@@ -34,6 +36,32 @@ function StudentCourses() {
       };
       getData();
   },[]);
+
+  useEffect(() => {
+    const getWeeklyClasses = async () => {
+      try {
+        const response = await fetch(`/api/course/classes/student/${ID}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        if (!response.ok) throw new Error('Failed to fetch classes');
+        const user = await response.json();
+        // Filter for upcoming week
+        const classes = (user.data.classes || []).filter(clas => {
+          if (!clas.date) return false;
+          const classDate = new Date(clas.date.slice(0, 10));
+          const today = new Date();
+          const oneWeekFromNow = new Date(today);
+          oneWeekFromNow.setDate(today.getDate() + 7);
+          return classDate >= today && classDate <= oneWeekFromNow;
+        });
+        setWeeklyClasses(classes);
+      } catch (error) {
+        // handle error
+      }
+    };
+    getWeeklyClasses();
+  }, [ID]);
 
   const openpopup = async(sub)=>{ 
     setsubDetails(sub);

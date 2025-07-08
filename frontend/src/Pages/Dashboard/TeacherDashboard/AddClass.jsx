@@ -25,18 +25,23 @@ function AddClass({ onClose }) {
   function setToMidnight(dateTimeString) {
     // Create a new Date object from the input string
     let date = new Date(dateTimeString);
-    
-    // Extract the time part
-    let hours = date.getUTCHours();
-    let minutes = date.getUTCMinutes();
-    let seconds = date.getUTCSeconds();
-    
+
+    // Convert to IST (Asia/Kolkata)
+    const IST_OFFSET = 5.5 * 60; // IST is UTC+5:30 in minutes
+    let utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+    let istDate = new Date(utc + (IST_OFFSET * 60000));
+
+    // Extract the time part in IST
+    let hours = istDate.getHours();
+    let minutes = istDate.getMinutes();
+
     let totalMinutes = (hours * 60) + minutes;
-    date.setUTCHours(0, 0, 0, 0);
-    let modifiedDateTimeString = date.toISOString();
-    
+
+    // Set to midnight in IST for the date part
+    istDate.setHours(0, 0, 0, 0);
+    let modifiedDateTimeString = istDate.toISOString();
+
     const DATETIME = [totalMinutes, modifiedDateTimeString];
-    
     return DATETIME;
   }
 
@@ -91,6 +96,8 @@ function AddClass({ onClose }) {
       alert('All fields are required!');
     } else {
       try {
+        console.log("note:", note, "date:", date, "link:", link, "data:", data);
+        console.log("Submitting data:", data);
         const response = await fetch(`/api/course/${CourseId}/teacher/${ID}/add-class`, {
           method: 'POST',
           headers: {
