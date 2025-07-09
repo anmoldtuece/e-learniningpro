@@ -4,6 +4,24 @@ import {
   FaAtom, FaFlask, FaLeaf, FaSquare, FaLaptopCode,
 } from "react-icons/fa";
 
+const admins = [
+  {
+    name: "Anmol Pandey",
+    branch: "DTU ECE 4th year",
+    img: "https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png",
+  },
+  {
+    name: "Naman Adlakha",
+    branch: "DTU CSE 4th year",
+    img: "https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png",
+  },
+  {
+    name: "Divyansh",
+    branch: "DTU ECE 4th year",
+    img: "https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png",
+  },
+];
+
 function About() {
   const features = [
     { icon: <FaAtom size={32} />, label: "Physics" },
@@ -120,6 +138,24 @@ function About() {
                   <p className="text-gray-600">Study at your own pace with 24/7 access to resources</p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Admins section */}
+          <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-3xl mt-8">
+            <h2 className="text-2xl font-bold text-blue-700 mb-6 text-center">Admins</h2>
+            <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
+              {admins.map((admin, idx) => (
+                <div key={idx} className="flex flex-col items-center bg-blue-50 rounded-xl p-4 shadow w-60">
+                  <img
+                    src={admin.img}
+                    alt={admin.name}
+                    className="w-24 h-24 rounded-full mb-3 object-cover border-2 border-blue-200"
+                  />
+                  <div className="text-lg font-semibold text-blue-900">{admin.name}</div>
+                  <div className="text-gray-700">{admin.branch}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

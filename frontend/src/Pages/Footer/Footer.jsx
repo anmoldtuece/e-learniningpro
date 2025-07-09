@@ -5,19 +5,6 @@ import '../Home/Landing/Landing.css';
 function Footer() {
   return (
     <div className="footer">
-      <div className="leftPart">
-        <div className="title">
-          <img
-            src="https://www.figma.com/file/6b4R8evBkii6mI53IA4vSS/image/53619c42501fb7619406ed947b38c5fa4f07597c"
-            width={60}
-            alt=""
-          />
-          <h2>EduPlatform</h2>
-        </div>
-        <p>© 2025 EduPlatform</p>
-        <p>Small Change. Big Change.</p>
-      </div>
-
       <div className="rightPart">
         <div className="links">
           <div className="link">

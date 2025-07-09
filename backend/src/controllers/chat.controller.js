@@ -26,4 +26,4 @@ export const chatWithOpenRouter = async (req, res) => {
     console.error("OpenRouter API error:", error?.response?.data || error.message);
     return res.status(500).json({ error: "OpenRouter API error" });
   }
-}; 
+};
