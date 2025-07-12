@@ -8,7 +8,7 @@ const Bot = () => {
     const saved = sessionStorage.getItem(STORAGE_KEY);
     return saved
       ? JSON.parse(saved)
-      : [{ from: "bot", text: "Hi! I'm EduBot 🇮🇳 — your personal Learning guide. Ask me anything!" }];
+      : [{ from: "bot", text: "Hi! I'm EduBot — your personal Learning guide. Ask me anything!" }];
   });
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,11 +39,6 @@ const Bot = () => {
         },
         body: JSON.stringify({
           messages: [
-            {
-              role: "system",
-              content:
-                "You are 'EduBot', a smart, friendly assistant on the e-Learning website. Your job is to help users with course information, study tips, platform navigation, and general learning support. Be warm, conversational, and helpful. Give clear, concise advice like an expert tutor or guide.",
-            },
             {
               role: "user",
               content: input,
@@ -80,7 +75,7 @@ const Bot = () => {
       {open ? (
         <div className="bg-white shadow-2xl rounded-xl w-80 h-96 flex flex-col border border-gray-200">
           <div className="flex items-center justify-between px-4 py-2 bg-blue-600 rounded-t-xl">
-            <span className="text-white font-semibold">Edu-bot — Learning Bot 🇮🇳</span>
+            <span className="text-white font-semibold">Edu-bot — Learning Bot</span>
             <button onClick={() => setOpen(false)} className="text-white text-lg font-bold">×</button>
           </div>
           <div className="flex-1 overflow-y-auto space-y-2 pr-1 mb-3 p-3">
@@ -109,7 +104,7 @@ const Bot = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="e.g. Best places to visit in December?"
+              placeholder="e.g. What are the courses available?"
               className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
