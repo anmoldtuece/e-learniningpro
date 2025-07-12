@@ -33,6 +33,22 @@ function ActiveCourses() {
     getCourses();
   }, [ID]);
 
+  const markAsCompleted = async (courseId) => {
+    try {
+      const response = await fetch(`/api/course/teacher/${ID}/course/${courseId}/complete`, {
+        method: 'PATCH',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (response.ok) {
+        setCourses((prev) => prev.filter((c) => c._id !== courseId));
+        alert('Course marked as completed!');
+      }
+    } catch (err) {
+      alert('Failed to mark course as completed.');
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -48,7 +64,7 @@ function ActiveCourses() {
       {courses && courses.length > 0 ? (
         <div className="space-y-6">
           {courses
-            .filter((course) => course.isapproved)
+            .filter((course) => course.isapproved && course.status !== 'completed')
             .map((course) => (
               <div key={course._id} className="border border-blue-200 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-all duration-200 hover:border-blue-400 bg-white/90">
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
@@ -90,6 +106,12 @@ function ActiveCourses() {
                     </span>
                   </div>
                 </div>
+                <button
+                  className="mt-4 bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded shadow hover:from-green-600 hover:to-green-700"
+                  onClick={() => markAsCompleted(course._id)}
+                >
+                  Mark as Completed
+                </button>
               </div>
             ))}
         </div>

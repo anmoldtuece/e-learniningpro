@@ -2,7 +2,7 @@ import { Router } from "express";
 import { addClass, addCourseStudent, addCourseTeacher, canStudentEnroll, enrolledcourseSTD, enrolledcourseTeacher, getCourse, getcourseTeacher, stdEnrolledCoursesClasses, teacherEnrolledCoursesClasses, getStudentClasses } from "../controllers/course.controller.js";
 import { authSTD } from "../middlewares/stdAuth.middleware.js";
 import { authTeacher } from "../middlewares/teacherAuth.middleware.js";
-
+import { course } from "../models/course.model.js";
 
 const router = Router()
 
@@ -28,5 +28,20 @@ router.route("/classes/student/:studentId").get(authSTD, stdEnrolledCoursesClass
 router.route("/classes/teacher/:teacherId").get(authTeacher, teacherEnrolledCoursesClasses)
 
 router.get('/classes/student/:ID', getStudentClasses);
+
+router.patch('/teacher/:teacherId/course/:courseId/complete', authTeacher, async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const updatedCourse = await course.findByIdAndUpdate(
+      courseId,
+      { status: 'completed' },
+      { new: true }
+    );
+    if (!updatedCourse) return res.status(404).json({ message: 'Course not found' });
+    res.json({ message: 'Course marked as completed', data: updatedCourse });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 export default router;

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { TbHome, TbSchool, TbBook, TbCurrencyRupee, TbMessage2Star, TbUser } from "react-icons/tb";
+import { TbHome, TbSchool, TbBook, TbCurrencyRupee, TbMessage2Star, TbUser, TbBook2 } from "react-icons/tb";
 import { FiX } from "react-icons/fi";
 
 function TeacherSidebar({ ID, sidebarOpen, setSidebarOpen, setPopup, setFormPopup, data }) {
@@ -87,6 +87,20 @@ function TeacherSidebar({ ID, sidebarOpen, setSidebarOpen, setPopup, setFormPopu
         > 
           <TbBook className="text-xl" />
           <span>Active Courses</span>
+        </NavLink>
+        <NavLink 
+          to={`/Teacher/Dashboard/${ID}/completed-courses`} 
+          className={({isActive}) => 
+            `flex items-center gap-3 p-3 lg:p-4 rounded-lg font-semibold transition-all duration-200 ${
+              isActive 
+                ? "bg-[#ffe066] text-[#071645] shadow-lg" 
+                : "text-white hover:bg-white/10 hover:text-[#ffe066]"
+            }`
+          }
+          onClick={() => setSidebarOpen(false)}
+        > 
+          <TbBook2 className="text-xl" />
+          <span>Completed Courses</span>
         </NavLink>
         <NavLink 
           to={`/Teacher/Dashboard/${ID}/remuneration`} 

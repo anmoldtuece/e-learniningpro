@@ -33,6 +33,11 @@ liveClasses: [{
         default: 'upcoming'
       }
   }],
+status: {
+  type: String,
+  enum: ['active', 'completed'],
+  default: 'active'
+},
 
 enrolledteacher:{
     type:mongoose.Schema.Types.ObjectId,

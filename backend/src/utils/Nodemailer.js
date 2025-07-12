@@ -18,7 +18,7 @@ export const Sendmail = async function (email, subject, message) {
   });
 
   const mailOptions = {
-    from: `"Property Plus" <${process.env.SMTP_EMAIL}>`,
+    from: `"Gurukul" <${process.env.SMTP_EMAIL}>`,
     to: email,
     subject: subject,
     html: message,

@@ -7,8 +7,7 @@
   "scripts": {
     "dev": "nodemon  -r dotenv/config --experimental-json-modules src/index.js"
   },
-  "github": "https://github.com/Pika003/e-Learning-Platform.git",
-  "author": "Parag, Satyajit, Gopi, Aditya",
+  "author": "Anmol Pandey,Naman Adlakha",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
