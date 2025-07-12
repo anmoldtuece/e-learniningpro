@@ -1,110 +1,73 @@
-import React, { useState } from 'react';
-import Search from '../../Components/Searchbtn/Search';
+import React, { useState } from 'react'
+import Search from '../../Components/Searchbtn/Search'
 
 function SearchTeacher() {
   const [popup, SetPopup] = useState(false);
-
   return (
-    <div className="ml-56 p-6">
-      <div className="flex justify-between items-center mb-6">
-        <Search />
-        <button
-          onClick={() => SetPopup(true)}
-          className="flex items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white px-7 py-2.5 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-400"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
-            viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-              d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8s-9-3.582-9-8 4.03-8 9-8 9 3.582 9 8z" />
-          </svg>
-          Give Feedback
-        </button>
-      </div>
+    <div className='ml-56'>
+        <Search/>
+        {popup && (
+          <div className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center'>
+            <div className='bg-[#5be0de] w-[70vw] px-14 py-10 rounded-sm'>
+              {/* <div className=' absolute w-9 h-9 bg-white rounded-xl cursor-pointer flex items-center justify-center m-2' onClick={onClose}>✖️</div> */}
 
-      {popup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm">
-          <div className="bg-white w-[90vw] md:w-[70vw] max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-10 transition-transform scale-100 duration-300">
-            {/* Close Button */}
-            <div className="flex justify-end mb-2">
-              <button onClick={() => SetPopup(false)} className="text-gray-500 hover:text-gray-800">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
-                  viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+              <p className='text-3xl'>Student Feedback Form</p>
+              <p className=' border-b-2 py-2'>Please help us improve our courses by filling out this student feedback form. We highly appreciate your involvement. Thank you!</p>
 
-            {/* Header */}
-            <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">Student Feedback Form</h2>
-            <p className="text-center text-gray-500 mb-6 border-b pb-4">
-              Help us improve by providing your valuable feedback. Thank you!
-            </p>
-
-            {/* Form Fields */}
-            <div className="space-y-6">
-              {[
-                { label: 'Teacher / Instructor', placeholder: 'Enter teacher name' },
-                { label: 'Course Name', placeholder: 'Enter course name' },
-                { label: 'What did you like about this course?', placeholder: 'Your thoughts...' }
-              ].map((field, idx) => (
-                <div key={idx}>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">{field.label}</label>
-                  <input
-                    type="text"
-                    className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-400 outline-none transition"
-                    placeholder={field.placeholder}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Rating Section */}
-            <div className="mt-8">
-              <p className="font-bold mb-4 text-gray-800">Please rate the following:</p>
-              {[
-                'Level of effort invested in course',
-                'Level of knowledge on the subject',
-                'Level of communication',
-              ].map((question, qIdx) => (
-                <div key={qIdx} className="mb-4">
-                  <p className="mb-2 text-gray-700">{question}</p>
-                  <div className="flex flex-wrap gap-4">
-                    {['Very Good', 'Good', 'Fair', 'Poor', 'Very Poor'].map((label, i) => (
-                      <label key={i} className="flex items-center text-sm text-gray-600 space-x-1">
-                        <input type="radio" name={`rating-${qIdx}`} className="accent-teal-500" />
-                        <span>{label}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Recommend Question */}
-            <div className="mt-6">
-              <p className="font-medium text-gray-800 mb-2">Would you recommend this course?</p>
-              <div className="flex gap-6">
-                {['Yes', 'No'].map((option, i) => (
-                  <label key={i} className="flex items-center space-x-2 text-gray-600">
-                    <input type="radio" name="recommend" className="accent-teal-500" />
-                    <span>{option}</span>
-                  </label>
-                ))}
+              <div className='flex flex-col gap-3 my-5 pb-5 border-b-2'>
+                <label>Teacher / Instructor</label>
+                <input type="text" className='p-2'  placeholder='Teacher / Instructor Name'/>
+                <label>Course Name</label>
+                <input type="text" className='p-2'  placeholder='Course Name'/>
+                <label>What you like about this course?</label>
+                <input type="text" className='p-2'  placeholder=''/>
               </div>
-            </div>
 
-            {/* Submit Button */}
-            <div className="flex justify-center mt-10">
-              <button className="bg-teal-600 hover:bg-teal-700 text-white font-medium px-10 py-3 rounded-full transition">
-                Submit Feedback
-              </button>
+              <p className='font-bold'>Please rate each following statement : </p>
+              
+              <div className='my-3'>
+                <div className='flex gap-1'>
+                  <p className='mr-[1.65rem]'>Level of effort invested in course</p>
+                  <input name="group" type="radio" id='one'/> <label className='mr-3' htmlFor='one'>Very Good</label>
+                  <input name="group" type="radio" id='two'/> <label className='mr-3' htmlFor='two'>Good</label>
+                  <input name="group" type="radio" id='three'/> <label className='mr-3' htmlFor='three'>Fair</label>
+                  <input name="group" type="radio" id='four'/> <label className='mr-3' htmlFor='four'>Poor</label>
+                  <input name="group" type="radio" id='five'/> <label className='mr-3' htmlFor='five'>Very Poor</label>
+                </div>
+                <div className='flex gap-1 mt-1'>
+                  <p className='mr-4'>Level of knowledge on the Subject</p>
+                  <input name="group-0" type="radio" id='onec'/> <label className='mr-3' htmlFor='onec'>Very Good</label>
+                  <input name="group-0" type="radio" id='twoc'/> <label className='mr-3' htmlFor='twoc'>Good</label>
+                  <input name="group-0" type="radio" id='threec'/> <label className='mr-3' htmlFor='threec'>Fair</label>
+                  <input name="group-0" type="radio" id='fourc'/> <label className='mr-3' htmlFor='fourc'>Poor</label>
+                  <input name="group-0" type="radio" id='fivec'/> <label className='mr-3' htmlFor='fivec'>Very Poor</label>
+                </div>
+                <div className='flex gap-1 mt-1'>
+                  <p className='mr-[5.48rem]'>Level of communication</p>
+                  <input name="group-1" type="radio" id='oned'/> <label className='mr-3' htmlFor='oned'>Very Good</label>
+                  <input name="group-1" type="radio" id='twod'/> <label className='mr-3' htmlFor='twod'>Good</label>
+                  <input name="group-1" type="radio" id='threed'/> <label className='mr-3' htmlFor='threed'>Fair</label>
+                  <input name="group-1" type="radio" id='fourd'/> <label className='mr-3' htmlFor='fourd'>Poor</label>
+                  <input name="group-1" type="radio" id='fived'/> <label className='mr-3' htmlFor='fived'>Very Poor</label>
+                </div>
+
+              </div>
+
+              <div className='py-3'>
+                <p className='pb-3'>Would you recommend this course to other students?</p>
+                <input name="radio-group" type="radio" id='one'/> <label htmlFor='one'>Yes</label>
+                <input name="radio-group" type="radio" id='two' className='ml-5'/> <label htmlFor='two'>No</label>
+              </div>
+
+              <div className='flex justify-center'>
+                <button className='w-[10rem]'>Submit Form</button>
+              </div>
+              
             </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
+        )}
+    </div> 
+  )
 }
 
-export default SearchTeacher;
+export default SearchTeacher
