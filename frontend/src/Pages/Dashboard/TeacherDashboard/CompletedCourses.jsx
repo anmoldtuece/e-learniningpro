@@ -21,7 +21,7 @@ function CompletedCourses() {
     const getCourses = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/course/Teacher/${ID}/enrolled`);
+        const response = await fetch(`/api/course/teacher/${ID}/completed`);
         const res = await response.json();
         setCourses(res.data);
       } catch (error) {

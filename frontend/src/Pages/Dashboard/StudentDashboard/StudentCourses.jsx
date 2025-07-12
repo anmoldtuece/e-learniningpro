@@ -60,31 +60,57 @@ function StudentCourses() {
     "computer" : "https://www.figma.com/file/6b4R8evBkii6mI53IA4vSS/image/a64c93efe984ab29f1dfb9e8d8accd9ba449f272",
   }
 
+  const activeCourses = data.filter(course => course.status === "active");
+
   return (
     <>
     <div className='flex gap-10 pl-[12rem] mt-12 flex-wrap justify-center mb-2'>
-        {data.map(sub => (
-          <div key={sub._id} className="text-white rounded-md bg-[#042439] cursor-pointer text-center p-3 w-[15rem]" onClick={()=>openpopup(sub)}>
-            <div className='flex justify-center items-center'>
-              <img src={Image[sub.coursename]} alt={sub.coursename} width={60}/>
-              <p>{sub.coursename.toUpperCase()}</p>
+      {activeCourses.map(sub => (
+        <div
+          key={sub._id}
+          className="relative rounded-3xl shadow-xl cursor-pointer text-center p-8 min-h-[22rem] flex flex-col justify-between transition-transform transform hover:scale-x-105 hover:shadow-2xl"
+          style={{
+            width: "calc(100vw - 18rem)", // Full right side minus sidebar
+            maxWidth: "80vw",
+            background: "linear-gradient(120deg, #0d1a3a 0%, #0d3a5a 60%, #008280 100%)",
+            border: "2px solid #ffe066"
+          }}
+          onClick={() => openpopup(sub)}
+        >
+          <div className="flex flex-row items-center justify-center gap-8 mb-6">
+            <img
+              src={Image[sub.coursename]}
+              alt={sub.coursename}
+              width={110}
+              className="rounded-full border-4 border-[#ffe066] shadow-md"
+            />
+            <div>
+              <p className="text-3xl font-extrabold text-[#ffe066] tracking-wide drop-shadow-lg">
+                {sub.coursename.toUpperCase()}
+              </p>
+              <span className="block text-lg text-gray-200 mt-2 font-medium">
+                {sub.category || "Course"}
+              </span>
             </div>
-            <p className='mt-5 text-gray-300 text-sm text-center px-2 '>{sub.description}</p>
-
-            {sub.schedule && (
-              <div>
-                <p className='mt-2 text-blue-700 font-bold'>Timing:</p>
+          </div>
+          <p className="mt-4 text-gray-100 text-lg px-8 font-medium leading-relaxed">
+            {sub.description}
+          </p>
+          {sub.schedule && (
+            <div className="mt-8 bg-[#ffe066]/10 rounded-lg p-5">
+              <p className="text-[#ffe066] font-semibold mb-2 text-lg">Timing:</p>
+              <span className="text-base text-gray-100">
                 {'[ '}
                 {sub.schedule.map(daytime => {
                   return `${daysName[daytime.day]} ${Math.floor(daytime.starttime / 60)}:${daytime.starttime % 60 === 0 ? "00" : daytime.starttime % 60} - ${Math.floor(daytime.endtime/60)}:${daytime.endtime % 60 === 0 ? "00" : daytime.endtime % 60}`;
                 }).join(', ')}
                 {' ]'}
-              </div>
-            )}
-        
-            {/* <p className='mt-5 text-gray-300 text-sm text-center px-2 '>Fees : Rs. {price[sub.coursename]}</p> */}
-          </div>
-        ))}
+              </span>
+            </div>
+          )}
+          {/* <p className="mt-5 text-gray-300 text-sm text-center px-2">Fees : Rs. {price[sub.coursename]}</p> */}
+        </div>
+      ))}
     </div>
     {popup && (
       <Popup onClose={()=> setPopup(false)} subject={subDetails} allSubject={subD}/>

@@ -44,4 +44,33 @@ router.patch('/teacher/:teacherId/course/:courseId/complete', authTeacher, async
   }
 });
 
+router.route("/student/:id/completed").get(authSTD, async (req, res) => {
+  try {
+    const stdID = req.params.id;
+    if (!stdID || stdID !== req.Student._id.toString()) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const completedCourses = await course.find({
+      enrolledStudent: stdID,
+      status: "completed"
+    }).select("-enrolledStudent -liveClasses -enrolledteacher");
+    res.json({ success: true, data: completedCourses });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.route("/teacher/:id/completed").get(authTeacher, async (req, res) => {
+  try {
+    const teacherId = req.params.id;
+    const completedCourses = await course.find({
+      enrolledteacher: teacherId,
+      status: "completed"
+    });
+    res.json({ data: completedCourses });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 export default router;

@@ -37,6 +37,9 @@ import { Toaster } from 'react-hot-toast'
 import ResetTeacher from './Pages/ForgetPassword/ResetTeacher'
 import Course from './Pages/Components/Admin/Course'
 import TeacherProfile from './Pages/Dashboard/TeacherDashboard/TeacherProfile'
+import StudentWelcome from './Pages/Dashboard/StudentDashboard/StudentWelcome'
+import CompletedCourses from './Pages/Dashboard/StudentDashboard/CompletedCourses'
+import TeacherCompletedCourses from './Pages/Dashboard/TeacherDashboard/CompletedCourses'
 
 
 const router = createBrowserRouter(
@@ -61,9 +64,11 @@ const router = createBrowserRouter(
       <Route path='/admin/course/:data' element={<Course/>}/>
       <Route path='/VarifyDoc/:type/:adminID/:ID' element={<VarifyDoc/>}/>
       <Route path='/Student/Dashboard/:ID' element={<StudentLayout/>}>
+        <Route index element={<StudentWelcome/>}/> {/* Dashboard Welcome page */}
         <Route path='/Student/Dashboard/:ID/Search' element={<SearchTeacher/>}/>
         <Route path='/Student/Dashboard/:ID/Classes' element={<StudentClasses/>}/>
         <Route path='/Student/Dashboard/:ID/Courses' element={<StudentCourses/>}/>
+        <Route path="/Student/Dashboard/:ID/CompletedCourses" element={<CompletedCourses />} />
       </Route>
       <Route path='/Teacher/Dashboard/:ID' element={<TeacherLayout/>}>
         <Route index element={<TeacherWelcome/>}/> {/* Default welcome page */}
@@ -72,6 +77,7 @@ const router = createBrowserRouter(
         <Route path='remuneration' element={<TeacherRemuneration/>}/>
         <Route path='create-course' element={<CreateCourse />} />
         <Route path='classes' element={<TeacherClasses/>}/>
+        <Route path='completed-courses' element={<TeacherCompletedCourses />} /> {/* <-- Add this */}
       </Route>
 
       <Route path='/forgetPassword' element={<Forgetpassword/>}/>
