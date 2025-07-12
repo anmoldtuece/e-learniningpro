@@ -9,19 +9,11 @@ function StudentDashboard() {
   const [data, setdata] = useState([]);
   const [error, setError] = useState(null);
 
-  const Handlelogout = async () => {
-    const response = await fetch(`/api/student/logout`, {
-      method: 'POST',
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      }
-    });
-    const result = await response.json();
-    if (result.statusCode === 200) {
-      navigator('/');
-    }
+  const Handlelogout = () => {
+    localStorage.removeItem('token');
+    navigator('/');
   };
+
 
   useEffect(() => {
     const getData = async () => {

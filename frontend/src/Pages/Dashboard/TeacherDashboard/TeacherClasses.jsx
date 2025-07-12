@@ -25,15 +25,23 @@ function TeacherClasses() {
                 }
 
                 const user = await response.json();
-                setData(user.data.classes[0]?.liveClasses || []);
-                console.log(user.data);
-
+                // Defensive checks for API response
+                let liveClasses = [];
+                if (
+                    user &&
+                    user.data &&
+                    Array.isArray(user.data.classes) &&
+                    user.data.classes.length > 0 &&
+                    Array.isArray(user.data.classes[0].liveClasses)
+                ) {
+                    liveClasses = user.data.classes[0].liveClasses;
+                }
+                setData(liveClasses);
             } catch (error) {
                 setError(error.message);
             }
         };
         getData();
-
     }, [showPopup, ID]);
 
     const formatTime = (timing) => {
@@ -62,13 +70,17 @@ function TeacherClasses() {
         );
     }
 
-    const weeklyClasses = data.filter(clas => {
-        const classDate = new Date(clas.date.slice(0, 10));
-        const today = new Date();
-        const oneWeekFromNow = new Date();
-        oneWeekFromNow.setDate(today.getDate() + 7);
-        return classDate >= today && classDate <= oneWeekFromNow;
-    });
+    // Defensive filter for weeklyClasses
+    const weeklyClasses = Array.isArray(data)
+        ? data.filter(clas => {
+            if (!clas || !clas.date) return false;
+            const classDate = new Date(clas.date.slice(0, 10));
+            const today = new Date();
+            const oneWeekFromNow = new Date();
+            oneWeekFromNow.setDate(today.getDate() + 7);
+            return classDate >= today && classDate <= oneWeekFromNow;
+        })
+        : [];
 
     return (
         <div className='min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6'>

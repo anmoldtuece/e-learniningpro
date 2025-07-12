@@ -18,12 +18,15 @@ import Rejected from './Pages/Response/Rejected'
 import Pending from './Pages/Response/Pending'
 import Admin from './Pages/Components/Admin/Admin'
 import VarifyDoc from './Pages/Components/Admin/VarifyDoc'
-import TeacherLayout from './Pages/Dashboard/TeacherDashboard/TeacherLayout'
+import TeacherLayout from './Pages/Dashboard/TeacherDashboard/TeacherLayout';
+import ActiveCourses from './Pages/Dashboard/TeacherDashboard/ActiveCourses';
+import TeacherRemuneration from './Pages/Dashboard/TeacherDashboard/TeacherRemuneration'
+import TeacherWelcome from './Pages/Dashboard/TeacherDashboard/TeacherWelcome'
+import CreateCourse from './Pages/Dashboard/TeacherDashboard/CreateCourse'
 import StudentLayout from './Pages/Dashboard/StudentDashboard/StudentLayout'
 import SearchTeacher from './Pages/Dashboard/StudentDashboard/SearchTeacher'
 import StudentClasses from './Pages/Dashboard/StudentDashboard/StudentClasses'
 import StudentCourses from './Pages/Dashboard/StudentDashboard/StudentCourses'
-import DashboardTeacher from './Pages/Dashboard/TeacherDashboard/DashboardTeacher'
 import TeacherClasses from './Pages/Dashboard/TeacherDashboard/TeacherClasses'
 import TeacherCourses from './Pages/Dashboard/TeacherDashboard/TeacherCourses'
 import SearchData from './Pages/Home/Search/Search'
@@ -33,6 +36,7 @@ import ResetPassword from './Pages/ForgetPassword/ResetPassword'
 import { Toaster } from 'react-hot-toast'
 import ResetTeacher from './Pages/ForgetPassword/ResetTeacher'
 import Course from './Pages/Components/Admin/Course'
+import TeacherProfile from './Pages/Dashboard/TeacherDashboard/TeacherProfile'
 
 
 const router = createBrowserRouter(
@@ -62,9 +66,12 @@ const router = createBrowserRouter(
         <Route path='/Student/Dashboard/:ID/Courses' element={<StudentCourses/>}/>
       </Route>
       <Route path='/Teacher/Dashboard/:ID' element={<TeacherLayout/>}>
-        {/* <Route path='/Teacher/Dashboard/:ID/Home' element={<DashboardTeacher/>}/> */}
-        <Route path='/Teacher/Dashboard/:ID/Classes' element={<TeacherClasses/>}/>
-        <Route path='/Teacher/Dashboard/:ID/Courses' element={<TeacherCourses/>}/>
+        <Route index element={<TeacherWelcome/>}/> {/* Default welcome page */}
+        <Route path='profile' element={<TeacherProfile />} /> {/* Profile details */}
+        <Route path='courses' element={<ActiveCourses/>}/>
+        <Route path='remuneration' element={<TeacherRemuneration/>}/>
+        <Route path='create-course' element={<CreateCourse />} />
+        <Route path='classes' element={<TeacherClasses/>}/>
       </Route>
 
       <Route path='/forgetPassword' element={<Forgetpassword/>}/>
