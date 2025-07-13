@@ -6,6 +6,7 @@ function StudentLayout() {
   return (
     <>
     <StudentDashboard/>
+    <Outlet/>
     </>
   )
 }

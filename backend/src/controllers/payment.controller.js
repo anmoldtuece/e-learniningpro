@@ -5,33 +5,25 @@ import {instance}  from "../app.js"
 import crypto from "crypto"
 import {payment} from "../models/payment.model.js"
 import { Teacher } from "../models/teacher.model.js";
-import { course } from "../models/course.model.js";
 
 
 const coursePayment = asyncHandler(async(req,res)=>{
-    const { courseID } = req.params;
+    const {fees, } = req.body
 
-    // Fetch the course to get the latest price
-    const selectedCourse = await course.findById(courseID);
-    if (!selectedCourse) {
-      throw new ApiError(404, "Course not found");
-    }
-
-    const fees = selectedCourse.price;
     if(!fees){
-      throw new ApiError(400,"Course price not set");
+      throw new ApiError(400,"fees is required")
     }
 
     const options = {
-        amount: fees * 100,  // amount in paise
+        amount: fees,  // amount in the smallest currency unit
         currency: "INR",
         receipt: "order_rcptid_11"
-    };
-    const order = await instance.orders.create(options);
+      };
+      const order = await instance.orders.create(options)
 
-    return res
+      return res
       .status(200)
-      .json(new ApiResponse(200, order, "order fetched"));
+      .json( new ApiResponse(200, order,"order fetched"))
 })
 
 

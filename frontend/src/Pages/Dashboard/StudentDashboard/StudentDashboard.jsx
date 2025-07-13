@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import teachingImg from '../../Images/Teaching.svg';
-import { NavLink, useParams, useNavigate, Outlet } from 'react-router-dom';
-import logo from '../../Images/logo.svg';
+import React, { useEffect, useState } from 'react'
+import teachingImg from '../../Images/Teaching.svg'
+import { NavLink, useParams, useNavigate } from 'react-router-dom'
+import logo from '../../Images/logo.svg'
+
 
 function StudentDashboard() {
   const { ID } = useParams();
@@ -9,11 +10,19 @@ function StudentDashboard() {
   const [data, setdata] = useState([]);
   const [error, setError] = useState(null);
 
-  const Handlelogout = () => {
-    localStorage.removeItem('token');
-    navigator('/');
-  };
-
+  const Handlelogout = async() =>{
+    const response = await fetch(`/api/student/logout`, {
+      method: 'POST',
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    const data = await response.json();
+    if(data.statusCode == 200){
+      navigator('/');
+    }
+  }
 
   useEffect(() => {
     const getData = async () => {
@@ -32,93 +41,62 @@ function StudentDashboard() {
         const user = await response.json();
         setdata(user.data);
       } catch (error) {
-        setError(error.message);
+        setError(error.message)
       }
     };
     getData();
-  }, []);
+   },[]);
 
   return (
     <>
-      {/* Navbar */}
-      <nav className='bg-white px-10 py-4 flex justify-between items-center border-b border-blue-200 shadow-sm'>
+    {/* navbar */}
+      <nav className='bg-[#04253A] px-10 py-3 flex justify-between items-center'>
         <NavLink to="/">
-          <div className='flex items-center gap-3'>
-            <img src={logo} className="w-14" alt="logo" />
-            <h1 className='text-2xl text-blue-700 font-bold'>DTU E-Learning</h1>
-          </div>
+        <div className='flex items-center gap-3'>
+          <img src={logo}
+            className="w-14" alt="" />
+          <h1 className='text-2xl text-[#4E84C1] font-bold'>Shiksharthee</h1>
+        </div>
         </NavLink>
-        <button
-          onClick={Handlelogout}
-          className='bg-blue-700 text-white py-2 px-5 rounded-full hover:bg-blue-800'
-        >
-          Logout
-        </button>
+        <div className='bg-[#0D199D] text-white py-2 px-5 rounded-full'>
+          <p onClick={Handlelogout}>logout</p>
+        </div>
       </nav>
 
-      {/* Welcome Banner */}
-      <div className='bg-blue-50 flex justify-between items-center px-10 py-10'>
-        <div className='text-blue-700 font-semibold text-4xl'>
-          <h1 className='mb-3'>Welcome to <span className='text-blue-600'>DTU E-Learning</span></h1>
-          <h3 className='text-2xl'>{data.Firstname} {data.Lastname}</h3>
+      <div className='bg-[#008280] flex justify-between items-center'>
+        <div className=' text-white font-semibold text-5xl ml-72'>
+          <h1 className='mb-5 text-[#071645]'>Welcome to <span className='text-white'>Shiksharthee</span></h1>
+          <h3 className='ml-16 text-[#071645]'>{data.Firstname} {data.Lastname}</h3>
         </div>
-        <div>
-          <img src={teachingImg} alt="teaching" width={300} />
+        <div className='m-5 mr-20'>
+          <img src={teachingImg} alt="teaching" width={300}/>
         </div>
       </div>
 
-      {/* Sidebar */}
-      <div className='flex'>
-        <aside className='bg-white shadow-md w-60 min-h-[calc(100vh-5rem)] pt-10 px-4'>
-          <div className='flex flex-col items-center gap-2 mb-8'>
-            <img src="https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png" alt="profile_img" width={60} className="rounded-full" />
-            <p className='text-blue-700 font-medium text-lg'>{data.Firstname} {data.Lastname}</p>
-          </div>
+      {/* sidebar */}
+      <div className='bg-[#071645] w-52 min-h-[120vh] max-h-[130vh] absolute top-20'>
+        <div className='flex flex-col gap-5 text-xl items-center text-white mt-8 mb-10'>
+          <img src="https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png" alt="profile_img" width={50} />
+          <p>{data.Firstname} {data.Lastname}</p>
+        </div>
 
-          <div className='flex flex-col gap-1'>
-            <NavLink
-              to={`/Student/Dashboard/${ID}/Search`}
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-blue-700 text-white rounded-md p-3 font-medium"
-                  : "text-blue-700 hover:bg-blue-100 rounded-md p-3 font-medium"
-              }
-            >
-              Teacher
-            </NavLink>
-            <NavLink
-              to={`/Student/Dashboard/${ID}/Classes`}
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-blue-700 text-white rounded-md p-3 font-medium"
-                  : "text-blue-700 hover:bg-blue-100 rounded-md p-3 font-medium"
-              }
-            >
-              Classes
-            </NavLink>
-            <NavLink
-              to={`/Student/Dashboard/${ID}/Courses`}
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-blue-700 text-white rounded-md p-3 font-medium"
-                  : "text-blue-700 hover:bg-blue-100 rounded-md p-3 font-medium"
-              }
-            >
-              Courses
-            </NavLink>
-          </div>
-        </aside>
+        <div className='flex flex-col gap-1'>
+          <NavLink to = {`/Student/Dashboard/${ID}/Search`} className={({isActive}) => isActive ? "bg-white p-3 px-[4.61rem] text-center font-semibold text-[#4E84C1]" : "p-3 text-center font-semibold text-[#4E84C1]" }> 
+          Teacher
+          </NavLink>
 
-        {/* Main Content Placeholder */}
-        <main className="flex-1 p-10 text-center text-gray-500 text-lg bg-white">
-          <Outlet />
-          <div>
-           
-          </div>
-        </main>
+          <NavLink to = {`/Student/Dashboard/${ID}/Classes`} className={({isActive}) => isActive ? "bg-white p-3 px-[4.61rem] text-center font-semibold text-[#4E84C1]" : "p-3 text-center font-semibold text-[#4E84C1]" }> 
+          Classes
+          </NavLink>
+
+          <NavLink to = {`/Student/Dashboard/${ID}/Courses`} className={({isActive}) => isActive ? "bg-white p-3 px-[4.61rem] text-center font-semibold text-[#4E84C1]" : "p-3 text-center font-semibold text-[#4E84C1]" }> 
+          Courses
+          </NavLink>
+        </div>
+
       </div>
     </>
-  );
+  )
 }
 
-export default StudentDashboard;
+export default StudentDashboard 
