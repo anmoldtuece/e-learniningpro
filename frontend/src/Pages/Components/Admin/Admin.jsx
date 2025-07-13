@@ -79,7 +79,7 @@ const Admin = () => {
         <NavLink to='/'>
           <div className="flex items-center gap-4">
             <img src={logo} alt="logo" className="w-14 h-14" />
-            <h1 className="text-2xl text-blue-300 font-bold">DTU E-Learning</h1>
+            <h1 className="text-2xl text-blue-300 font-bold"> Gurukul</h1>
           </div>
         </NavLink>
         <div className="flex items-center gap-4">

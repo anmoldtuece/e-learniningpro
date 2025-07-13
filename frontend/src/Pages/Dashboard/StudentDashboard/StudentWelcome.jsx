@@ -7,7 +7,7 @@ function StudentWelcome({ student }) {
       <div className="flex flex-row justify-between items-center w-full px-24">
         <div className="text-white font-semibold text-5xl">
           <h1 className="mb-5 text-[#ffe066]">
-            Welcome to <span className="text-white">Shiksharthee</span>
+            Welcome to <span className="text-white">Gurukul</span>
           </h1>
           <h3 className="ml-16 text-[#ffe066]">
             {student?.Firstname} {student?.Lastname}

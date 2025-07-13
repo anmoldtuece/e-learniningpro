@@ -30,8 +30,8 @@ function Header() {
           {/* Logo Section */}
           <NavLink to='/' className="logo-link" onClick={closeMobileMenu}>
             <div className="logo">
-              <img src={Logo} alt="DTU E-learning Logo" />
-              <span className="logo-text">DTU E-learning</span>
+              <img src={Logo} alt=" Gurukul Logo" />
+              <span className="logo-text"> Gurukul</span>
             </div>
           </NavLink>
           

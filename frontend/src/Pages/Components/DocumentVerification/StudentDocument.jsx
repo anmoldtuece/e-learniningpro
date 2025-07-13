@@ -114,7 +114,7 @@ const StudentDocument = () => {
       <div className="flex items-center justify-between px-10 py-4 bg-[#0D286F]">
         <div className="flex items-center gap-3">
           <img src={logo} className="w-14" alt="logo" />
-          <h1 className="text-2xl text-[#4E84C1] font-bold">DTU E-Learning</h1>
+          <h1 className="text-2xl text-[#4E84C1] font-bold"> Gurukul</h1>
         </div>
         <h2 className="text-white text-xl">Document Verification (Student)</h2>
       </div>

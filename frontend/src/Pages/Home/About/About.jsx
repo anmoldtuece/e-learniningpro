@@ -7,17 +7,17 @@ import {
 const admins = [
   {
     name: "Anmol Pandey",
-    branch: "DTU ECE 4th year",
+    branch: " ECE 4th year",
     img: "https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png",
   },
   {
     name: "Naman Adlakha",
-    branch: "DTU CSE 4th year",
+    branch: " CSE 4th year",
     img: "https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png",
   },
   {
     name: "Divyansh",
-    branch: "DTU ECE 4th year",
+    branch: " ECE 4th year",
     img: "https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png",
   },
 ];
@@ -52,7 +52,7 @@ function About() {
                 About Us
               </h1>
               <p className="text-xl md:text-2xl text-blue-100 leading-relaxed">
-                At <strong className="text-white">E‑Learning</strong>, we believe in the power of education to transform lives and unlock human potential through innovative digital learning experiences.
+                At <strong className="text-white">Gurukul</strong>, we believe in the power of education to transform lives and unlock human potential through innovative digital learning experiences.
               </p>
             </div>
 
@@ -64,7 +64,7 @@ function About() {
                   Our Story
                 </h3>
                 <p className="text-blue-50 leading-relaxed text-lg">
-                  E‑Learning was born out of a passion for learning and a desire to make quality education accessible to everyone. We recognized the transformative power of technology in education and set out to create a platform that bridges the gap between traditional learning and modern digital experiences.
+                  Gurukul was born out of a passion for learning and a desire to make quality education accessible to everyone. We recognized the transformative power of technology in education and set out to create a platform that bridges the gap between traditional learning and modern digital experiences.
                 </p>
               </div>
               <div className="space-y-6">
@@ -113,7 +113,7 @@ function About() {
           <div className="mt-24 bg-white rounded-3xl shadow-xl p-10 md:p-16 mx-4 md:mx-8 lg:mx-12">
             <div className="text-center space-y-6">
               <h3 className="text-3xl md:text-4xl font-bold text-gray-800">
-                Why Choose E‑Learning?
+                Why Choose Gurukul?
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
                 <div className="space-y-4">

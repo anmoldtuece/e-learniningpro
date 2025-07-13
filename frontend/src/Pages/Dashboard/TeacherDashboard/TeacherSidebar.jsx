@@ -47,20 +47,6 @@ function TeacherSidebar({ ID, sidebarOpen, setSidebarOpen, setPopup, setFormPopu
           <span>Dashboard</span>
         </NavLink>
         <NavLink 
-          to={`/Teacher/Dashboard/${ID}/Classes`} 
-          className={({isActive}) => 
-            `flex items-center gap-3 p-3 lg:p-4 rounded-lg font-semibold transition-all duration-200 ${
-              isActive 
-                ? "bg-[#ffe066] text-[#071645] shadow-lg" 
-                : "text-white hover:bg-white/10 hover:text-[#ffe066]"
-            }`
-          }
-          onClick={() => setSidebarOpen(false)}
-        > 
-          <TbSchool className="text-xl" />
-          <span>Classes</span>
-        </NavLink>
-        <NavLink 
           to={`/Teacher/Dashboard/${ID}/profile`} 
           className={({isActive}) => 
             `flex items-center gap-3 p-3 lg:p-4 rounded-lg font-semibold transition-all duration-200 ${
@@ -73,6 +59,20 @@ function TeacherSidebar({ ID, sidebarOpen, setSidebarOpen, setPopup, setFormPopu
         > 
           <TbUser className="text-xl" />
           <span>My Profile</span>
+        </NavLink>
+        <NavLink 
+          to={`/Teacher/Dashboard/${ID}/Classes`} 
+          className={({isActive}) => 
+            `flex items-center gap-3 p-3 lg:p-4 rounded-lg font-semibold transition-all duration-200 ${
+              isActive 
+                ? "bg-[#ffe066] text-[#071645] shadow-lg" 
+                : "text-white hover:bg-white/10 hover:text-[#ffe066]"
+            }`
+          }
+          onClick={() => setSidebarOpen(false)}
+        > 
+          <TbSchool className="text-xl" />
+          <span>Classes</span>
         </NavLink>
         <NavLink 
           to={`/Teacher/Dashboard/${ID}/courses`} 
@@ -129,6 +129,7 @@ function TeacherSidebar({ ID, sidebarOpen, setSidebarOpen, setPopup, setFormPopu
           <TbCurrencyRupee className="text-xl text-green-300" />
           <span>Withdraw Funds</span>
         </button>
+        {/* Remove or comment out this block to remove "Give Feedback"
         <button
           onClick={() => {
             setFormPopup(true);
@@ -139,6 +140,7 @@ function TeacherSidebar({ ID, sidebarOpen, setSidebarOpen, setPopup, setFormPopu
           <TbMessage2Star className="text-xl text-purple-300" />
           <span>Give Feedback</span>
         </button>
+        */}
         <button
           onClick={() => {
             navigate(`/Teacher/Dashboard/${ID}/create-course`);

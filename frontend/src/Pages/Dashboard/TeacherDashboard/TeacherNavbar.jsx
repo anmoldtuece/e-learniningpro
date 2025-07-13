@@ -31,7 +31,7 @@ function TeacherNavbar() {
     <nav className='bg-gradient-to-r from-[#0d1a3a] via-[#0d3a5a] to-[#008280] px-4 sm:px-8 lg:px-16 py-3 flex justify-between items-center sticky top-0 z-50 shadow-xl'>
       <NavLink to="/" className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity">
         <img src={logo} className="w-10 sm:w-12 lg:w-14" alt="logo" />
-        <h1 className='text-lg sm:text-xl lg:text-2xl text-[#4E84C1] font-bold tracking-wide'>E-Learning</h1>
+        <h1 className='text-lg sm:text-xl lg:text-2xl text-[#4E84C1] font-bold tracking-wide'>Gurukul</h1>
       </NavLink>
       <button 
         onClick={Handlelogout}

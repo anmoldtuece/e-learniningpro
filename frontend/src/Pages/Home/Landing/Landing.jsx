@@ -61,7 +61,7 @@ function Landing() {
       <div className="top">
         <div className="left">
           <h1>
-          Empowering Minds, Inspiring Futures: <br />Your Gateway to Online Learning with <span className="font-semibold text-blue-600 font-serif text-5xl">DTU E-learning</span>
+          Empowering Minds, Inspiring Futures: <br />Your Gateway to Online Learning with <span className="font-semibold text-blue-600 font-serif text-5xl"> Gurukul</span>
           </h1>
           {/*  Search  */}
 
@@ -309,7 +309,7 @@ function Landing() {
     {/* Text Block */}
     <div className="w-full lg:w-1/2 text-center lg:text-left space-y-8">
       <p className="text-lg leading-relaxed text-gray-700">
-        At <span className="font-semibold text-gray-900">Shiksharthee</span>, we believe in the power of education to transform lives. Our platform is a gateway to knowledge, offering diverse courses and meaningful learning experiences.
+        At <span className="font-semibold text-gray-900">Gurukul</span>, we believe in the power of education to transform lives. Our platform is a gateway to knowledge, offering diverse courses and meaningful learning experiences.
       </p>
 
       <div>
@@ -317,7 +317,7 @@ function Landing() {
           Our Story
         </h3>
         <p className="mt-4 text-gray-700 leading-relaxed">
-          Born out of a passion for learning, DTU-E-Learning aims to make quality education accessible for everyone. We recognize the needs of today's learners and deliver flexible, effective solutions.
+          Born out of a passion for learning, -Gurukul aims to make quality education accessible for everyone. We recognize the needs of today's learners and deliver flexible, effective solutions.
         </p>
       </div>
 

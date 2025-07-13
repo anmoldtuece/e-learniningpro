@@ -47,7 +47,7 @@ function TeacherWelcome() {
 
   return (
     <div className="flex flex-col items-center justify-center h-full py-20">
-      <h1 className="text-4xl font-bold text-[#008280] mb-4">Welcome to E-Learning</h1>
+      <h1 className="text-4xl font-bold text-[#008280] mb-4">Welcome to Gurukul</h1>
       <h2 className="text-2xl text-gray-700 font-semibold">
         {data?.Firstname} {data?.Lastname}
       </h2>

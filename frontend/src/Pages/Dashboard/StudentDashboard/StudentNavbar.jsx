@@ -8,7 +8,7 @@ function StudentNavbar({ onLogout }) {
       <NavLink to="/">
         <div className='flex items-center gap-3'>
           <img src={logo} className="w-14" alt="" />
-          <h1 className='text-2xl text-[#4E84C1] font-bold'>Shiksharthee</h1>
+          <h1 className='text-2xl text-[#4E84C1] font-bold'>Gurukul</h1>
         </div>
       </NavLink>
       <button

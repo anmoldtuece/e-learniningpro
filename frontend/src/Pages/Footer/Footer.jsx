@@ -36,6 +36,7 @@ function Footer() {
           <img src="https://www.figma.com/file/6b4R8evBkii6mI53IA4vSS/image/c3fb00857c69eb46b393dba8d759e426171ef02f" width={50} alt="GitHub" />
         </div>
       </div>
+      <span className="font-semibold text-gray-900">Gurukul</span>
     </div>
   );
 }

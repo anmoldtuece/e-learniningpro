@@ -29,7 +29,7 @@ const verifyEmail = async (Email, Firstname, createdStudent_id) => {
         // };
 
         const mailOptions = {
-            from: "elearningsnu@gmail.com",
+            from: "Gurukul <your_email@example.com>", // <-- Change here
             to: Email,
             subject: "Verify your E-mail",
             html: `
@@ -40,6 +40,7 @@ const verifyEmail = async (Email, Firstname, createdStudent_id) => {
                 <a href="http://localhost:4400/api/student/verify?id=${createdStudent_id}">
                     <button style="background-color: black; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 10px 0; cursor: pointer;">Verify Email</button>
                 </a>
+                <p style="font-size: 14px;">&copy; 2024 Gurukul. All rights reserved.</p>
             </div>`
         };
 
@@ -337,9 +338,9 @@ const forgetPassword=asyncHandler(async(req,res)=>{
    <p>We have received a request to reset your password. To proceed, please click on the following link: <a href="${resetToken}" target="_blank">reset your password</a>.</p>
    <p>If the link does not work for any reason, you can copy and paste the following URL into your browser's address bar:</p>
    <p>${resetToken}</p>
-   <p>Thank you for being a valued member of the DTU E-Learning community. If you have any questions or need further assistance, please do not hesitate to contact our support team.</p>
+   <p>Thank you for being a valued member of the  Gurukul community. If you have any questions or need further assistance, please do not hesitate to contact our support team.</p>
    <p>Best regards,</p>
-   <p>The DTU E-Learning Team</p>`
+   <p>The  Gurukul Team</p>`
 
    try{
     

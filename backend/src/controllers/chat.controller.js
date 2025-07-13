@@ -15,7 +15,7 @@ export const chatWithOpenRouter = async (req, res) => {
 
     // About Us section
     const aboutUs =
-      "E‑Learning is dedicated to transforming lives through accessible, innovative digital education. Our mission is to empower every learner to reach their full potential in an inclusive, engaging environment.\n";
+      "Gurukul is dedicated to transforming lives through accessible, innovative digital education. Our mission is to empower every learner to reach their full potential in an inclusive, engaging environment.\n";
 
     // Format course info
     const courseInfo = coursesList.map(c =>
@@ -30,7 +30,7 @@ export const chatWithOpenRouter = async (req, res) => {
     // Build system prompt
     const systemPrompt =
       aboutUs +
-      `You are 'EduBot', a smart, friendly assistant on the e-Learning website.\n` +
+      `You are 'EduBot', a smart, friendly assistant on the Gurukul website.\n` +
       `Our main sections are: Home, Courses, About, Contact, and Admin Login.\n` +
       `Students must log in and register for courses to access learning materials.\n` +
       `We offer ${coursesList.length} courses (e.g., ${courseInfo}).\n` +

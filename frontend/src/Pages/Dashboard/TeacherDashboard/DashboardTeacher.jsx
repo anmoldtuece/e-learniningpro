@@ -177,7 +177,7 @@
 //       <nav className='bg-gradient-to-r from-[#0d1a3a] via-[#0d3a5a] to-[#008280] px-4 sm:px-8 lg:px-16 py-3 flex justify-between items-center sticky top-0 z-50 shadow-xl'>
 //         <NavLink to="/" className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity">
 //           <img src={logo} className="w-10 sm:w-12 lg:w-14" alt="logo" />
-//           <h1 className='text-lg sm:text-xl lg:text-2xl text-[#4E84C1] font-bold tracking-wide'>E-Learning</h1>
+//           <h1 className='text-lg sm:text-xl lg:text-2xl text-[#4E84C1] font-bold tracking-wide'>Gurukul</h1>
 //         </NavLink>
         
 //         <div className="flex items-center gap-4">
@@ -203,7 +203,7 @@
 //       <div className='bg-gradient-to-r from-[#008280] via-[#00a09e] to-[#0d1a3a] flex flex-col lg:flex-row justify-between items-center px-4 sm:px-8 lg:px-24 py-8 lg:py-14 rounded-b-3xl shadow-lg'>
 //         <div className='text-center lg:text-left mb-6 lg:mb-0'>
 //           <h1 className='text-2xl sm:text-3xl lg:text-5xl font-extrabold text-white mb-4 lg:mb-5 leading-tight drop-shadow-lg'>
-//             Welcome to <span className='text-[#ffe066]'>E-Learning</span>
+//             Welcome to <span className='text-[#ffe066]'>Gurukul</span>
 //           </h1>
 //           <h3 className='text-xl sm:text-2xl lg:text-3xl text-white font-semibold drop-shadow'>
 //             {data.Firstname} {data.Lastname}

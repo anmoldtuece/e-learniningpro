@@ -82,7 +82,7 @@ function CompletedCourses() {
 
     doc.setFontSize(14);
     doc.setTextColor(255, 255, 255);
-    doc.text("eSigned by eLearning", 30, 180);
+    doc.text("eSigned by Gurukul", 30, 180);
 
     doc.save(`${course.coursename}_certificate.pdf`);
   };

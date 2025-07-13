@@ -7,17 +7,17 @@ import Header from '../Home/Header/Header';
 const admins = [
   {
     name: "Anmol Pandey",
-    branch: "DTU ECE 4th year",
+    branch: " ECE 4th year",
     img: "https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png",
   },
   {
     name: "Naman Adlakha",
-    branch: "DTU CSE 4th year",
+    branch: " CSE 4th year",
     img: "https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png",
   },
   {
     name: "Divyansh",
-    branch: "DTU ECE 4th year",
+    branch: " ECE 4th year",
     img: "https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png",
   },
 ];

@@ -106,7 +106,7 @@ function Search() {
         key: response.data.key,
         amount: price[courseName]*100,
         currency: "INR",
-        name: "Shiksharthee",
+        name: "Gurukul",
         description: "Enroll in a course",
         image: logo,
         order_id: DATA.data.id,

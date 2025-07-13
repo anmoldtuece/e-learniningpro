@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TbCurrencyRupee } from "react-icons/tb";
+import Withdrawal from "./Withdrawal";
 
 function TeacherRemuneration() {
   const { ID } = useParams();
   const [amount, setAmount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [showWithdraw, setShowWithdraw] = useState(false);
 
   useEffect(() => {
     const getAmount = async () => {
@@ -39,9 +41,19 @@ function TeacherRemuneration() {
         <span className="font-medium">Balance:</span>
         <span className="font-bold text-lg">₹{amount?.toLocaleString()}</span>
       </div>
-      <button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-base">
+      <button
+        className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-base"
+        onClick={() => setShowWithdraw(true)}
+      >
         Withdraw Funds
       </button>
+      {showWithdraw && (
+        <Withdrawal
+          onClose={() => setShowWithdraw(false)}
+          balance={amount}
+          onWithdraw={(withdrawn) => setAmount((prev) => prev - withdrawn)}
+        />
+      )}
     </div>
   );
 }
