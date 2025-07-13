@@ -3,6 +3,7 @@ import { addClass, addCourseStudent, addCourseTeacher, canStudentEnroll, enrolle
 import { authSTD } from "../middlewares/stdAuth.middleware.js";
 import { authTeacher } from "../middlewares/teacherAuth.middleware.js";
 import { course } from "../models/course.model.js";
+import { student } from "../models/student.model.js"; // adjust path if needed
 
 const router = Router()
 
@@ -50,11 +51,30 @@ router.route("/student/:id/completed").get(authSTD, async (req, res) => {
     if (!stdID || stdID !== req.Student._id.toString()) {
       return res.status(401).json({ message: "Unauthorized" });
     }
+
+    // Fetch current student details
+    const studentDoc = await student.findById(stdID);
+    const studentName = studentDoc
+      ? `${studentDoc.Firstname} ${studentDoc.Lastname}`
+      : "N/A";
+
+    // Find completed courses and populate teacher
     const completedCourses = await course.find({
       enrolledStudent: stdID,
       status: "completed"
-    }).select("-enrolledStudent -liveClasses -enrolledteacher");
-    res.json({ success: true, data: completedCourses });
+    })
+    .populate('enrolledteacher', 'Firstname Lastname');
+
+    // Map names to response
+    const coursesWithNames = completedCourses.map(c => ({
+      ...c.toObject(),
+      teacherName: c.enrolledteacher
+        ? `${c.enrolledteacher.Firstname} ${c.enrolledteacher.Lastname}`
+        : "N/A",
+      studentName, // always current student
+    }));
+
+    res.json({ success: true, data: coursesWithNames });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }

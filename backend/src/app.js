@@ -7,6 +7,7 @@ dotenv.config({
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import Razorpay from "razorpay"
+import certificateRouter from "./routes/certificate.routes.js";
 
 const app = express();
 
@@ -44,5 +45,7 @@ app.use("/api/payment", paymentRouter)
 
 import chatRouter from "./routes/chat.routes.js";
 app.use("/api/chat", chatRouter);
+
+app.use("/api/certificate", certificateRouter);
 
 export {app}
