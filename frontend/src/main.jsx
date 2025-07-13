@@ -23,6 +23,7 @@ import ActiveCourses from './Pages/Dashboard/TeacherDashboard/ActiveCourses';
 import TeacherRemuneration from './Pages/Dashboard/TeacherDashboard/TeacherRemuneration'
 import TeacherWelcome from './Pages/Dashboard/TeacherDashboard/TeacherWelcome'
 import CreateCourse from './Pages/Dashboard/TeacherDashboard/CreateCourse'
+import StudentProfile from './Pages/Dashboard/StudentDashboard/StudentProfile'
 import StudentLayout from './Pages/Dashboard/StudentDashboard/StudentLayout'
 import SearchTeacher from './Pages/Dashboard/StudentDashboard/SearchTeacher'
 import StudentClasses from './Pages/Dashboard/StudentDashboard/StudentClasses'
@@ -66,6 +67,7 @@ const router = createBrowserRouter(
       <Route path='/Student/Dashboard/:ID' element={<StudentLayout/>}>
         <Route index element={<StudentWelcome/>}/> {/* Dashboard Welcome page */}
         <Route path='/Student/Dashboard/:ID/Search' element={<SearchTeacher/>}/>
+        <Route path='/Student/Dashboard/:ID/profile' element={<StudentProfile />} /> {/* Profile details */}
         <Route path='/Student/Dashboard/:ID/Classes' element={<StudentClasses/>}/>
         <Route path='/Student/Dashboard/:ID/Courses' element={<StudentCourses/>}/>
         <Route path="/Student/Dashboard/:ID/CompletedCourses" element={<CompletedCourses />} />

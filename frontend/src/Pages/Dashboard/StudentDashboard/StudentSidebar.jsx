@@ -14,6 +14,9 @@ function StudentSidebar({ student }) {
         <NavLink to={`/Student/Dashboard/${ID}`} end className={({isActive}) => isActive ? "bg-[#ffe066] p-3 px-12 text-center font-semibold text-[#071645] shadow-lg" : "p-3 text-center font-semibold text-white hover:bg-white/10 hover:text-[#ffe066]"}>
           Dashboard
         </NavLink>
+        <NavLink to={`/Student/Dashboard/${ID}/profile`} className={({isActive}) => isActive ? "bg-[#ffe066] p-3 px-12 text-center font-semibold text-[#071645] shadow-lg" : "p-3 text-center font-semibold text-white hover:bg-white/10 hover:text-[#ffe066]"}>
+          Profile
+        </NavLink>
         <NavLink to={`/Student/Dashboard/${ID}/Search`} className={({isActive}) => isActive ? "bg-[#ffe066] p-3 px-12 text-center font-semibold text-[#071645] shadow-lg" : "p-3 text-center font-semibold text-white hover:bg-white/10 hover:text-[#ffe066]"}>
           Teacher
         </NavLink>

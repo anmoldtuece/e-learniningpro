@@ -226,15 +226,17 @@ const logout = asyncHandler(async(req,res)=>{
 })
 
 const getStudent = asyncHandler(async(req,res)=>{
-    const user = req.Student
-    const id = req.params.id
-    if(req.Student._id != id){
-        throw new ApiError(400, "unauthroized access")
+    const user = await student.findById(req.params.id)
+      .populate('Studentdetails'); // <-- this is the key line
+
+    if(!user){
+        throw new ApiError(404, "Student not found");
     }
+
     return res
-    .status(200)
-    .json(new ApiResponse(200, user, "Student is logged in"))
-})
+      .status(200)
+      .json(new ApiResponse(200, user, "Student is logged in"));
+});
 const addStudentDetails = asyncHandler(async(req, res)=>{
 
     const id = req.params.id
