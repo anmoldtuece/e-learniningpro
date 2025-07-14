@@ -93,6 +93,20 @@ function TeacherProfile() {
                 <p className="text-sm font-medium text-gray-600 mb-1">Experience</p>
                 <p className="text-gray-800 font-medium text-sm sm:text-base">{Tdec.Experience} years</p>
               </div>
+            </div>   
+            <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/80 rounded-lg hover:bg-blue-50 transition-colors border border-blue-100">
+              <TbUser className="text-blue-600 text-xl mt-0.5 flex-shrink-0" />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-gray-600 mb-1">Graduation College</p>
+                <p className="text-gray-800 font-medium text-sm sm:text-base">{Tdec.UGcollege}</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/80 rounded-lg hover:bg-blue-50 transition-colors border border-blue-100">
+              <TbUser className="text-blue-600 text-xl mt-0.5 flex-shrink-0" />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-gray-600 mb-1">Post Graduation College</p>
+                <p className="text-gray-800 font-medium text-sm sm:text-base">{Tdec.PGcollege}</p>
+              </div>
             </div>
           </>
         )}
