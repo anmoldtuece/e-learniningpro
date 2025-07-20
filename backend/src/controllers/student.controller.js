@@ -178,8 +178,9 @@ const login = asyncHandler(async(req,res) => {
     const loggedInStd = await student.findById(tempStd).select("-Password -Refreshtoken")
 
     const options = {
-        httpOnly:true,
-        secure:true,
+        httpOnly: true,
+        secure: true,
+        sameSite: "None", // <-- Add this line
     }
 
     return res
@@ -193,7 +194,6 @@ const login = asyncHandler(async(req,res) => {
             }, "logged in"
             )
     )
-
 })
 
 const logout = asyncHandler(async(req,res)=>{
@@ -209,8 +209,9 @@ const logout = asyncHandler(async(req,res)=>{
         }
     )
     const options ={
-        httpOnly:true,
-        secure:true,
+        httpOnly: true,
+        secure: true,
+        sameSite: "None", // <-- Add this line
     }
 
     return res

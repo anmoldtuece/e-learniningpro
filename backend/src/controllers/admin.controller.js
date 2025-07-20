@@ -73,8 +73,9 @@ const adminLogin = asyncHandler(async(req,res)=>{
     const loggedadmin = await admin.findById(temp_admin).select("-password -Refreshtoken")
 
     const options = {
-        httpOnly:true,
-        secure:true,
+        httpOnly: true,
+        secure: true,
+        sameSite: "None", // <-- Add this line
     }
 
     return res 
@@ -98,8 +99,9 @@ const adminLogout = asyncHandler(async(req,res)=>{
         }
     )
     const options ={
-        httpOnly:true,
-        secure:true,
+        httpOnly: true,
+        secure: true,
+        sameSite: "None", // <-- Add this line
     }
 
     return res
