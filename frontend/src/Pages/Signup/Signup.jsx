@@ -60,16 +60,19 @@ const Signup = () => {
     };
 
     try {
-      // Send data to backend (you need to implement this part)
-      const response = await fetch(`/api/${userType}/signup`, {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      // Send data to backend using VITE_BACKEND_URL from env
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/${userType}/signup`,
+        {
+          method: "POST",
+          mode: "cors",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       // Handle response
       const responseData = await response.json();
@@ -89,7 +92,6 @@ const Signup = () => {
       }
     } catch (error) {
       setErrors(error.message);
-     
     }
   };
 

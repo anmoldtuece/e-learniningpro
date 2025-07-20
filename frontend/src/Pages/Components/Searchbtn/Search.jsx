@@ -32,14 +32,17 @@ function Search() {
 
   const openTeacherDec = async(id,fname,lname,sub)=>{
     setTname({fname,lname,sub});
-    const data = await fetch('/api/teacher/teacherdocuments',{
+    const data = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}api/teacher/teacherdocuments`,
+      {
         method: 'POST',
         credentials: "include",
         headers: {
-        "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({teacherID : id}),
-    })
+      }
+    );
     const res = await data.json();
     setTeacherDetails(res.data);
     setOpenTM(true);
@@ -48,12 +51,15 @@ function Search() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`/api/course/student/${ID}/enrolled`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}api/course/student/${ID}/enrolled`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
         if (!response.ok) throw new Error('Failed to fetch data');
         const user = await response.json();
         setCourseID(user.data);
@@ -67,7 +73,9 @@ function Search() {
   
   const SearchTeacher = async (sub) => {
     const subject = sub.toLowerCase();
-    const Data = await fetch(`/api/course/${subject}`);
+    const Data = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}api/course/${subject}`
+    );
     const response = await Data.json();
     if (response.statusCode === 200) {
       setCourse(response.data);
@@ -77,7 +85,7 @@ function Search() {
 
   const handleEnroll = async (courseName, id) => {
     let check = await fetch(
-      `/api/course/${courseName}/${id}/verify/student/${ID}`,
+      `${import.meta.env.VITE_BACKEND_URL}api/course/${courseName}/${id}/verify/student/${ID}`,
       {
         method: "POST",
         headers: {
@@ -87,20 +95,26 @@ function Search() {
     );
     const res = await check.json();
     if(res.statusCode === 200){
-      const data = await fetch(`/api/payment/course/${id}/${courseName}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ fees: price[courseName]*100 }),
-      });
+      const data = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/payment/course/${id}/${courseName}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ fees: price[courseName]*100 }),
+        }
+      );
       const DATA = await data.json();
-      const Key = await fetch("/api/payment/razorkey", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const Key = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/payment/razorkey`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const response = await Key.json();
       const options = {
         key: response.data.key,
@@ -114,7 +128,7 @@ function Search() {
           const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
           const verificationData = { razorpay_payment_id, razorpay_order_id, razorpay_signature };
           const verificationResponse = await fetch(
-            `/api/payment/confirmation/course/${id}`,
+            `${import.meta.env.VITE_BACKEND_URL}api/payment/confirmation/course/${id}`,
             {
               method: "POST",
               headers: {
@@ -127,7 +141,7 @@ function Search() {
           if (res.statusCode === 200) {
             try {
               let response = await fetch(
-                `/api/course/${courseName}/${id}/add/student/${ID}`,
+                `${import.meta.env.VITE_BACKEND_URL}api/course/${courseName}/${id}/add/student/${ID}`,
                 {
                   method: "POST",
                   headers: {

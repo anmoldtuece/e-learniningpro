@@ -44,10 +44,13 @@ const ResetTeacher = () => {
     }
     
     try {
-      const response = axios.post(`/api/teacher/forgetpassword/${token}`, {
-        password: data.password,
-        confirmPassword: data.confirmPassword
-      });
+      const response = axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}api/teacher/forgetpassword/${token}`,
+        {
+          password: data.password,
+          confirmPassword: data.confirmPassword
+        }
+      );
 
       toast.promise(response, {
         loading: "Wait for processing",

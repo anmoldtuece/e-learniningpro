@@ -23,21 +23,24 @@ function Popup({onClose, subject, allSubject}) {
 
   useEffect(()=>{
     const getData = async()=>{
-      const data = await fetch('/api/teacher/teacherdocuments',{
-        method: 'POST',
-        credentials: "include",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify({teacherID : details.Teacherdetails}),
-      })
-      const res = await data.json();
-      // console.log(res.data);
-      setTeacherDetails(res.data);
-    }
-
+      if (details?.Teacherdetails) {
+        const data = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}api/teacher/teacherdocuments`,
+          {
+            method: 'POST',
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({teacherID : details.Teacherdetails}),
+          }
+        );
+        const res = await data.json();
+        setTeacherDetails(res.data);
+      }
+  }
     getData();
-  },[])
+  },[details])
 
   return (
     <div className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center'>

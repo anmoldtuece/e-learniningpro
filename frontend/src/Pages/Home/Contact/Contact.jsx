@@ -13,12 +13,15 @@ function Contact() {
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       alert('Enter a valid email!');
     } else {
-      const res = await fetch('/api/admin/contact-us', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message: msg }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/admin/contact-us`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message: msg }),
+        }
+      );
       const { message } = await res.json();
       alert(message);
       setName('');

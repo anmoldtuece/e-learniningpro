@@ -110,16 +110,17 @@ function Popup({ onClose, subject }) {
       price: price,
     };
 
-    console.log(data);
-
-    // Call API
-    const response = await fetch(`/api/course/${subject}/create/${ID}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+    // Call API with backend URL from .env
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}api/course/${subject}/create/${ID}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     const responseData = await response.json();
     console.log(responseData);

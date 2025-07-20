@@ -12,12 +12,14 @@ function StudentClasses() {
     useEffect(() => {
         const getData = async () => {
             try {
-                const response = await fetch(`/api/course/classes/student/${ID}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+                const response = await fetch(
+                    `${import.meta.env.VITE_BACKEND_URL}api/course/classes/student/${ID}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');

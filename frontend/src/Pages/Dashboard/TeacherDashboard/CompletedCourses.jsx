@@ -21,7 +21,9 @@ function CompletedCourses() {
     const getCourses = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/course/teacher/${ID}/completed`);
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}api/course/teacher/${ID}/completed`
+        );
         const res = await response.json();
         setCourses(res.data);
       } catch (error) {

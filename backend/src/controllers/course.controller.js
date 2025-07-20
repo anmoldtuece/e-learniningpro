@@ -1,9 +1,9 @@
-import {course} from "../models/course.model.js";
-import {asyncHandler} from "../utils/asyncHandler.js";
-import {ApiError} from "../utils/ApiError.js"; 
-import {ApiResponse} from "../utils/ApiResponse.js";
+import { course } from "../models/course.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 import { Teacher } from "../models/teacher.model.js";
-import {Sendmail} from "../utils/Nodemailer.js"
+import { Sendmail } from "../utils/Nodemailer.js";
 
 
 const getCourse = asyncHandler(async(req,res)=>{
@@ -523,8 +523,6 @@ const canStudentEnroll = asyncHandler(async(req,res)=>{
   return res.status(200).json(new ApiResponse(200, {}, "student can enroll"))
 })
 
-export {getCourse, getcourseTeacher, addCourseTeacher, addCourseStudent, enrolledcourseSTD, enrolledcourseTeacher, addClass, stdEnrolledCoursesClasses, teacherEnrolledCoursesClasses, canStudentEnroll}
-
 // Add or update this controller function
 
 export const getStudentClasses = async (req, res) => {
@@ -553,6 +551,19 @@ export const getStudentClasses = async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
+};
+
+export { 
+  getCourse, 
+  getcourseTeacher, 
+  addCourseTeacher, 
+  addCourseStudent, 
+  enrolledcourseSTD, 
+  enrolledcourseTeacher, 
+  addClass, 
+  stdEnrolledCoursesClasses, 
+  teacherEnrolledCoursesClasses, 
+  canStudentEnroll 
 };
 
 

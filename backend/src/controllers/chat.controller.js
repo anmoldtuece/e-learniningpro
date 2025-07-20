@@ -27,16 +27,21 @@ export const chatWithOpenRouter = async (req, res) => {
       `${t.Firstname} ${t.Lastname}`
     ).join("; ");
 
+    // Use env URLs for platform info
+    const frontendUrl = process.env.FRONTEND_URL || "https://exquisite-raindrop-714b6e.netlify.app";
+    const backendUrl = process.env.VITE_BACKEND_URL || "https://gurukul-gec0.onrender.com";
+
     // Build system prompt
     const systemPrompt =
       aboutUs +
       `You are 'EduBot', a smart, friendly assistant on the Gurukul website.\n` +
-      `Our main sections are: Home, Courses, About, Contact, and Admin Login.\n` +
-      `Students must log in and register for courses to access learning materials.\n` +
+      `Our main sections are: Home (${frontendUrl}), Courses (${frontendUrl}/courses), About (${frontendUrl}/about), Contact (${frontendUrl}/contact), and Admin Login (${frontendUrl}/admin/login).\n` +
+      `Students must log in and register for courses to access learning materials. Login page: ${frontendUrl}/login\n` +
       `We offer ${coursesList.length} courses (e.g., ${courseInfo}).\n` +
       `Our teaching team includes ${teachers.length} expert instructors (e.g., ${teacherInfo}).\n` +
       `Help users with course info, study tips, platform navigation, and learning support. Be warm, conversational, and concise.\n` +
-      `Do not make up information or hallucinate. Only provide information that is accurate and based on the provided data. If you do not know the answer, say so.`;
+      `Do not make up information or hallucinate. Only provide information that is accurate and based on the provided data. If you do not know the answer, say so.\n` +
+      `For any backend API needs, the base URL is: ${backendUrl}`;
 
     const newMessages = [
       { role: "system", content: systemPrompt },

@@ -19,13 +19,16 @@ function VarifyDoc() {
         email: email,
       };
 
-      const response = await fetch(`/api/admin/${adminID}/approve/${type}/${id}`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/admin/${adminID}/approve/${type}/${id}`,
+        {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       navigator(`/admin/${adminID}`);
     } catch (error) {
@@ -36,7 +39,9 @@ function VarifyDoc() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const docData = await fetch(`/api/admin/${adminID}/documents/${type}/${ID}`);
+        const docData = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}api/admin/${adminID}/documents/${type}/${ID}`
+        );
         const response = await docData.json();
         setData(response.data);
       } catch (err) {

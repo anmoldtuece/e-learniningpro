@@ -13,12 +13,15 @@ function TeacherRemuneration() {
     const getAmount = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/payment/teacher/${ID}/balance`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}api/payment/teacher/${ID}/balance`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
         const user = await response.json();
         setAmount(user.data.newTeacher.Balance);
       } catch (error) {

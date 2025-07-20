@@ -20,14 +20,14 @@ const verifyEmail = async (Email, Firstname, createdTeacherId) => {
             }
         });
         const mailOptions = {
-            from: "kadyanparag@gmail.com",
+            from: "namanadlakha9311@gmail.com",
             to: Email,
             subject: "Verify your E-mail",
             html: `<div style="text-align: center;">
             <p style="margin: 20px;"> Hi ${Firstname}, Please click the button below to verify your E-mail. </p>
             <img src="https://img.freepik.com/free-vector/illustration-e-mail-protection-concept-e-mail-envelope-with-file-document-attach-file-system-security-approved_1150-41788.jpg?size=626&ext=jpg&uid=R140292450&ga=GA1.1.553867909.1706200225&semt=ais" alt="Verification Image" style="width: 100%; height: auto;">
             <br>
-            <a href="http://localhost:4400/api/teacher/verify?id=${createdTeacherId}">
+            <a href="${process.env.VITE_BACKEND_URL}/api/teacher/verify?id=${createdTeacherId}">
                 <button style="background-color: black; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 10px 0; cursor: pointer;">Verify Email</button>
             </a>
         </div>`
@@ -40,7 +40,7 @@ const verifyEmail = async (Email, Firstname, createdTeacherId) => {
             }
         });
     } catch (error) {
-        console.log("kadyan",error);
+        console.log("hello",error);
         throw new ApiError(400, "Failed to send email verification");
     }
 };
@@ -113,7 +113,7 @@ const mailVerified = asyncHandler(async (req, res) => {
             <img src="https://cdn-icons-png.flaticon.com/128/4436/4436481.png" alt="Verify Email Icon" style="width: 100px; height: 100px;">
             <h1 style="font-size: 36px; font-weight: bold; padding: 20px;">Email Verified</h1>
             <h4>Your email address was successfully verified.</h4>
-            <button style="padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; margin: 20px;" onclick="window.location.href = 'http://localhost:5173';">Go Back Home</button>
+            <button style="padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; margin: 20px;" onclick="window.location.href = '${process.env.FRONTEND_URL}';">Go Back Home</button>
         </div>`
         );
     } catch (error) {

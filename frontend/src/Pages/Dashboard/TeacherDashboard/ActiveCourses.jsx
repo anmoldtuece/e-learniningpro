@@ -21,7 +21,9 @@ function ActiveCourses() {
     const getCourses = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/course/Teacher/${ID}/enrolled`);
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}api/course/Teacher/${ID}/enrolled`
+        );
         const res = await response.json();
         setCourses(res.data);
       } catch (error) {
@@ -35,11 +37,14 @@ function ActiveCourses() {
 
   const markAsCompleted = async (courseId) => {
     try {
-      const response = await fetch(`/api/course/teacher/${ID}/course/${courseId}/complete`, {
-        method: 'PATCH',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/course/teacher/${ID}/course/${courseId}/complete`,
+        {
+          method: 'PATCH',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
       if (response.ok) {
         setCourses((prev) => prev.filter((c) => c._id !== courseId));
         alert('Course marked as completed!');

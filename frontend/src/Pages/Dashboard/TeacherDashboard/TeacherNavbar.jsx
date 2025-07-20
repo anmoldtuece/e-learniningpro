@@ -3,30 +3,30 @@ import { NavLink, useNavigate } from "react-router-dom";
 import logo from '../../Images/logo.svg';
 import { TbLogout } from "react-icons/tb";
 
-
-
 function TeacherNavbar() {
-  const navigate = useNavigate(); // Add this line
+  const navigate = useNavigate();
 
   const Handlelogout = async () => {
     try {
-      const response = await fetch('/api/teacher/logout', {
-        method: 'POST',
-        credentials: 'include', // <-- This sends cookies/session
-        headers: {
-          'Content-Type': 'application/json',
-          // If using JWT:
-          // 'Authorization': `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/teacher/logout`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
       const res = await response.json();
       if (!response.ok) throw res;
-      navigate('/'); // Redirect to homepage on success
+      navigate('/');
     } catch (err) {
       console.log(err);
       // ...handle error...
     }
-  }
+  };
+
   return (
     <nav className='bg-gradient-to-r from-[#0d1a3a] via-[#0d3a5a] to-[#008280] px-4 sm:px-8 lg:px-16 py-3 flex justify-between items-center sticky top-0 z-50 shadow-xl'>
       <NavLink to="/" className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity">

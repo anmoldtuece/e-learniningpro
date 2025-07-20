@@ -23,7 +23,9 @@ const Course = () => {
   useEffect(() => {
     const fetchCourseRequests = async () => {
       try {
-        const response = await axios.get(`/api/admin/${data}/approve/course`);
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}api/admin/${data}/approve/course`
+        );
         setCourseReq(response.data.data);
       } catch (error) {
         console.error('Error fetching course requests:', error);
@@ -34,11 +36,14 @@ const Course = () => {
 
   const handleAccept = async (id, info) => {
     try {
-      const response = await axios.post(`/api/admin/${data}/approve/course/${id}`, {
-        Isapproved: true,
-        email: info.Email,
-        Firstname: info.enrolledteacher,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}api/admin/${data}/approve/course/${id}`,
+        {
+          Isapproved: true,
+          email: info.Email,
+          Firstname: info.enrolledteacher,
+        }
+      );
 
       if (response.status === 200) {
         setCourseReq(courseReq.filter(req => req._id !== id));
@@ -51,11 +56,14 @@ const Course = () => {
 
   const handleReject = async (id, info) => {
     try {
-      const response = await axios.post(`/api/admin/${data}/approve/course/${id}`, {
-        Isapproved: false,
-        email: info.Email,
-        Firstname: info.enrolledteacher,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}api/admin/${data}/approve/course/${id}`,
+        {
+          Isapproved: false,
+          email: info.Email,
+          Firstname: info.enrolledteacher,
+        }
+      );
 
       if (response.status === 200) {
         setCourseReq(courseReq.filter(req => req._id !== id));

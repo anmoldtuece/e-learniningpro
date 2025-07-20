@@ -10,13 +10,16 @@ function StudentLayout() {
   const [error, setError] = useState(null);
 
   const handleLogout = async () => {
-    const response = await fetch(`/api/student/logout`, {
-      method: 'POST',
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}api/student/logout`,
+      {
+        method: 'POST',
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        }
       }
-    });
+    );
     const data = await response.json();
     if (data.statusCode === 200) {
       navigator('/');
@@ -26,12 +29,15 @@ function StudentLayout() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`/api/Student/StudentDocument/${ID}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}api/Student/StudentDocument/${ID}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            }
           }
-        });
+        );
 
         if (!response.ok) {
           throw new Error('Failed to fetch data');

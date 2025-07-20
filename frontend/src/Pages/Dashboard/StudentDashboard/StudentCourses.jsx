@@ -9,16 +9,20 @@ function StudentCourses() {
   const [popup, setPopup] = useState(false);
   const [subDetails, setsubDetails] = useState({});
   const [subD, setsubD] = useState();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
       const getData = async () => {
         try {
-          const response = await fetch(`/api/course/student/${ID}/enrolled`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
+          const response = await fetch(
+            `${import.meta.env.VITE_BACKEND_URL}api/course/student/${ID}/enrolled`,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
   
           if (!response.ok) {
             throw new Error('Failed to fetch data');
@@ -33,13 +37,15 @@ function StudentCourses() {
         }
       };
       getData();
-  },[]);
+  },[ID]);
 
   const openpopup = async(sub)=>{ 
     setsubDetails(sub);
-    await axios.get(`/api/course/${sub.coursename}`)
-      .then(res => {setPopup(true);
-      setsubD(res.data.data)})
+    await axios.get(`${import.meta.env.VITE_BACKEND_URL}api/course/${sub.coursename}`)
+      .then(res => {
+        setPopup(true);
+        setsubD(res.data.data);
+      })
   }
 
   const price = {

@@ -23,11 +23,12 @@ function search() {
     
     let SearchTeacher = async()=>{
         let Subject = data.toLowerCase();
-        let Data = await fetch(`/api/course/${Subject}`)
+        let Data = await fetch(
+            `${import.meta.env.VITE_BACKEND_URL}api/course/${Subject}`
+        );
         let response = await Data.json();
         if(response.statusCode == 200){
-        setCourse(response.data)
-        // console.log(response.data.length)
+            setCourse(response.data)
         }
         setData('')
     }
@@ -39,17 +40,19 @@ function search() {
     const openTeacherDec = async(id,fname,lname,sub)=>{
         setTname({fname,lname,sub});
 
-        const data = await fetch('/api/teacher/teacherdocuments',{
-            method: 'POST',
-            credentials: "include",
-            headers: {
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify({teacherID : id}),
-        })
+        const data = await fetch(
+            `${import.meta.env.VITE_BACKEND_URL}api/teacher/teacherdocuments`,
+            {
+                method: 'POST',
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({teacherID : id}),
+            }
+        )
 
         const res = await data.json();
-        // console.log(res.data);
         setTeacherDetails(res.data);
         setOpenTM(true);
     }

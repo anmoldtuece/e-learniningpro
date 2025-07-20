@@ -9,7 +9,10 @@ function CompletedCourses() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`/api/course/student/${ID}/completed`, { withCredentials: true })
+    axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}api/course/student/${ID}/completed`,
+      { withCredentials: true }
+    )
       .then(res => {
         setCourses(res.data.data || []);
         setLoading(false);
@@ -30,11 +33,15 @@ function CompletedCourses() {
 
     // Store certificate number in DB
     try {
-      await axios.post('/api/certificate/store', {
-        studentId: ID,
-        courseId: course._id,
-        certificateNumber,
-      }, { withCredentials: true });
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}api/certificate/store`,
+        {
+          studentId: ID,
+          courseId: course._id,
+          certificateNumber,
+        },
+        { withCredentials: true }
+      );
     } catch (err) {
       alert("Error storing certificate number!");
       return;

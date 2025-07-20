@@ -39,13 +39,16 @@ function Landing() {
   const teachersList = async(sub)=>{
     setLoading(true);
 
-    const response = await fetch(`/api/course/${sub}`, {
-      method: 'GET',
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}api/course/${sub}`,
+      {
+        method: 'GET',
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        }
       }
-    });
+    );
 
     const data = await response.json();
     setFacList(data.data);
@@ -175,15 +178,15 @@ function Landing() {
         <div className="space-y-2 text-center">
           <div className="flex items-center justify-center gap-2">
             <CgProfile />
-            <p>Prof. Dina Sharma</p>
+            <p>Prof. Naman Adlakha</p>
           </div>
           <div className="flex items-center justify-center gap-2">
             <FaSchool />
-            <p>Galaxy University</p>
+            <p>Delhi Technological University</p>
           </div>
           <div className="flex items-center justify-center gap-2">
             <IoSchoolSharp />
-            <p>Ph.D. in Astrophysics</p>
+            <p>B.Tech in CSE</p>
           </div>
         </div>
       </div>
@@ -198,15 +201,15 @@ function Landing() {
         <div className="space-y-2 text-center">
           <div className="flex items-center justify-center gap-2">
             <CgProfile />
-            <p>Dr. Anand Mishra</p>
+            <p>Anmol Pandey</p>
           </div>
           <div className="flex items-center justify-center gap-2">
             <FaSchool />
-            <p>Maharishi University</p>
+            <p>Delhi Technological University</p>
           </div>
           <div className="flex items-center justify-center gap-2">
             <IoSchoolSharp />
-            <p>Ph.D. in Quantum Physics</p>
+            <p>B.Tech in ECE </p>
           </div>
         </div>
       </div>

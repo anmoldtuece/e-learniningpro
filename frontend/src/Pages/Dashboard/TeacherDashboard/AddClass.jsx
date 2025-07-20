@@ -48,12 +48,15 @@ function AddClass({ onClose }) {
   useEffect(() => {
     const getCourses = async () => {
       try {
-        const response = await fetch(`/api/course/Teacher/${ID}/enrolled`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}api/course/Teacher/${ID}/enrolled`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error('Failed to fetch data');
@@ -98,13 +101,16 @@ function AddClass({ onClose }) {
       try {
         console.log("note:", note, "date:", date, "link:", link, "data:", data);
         console.log("Submitting data:", data);
-        const response = await fetch(`/api/course/${CourseId}/teacher/${ID}/add-class`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}api/course/${CourseId}/teacher/${ID}/add-class`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          }
+        );
 
         const res = await response.json();
         alert(res.message);

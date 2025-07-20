@@ -18,7 +18,9 @@ const Admin = () => {
   useEffect(() => {
     const getAllMsg = async () => {
       try {
-        const response = await fetch(`/api/admin/messages/all`);
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}api/admin/messages/all`
+        );
         const data = await response.json();
         setAllMsg(data.data || []);
       } catch (err) {
@@ -31,11 +33,14 @@ const Admin = () => {
   const Approval = async (ID, type, approve) => {
     try {
       const data = { Isapproved: approve };
-      await fetch(`/api/admin/${adminID}/approve/${type}/${ID}`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/admin/${adminID}/approve/${type}/${ID}`,
+        {
+          method: 'POST',
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (type === "student") {
         setStudentData(pre => pre.filter(pre => pre._id !== ID));
@@ -54,10 +59,13 @@ const Admin = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`/api/admin/${data}/approve`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}api/admin/${data}/approve`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
         if (!response.ok) throw new Error("Failed to fetch data");
 

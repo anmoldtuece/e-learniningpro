@@ -46,15 +46,18 @@ export default function Login() {
     };
 
     try {
-      // Send data to backend (you need to implement this part)
-      const response = await fetch(`/api/${userType}/login`, {
-        method: 'POST',
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      // Use VITE_BACKEND_URL from env for deployment
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}api/${userType}/login`,
+        {
+          method: 'POST',
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       const responesData = await response.json()
       if(responesData.message != 'Logged in'){
@@ -113,7 +116,6 @@ export default function Login() {
         setErrors({ general: "An unexpected error occurred" });
       }
     } catch (error) {
-   
       setErrors(error.message);
     }
   };

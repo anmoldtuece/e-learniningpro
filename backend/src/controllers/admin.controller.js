@@ -9,6 +9,7 @@ import { course } from "../models/course.model.js";
 import {Sendmail} from "../utils/Nodemailer.js"
 
 
+
 // Call this ONCE then delete it
 const createHardcodedAdmin = async () => {
     const username = "admin";
