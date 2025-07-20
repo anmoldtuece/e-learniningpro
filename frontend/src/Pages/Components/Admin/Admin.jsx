@@ -19,7 +19,10 @@ const Admin = () => {
     const getAllMsg = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/admin/messages/all`
+          `${import.meta.env.VITE_BACKEND_URL}/api/admin/messages/all`,
+          {
+            credentials: "include", // <-- Add this line
+          }
         );
         const data = await response.json();
         setAllMsg(data.data || []);
@@ -38,6 +41,7 @@ const Admin = () => {
         {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
+          credentials: "include", // <-- Add this line
           body: JSON.stringify(data),
         }
       );
@@ -64,6 +68,7 @@ const Admin = () => {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include", // <-- Add this line
           }
         );
 
