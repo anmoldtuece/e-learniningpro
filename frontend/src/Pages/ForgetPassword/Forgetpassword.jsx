@@ -35,7 +35,14 @@ const Forgetpassword = () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/${userType}/forgetpassword`,
-        { Email: data.email }
+    
+        { Email: data.email },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true, // Include credentials for cross-origin requests
+        }
       );
       console.log(response.data);
       toast.success('Email sent successfully');

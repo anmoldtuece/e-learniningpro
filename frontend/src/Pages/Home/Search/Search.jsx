@@ -24,7 +24,10 @@ function search() {
     let SearchTeacher = async()=>{
         let Subject = data.toLowerCase();
         let Data = await fetch(
-            `${import.meta.env.VITE_BACKEND_URL}/api/course/${Subject}`
+            `${import.meta.env.VITE_BACKEND_URL}/api/course/${Subject}`,
+            {
+                credentials: "include",
+            }
         );
         let response = await Data.json();
         if(response.statusCode == 200){

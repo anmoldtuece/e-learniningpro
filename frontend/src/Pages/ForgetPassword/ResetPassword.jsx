@@ -47,6 +47,12 @@ const ResetPassword = () => {
       const response = axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/student/forgetpassword/${token}`,
         { password: data.password, confirmPassword: data.confirmPassword }
+        ,{
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true, // Include credentials for cross-origin requests
+        }
       );
       toast.promise(response, {
         loading: "wait for processing",

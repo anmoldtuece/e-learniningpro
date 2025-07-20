@@ -55,6 +55,7 @@ function AddClass({ onClose }) {
             headers: {
               'Content-Type': 'application/json',
             },
+            credentials: 'include', // <-- Add this line to send cookies if needed
           }
         );
 
@@ -109,6 +110,7 @@ function AddClass({ onClose }) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
+            credentials: 'include', // <-- Add this line to send cookies if needed
           }
         );
 

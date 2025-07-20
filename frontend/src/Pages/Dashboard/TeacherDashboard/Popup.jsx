@@ -119,6 +119,7 @@ function Popup({ onClose, subject }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
+        credentials: 'include', // <-- Add this line to send cookies if needed
       }
     );
 

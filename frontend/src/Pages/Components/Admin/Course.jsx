@@ -24,7 +24,10 @@ const Course = () => {
     const fetchCourseRequests = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/admin/${data}/approve/course`
+          `${import.meta.env.VITE_BACKEND_URL}/api/admin/${data}/approve/course`,
+          {
+            withCredentials: true, // <-- Use withCredentials for axios
+          }
         );
         setCourseReq(response.data.data);
       } catch (error) {
@@ -42,6 +45,9 @@ const Course = () => {
           Isapproved: true,
           email: info.Email,
           Firstname: info.enrolledteacher,
+        },
+        {
+          withCredentials: true, // <-- Use withCredentials for axios
         }
       );
 
@@ -62,6 +68,9 @@ const Course = () => {
           Isapproved: false,
           email: info.Email,
           Firstname: info.enrolledteacher,
+        },
+        {
+          withCredentials: true, // <-- Use withCredentials for axios
         }
       );
 

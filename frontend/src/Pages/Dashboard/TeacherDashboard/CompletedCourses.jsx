@@ -22,7 +22,10 @@ function CompletedCourses() {
       try {
         setLoading(true);
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/course/teacher/${ID}/completed`
+          `${import.meta.env.VITE_BACKEND_URL}/api/course/teacher/${ID}/completed`,
+          {
+            credentials: 'include', // <-- Add this line to send cookies if needed
+          }
         );
         const res = await response.json();
         setCourses(res.data);

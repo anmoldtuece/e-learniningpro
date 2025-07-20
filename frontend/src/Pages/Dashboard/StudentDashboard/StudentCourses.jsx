@@ -21,6 +21,7 @@ function StudentCourses() {
               headers: {
                 'Content-Type': 'application/json',
               },
+              credentials: 'include', // <-- Add this line to send cookies if needed
             }
           );
   
@@ -41,7 +42,9 @@ function StudentCourses() {
 
   const openpopup = async(sub)=>{ 
     setsubDetails(sub);
-    await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/course/${sub.coursename}`)
+    await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/course/${sub.coursename}`,
+      {credentials: 'include'}
+    )
       .then(res => {
         setPopup(true);
         setsubD(res.data.data);

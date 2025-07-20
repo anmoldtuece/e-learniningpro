@@ -81,6 +81,7 @@ const StudentDocument = () => {
         {
           method: "POST",
           body: formDataObj,
+          credentials: "include", // <-- Add this line to send cookies if needed
         }
       );
 

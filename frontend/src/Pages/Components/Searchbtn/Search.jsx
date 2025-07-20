@@ -36,7 +36,7 @@ function Search() {
       `${import.meta.env.VITE_BACKEND_URL}/api/teacher/teacherdocuments`,
       {
         method: 'POST',
-        credentials: "include",
+        credentials: "include", // <-- Ensure cookies are sent
         headers: {
           "Content-Type": "application/json",
         },
@@ -58,6 +58,7 @@ function Search() {
             headers: {
               'Content-Type': 'application/json',
             },
+            credentials: "include", // <-- Add this line
           }
         );
         if (!response.ok) throw new Error('Failed to fetch data');
@@ -74,7 +75,10 @@ function Search() {
   const SearchTeacher = async (sub) => {
     const subject = sub.toLowerCase();
     const Data = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}/api/course/${subject}`
+      `${import.meta.env.VITE_BACKEND_URL}/api/course/${subject}`,
+      {
+        credentials: "include", // <-- Add this line
+      }
     );
     const response = await Data.json();
     if (response.statusCode === 200) {
@@ -91,6 +95,7 @@ function Search() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include", // <-- Add this line
       }
     );
     const res = await check.json();
@@ -103,6 +108,7 @@ function Search() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ fees: price[courseName]*100 }),
+          credentials: "include", // <-- Add this line
         }
       );
       const DATA = await data.json();
@@ -113,6 +119,7 @@ function Search() {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include", // <-- Add this line
         }
       );
       const response = await Key.json();
@@ -135,6 +142,7 @@ function Search() {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(verificationData),
+              credentials: "include", // <-- Add this line
             }
           );
           const res = await verificationResponse.json();
@@ -147,6 +155,7 @@ function Search() {
                   headers: {
                     "Content-Type": "application/json",
                   },
+                  credentials: "include", // <-- Add this line
                 }
               );
               let res = await response.json();

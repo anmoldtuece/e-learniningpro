@@ -26,6 +26,7 @@ function VarifyDoc() {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(data),
         }
       );
@@ -40,7 +41,10 @@ function VarifyDoc() {
     const getData = async () => {
       try {
         const docData = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/admin/${adminID}/documents/${type}/${ID}`
+          `${import.meta.env.VITE_BACKEND_URL}/api/admin/${adminID}/documents/${type}/${ID}`,
+          {
+            credentials: "include",
+          }
         );
         const response = await docData.json();
         setData(response.data);

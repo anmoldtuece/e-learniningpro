@@ -23,6 +23,9 @@ function ActiveCourses() {
         setLoading(true);
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/course/Teacher/${ID}/enrolled`
+          ,{
+            credentials: 'include', // <-- Add this line to send cookies if needed
+          }
         );
         const res = await response.json();
         setCourses(res.data);

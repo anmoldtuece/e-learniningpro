@@ -14,6 +14,9 @@ function StudentProfile() {
         setLoading(true);
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/student/StudentDocument/${ID}`
+          ,{
+            credentials: "include", // <-- Add this line to send cookies if needed
+          }
         );
         const user = await response.json();
         setData(user.data);

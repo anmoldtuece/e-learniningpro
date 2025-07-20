@@ -22,6 +22,7 @@ const TeacherDocument = () => {
             headers: {
               "Content-Type": "application/json",
             },
+            credentials: "include", // <-- Add this line
           }
         );
 
@@ -88,6 +89,7 @@ const TeacherDocument = () => {
         {
           method: "POST",
           body: formDataObj,
+          credentials: "include", // <-- Add this line
         }
       );
       const responseData = await response.json();
@@ -99,6 +101,7 @@ const TeacherDocument = () => {
       }
     } catch (e) {
       console.error("Error:", e);
+      setLoader(false);
     }
   };
 

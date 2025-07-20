@@ -20,6 +20,7 @@ function TeacherRemuneration() {
             headers: {
               "Content-Type": "application/json",
             },
+            credentials: "include", // <-- Add this line to send cookies if needed
           }
         );
         const user = await response.json();

@@ -49,6 +49,12 @@ const ResetTeacher = () => {
         {
           password: data.password,
           confirmPassword: data.confirmPassword
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true, // Include credentials for cross-origin requests
         }
       );
 

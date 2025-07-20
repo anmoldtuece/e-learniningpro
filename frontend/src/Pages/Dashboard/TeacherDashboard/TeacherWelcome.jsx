@@ -14,7 +14,10 @@ function TeacherWelcome() {
       try {
         setLoading(true);
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/Teacher/TeacherDocument/${ID}`
+          `${import.meta.env.VITE_BACKEND_URL}/api/Teacher/TeacherDocument/${ID}`,
+          {
+            credentials: "include", // <-- Add this line to send cookies if needed
+          }
         );
         const user = await response.json();
         setdata(user.data);
