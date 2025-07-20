@@ -22,7 +22,7 @@ function ActiveCourses() {
       try {
         setLoading(true);
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/course/Teacher/${ID}/enrolled`
+          `${import.meta.env.VITE_BACKEND_URL}/api/course/Teacher/${ID}/enrolled`
         );
         const res = await response.json();
         setCourses(res.data);
@@ -38,7 +38,7 @@ function ActiveCourses() {
   const markAsCompleted = async (courseId) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}api/course/teacher/${ID}/course/${courseId}/complete`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/course/teacher/${ID}/course/${courseId}/complete`,
         {
           method: 'PATCH',
           credentials: 'include',

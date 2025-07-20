@@ -15,7 +15,7 @@ function StudentCourses() {
       const getData = async () => {
         try {
           const response = await fetch(
-            `${import.meta.env.VITE_BACKEND_URL}api/course/student/${ID}/enrolled`,
+            `${import.meta.env.VITE_BACKEND_URL}/api/course/student/${ID}/enrolled`,
             {
               method: 'GET',
               headers: {
@@ -41,7 +41,7 @@ function StudentCourses() {
 
   const openpopup = async(sub)=>{ 
     setsubDetails(sub);
-    await axios.get(`${import.meta.env.VITE_BACKEND_URL}api/course/${sub.coursename}`)
+    await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/course/${sub.coursename}`)
       .then(res => {
         setPopup(true);
         setsubD(res.data.data);

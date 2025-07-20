@@ -62,7 +62,7 @@ const Signup = () => {
     try {
       // Send data to backend using VITE_BACKEND_URL from env
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}api/${userType}/signup`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/${userType}/signup`,
         {
           method: "POST",
           mode: "cors",

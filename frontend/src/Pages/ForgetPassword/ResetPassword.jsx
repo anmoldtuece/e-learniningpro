@@ -45,7 +45,7 @@ const ResetPassword = () => {
 
     try {
       const response = axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}api/student/forgetpassword/${token}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/student/forgetpassword/${token}`,
         { password: data.password, confirmPassword: data.confirmPassword }
       );
       toast.promise(response, {

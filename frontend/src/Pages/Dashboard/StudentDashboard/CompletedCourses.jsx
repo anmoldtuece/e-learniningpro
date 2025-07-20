@@ -10,7 +10,7 @@ function CompletedCourses() {
 
   useEffect(() => {
     axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}api/course/student/${ID}/completed`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/course/student/${ID}/completed`,
       { withCredentials: true }
     )
       .then(res => {
@@ -34,7 +34,7 @@ function CompletedCourses() {
     // Store certificate number in DB
     try {
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}api/certificate/store`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/certificate/store`,
         {
           studentId: ID,
           courseId: course._id,

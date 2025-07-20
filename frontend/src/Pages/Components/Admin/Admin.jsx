@@ -19,7 +19,7 @@ const Admin = () => {
     const getAllMsg = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/admin/messages/all`
+          `${import.meta.env.VITE_BACKEND_URL}/api/admin/messages/all`
         );
         const data = await response.json();
         setAllMsg(data.data || []);
@@ -34,7 +34,7 @@ const Admin = () => {
     try {
       const data = { Isapproved: approve };
       await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}api/admin/${adminID}/approve/${type}/${ID}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/${adminID}/approve/${type}/${ID}`,
         {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
@@ -60,7 +60,7 @@ const Admin = () => {
     const getData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/admin/${data}/approve`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/admin/${data}/approve`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

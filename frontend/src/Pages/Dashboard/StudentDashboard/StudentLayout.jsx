@@ -11,7 +11,7 @@ function StudentLayout() {
 
   const handleLogout = async () => {
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}api/student/logout`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/student/logout`,
       {
         method: 'POST',
         credentials: "include",
@@ -30,7 +30,7 @@ function StudentLayout() {
     const getData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/Student/StudentDocument/${ID}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/Student/StudentDocument/${ID}`,
           {
             method: 'GET',
             headers: {

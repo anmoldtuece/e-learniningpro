@@ -13,7 +13,7 @@ function StudentProfile() {
       try {
         setLoading(true);
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/student/StudentDocument/${ID}`
+          `${import.meta.env.VITE_BACKEND_URL}/api/student/StudentDocument/${ID}`
         );
         const user = await response.json();
         setData(user.data);
@@ -30,7 +30,7 @@ function StudentProfile() {
     const getDetails = async () => {
       if (data.Teacherdetails) {
         const Data = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/teacher/teacherdocuments`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/teacher/teacherdocuments`,
           {
             method: 'POST',
             credentials: "include",

@@ -20,7 +20,7 @@ function VarifyDoc() {
       };
 
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}api/admin/${adminID}/approve/${type}/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/${adminID}/approve/${type}/${id}`,
         {
           method: 'POST',
           headers: {
@@ -40,7 +40,7 @@ function VarifyDoc() {
     const getData = async () => {
       try {
         const docData = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/admin/${adminID}/documents/${type}/${ID}`
+          `${import.meta.env.VITE_BACKEND_URL}/api/admin/${adminID}/documents/${type}/${ID}`
         );
         const response = await docData.json();
         setData(response.data);

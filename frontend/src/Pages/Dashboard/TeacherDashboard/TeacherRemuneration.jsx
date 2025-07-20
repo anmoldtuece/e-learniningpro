@@ -14,7 +14,7 @@ function TeacherRemuneration() {
       try {
         setLoading(true);
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/payment/teacher/${ID}/balance`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/payment/teacher/${ID}/balance`,
           {
             method: "POST",
             headers: {

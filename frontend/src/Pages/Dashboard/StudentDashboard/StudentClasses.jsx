@@ -13,7 +13,7 @@ function StudentClasses() {
         const getData = async () => {
             try {
                 const response = await fetch(
-                    `${import.meta.env.VITE_BACKEND_URL}api/course/classes/student/${ID}`, {
+                    `${import.meta.env.VITE_BACKEND_URL}/api/course/classes/student/${ID}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',

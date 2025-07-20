@@ -32,20 +32,23 @@ const Bot = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: [
-            {
-              role: "user",
-              content: input,
-            },
-          ],
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/chat`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            messages: [
+              {
+                role: "user",
+                content: input,
+              },
+            ],
+          }),
+        }
+      );
 
       const data = await response.json();
       const botReply =
@@ -133,4 +136,4 @@ const Bot = () => {
   );
 };
 
-export default Bot; 
+export default Bot;

@@ -61,7 +61,7 @@ export default function AdminLogin() {
     try {
       // Send data to backend using VITE_BACKEND_URL from env
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}api/admin/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/login`,
         {
           method: 'POST',
           credentials: "include",

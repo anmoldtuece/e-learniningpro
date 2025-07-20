@@ -15,7 +15,7 @@ function TeacherProfile() {
       try {
         setLoading(true);
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/Teacher/TeacherDocument/${ID}`
+          `${import.meta.env.VITE_BACKEND_URL}/api/Teacher/TeacherDocument/${ID}`
         );
         const user = await response.json();
         setdata(user.data);
@@ -32,7 +32,7 @@ function TeacherProfile() {
     const getDetails = async () => {
       if (data.Teacherdetails) {
         const Data = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/teacher/teacherdocuments`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/teacher/teacherdocuments`,
           {
             method: 'POST',
             credentials: "include",

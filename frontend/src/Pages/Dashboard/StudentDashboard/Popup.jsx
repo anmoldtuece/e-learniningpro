@@ -25,7 +25,7 @@ function Popup({onClose, subject, allSubject}) {
     const getData = async()=>{
       if (details?.Teacherdetails) {
         const data = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/teacher/teacherdocuments`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/teacher/teacherdocuments`,
           {
             method: 'POST',
             credentials: "include",

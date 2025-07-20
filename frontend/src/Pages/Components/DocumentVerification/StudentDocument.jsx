@@ -16,7 +16,7 @@ const StudentDocument = () => {
     const getData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}api/student/StudentDocument/${Data}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/student/StudentDocument/${Data}`,
           {
             method: "GET",
             headers: {
@@ -77,7 +77,7 @@ const StudentDocument = () => {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}api/student/verification/${Data}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/student/verification/${Data}`,
         {
           method: "POST",
           body: formDataObj,

@@ -15,7 +15,7 @@ function TeacherClasses() {
         const getData = async () => {
             try {
                 const response = await fetch(
-                    `${import.meta.env.VITE_BACKEND_URL}api/course/classes/teacher/${ID}`,
+                    `${import.meta.env.VITE_BACKEND_URL}/api/course/classes/teacher/${ID}`,
                     {
                         method: 'GET',
                         headers: {

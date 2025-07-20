@@ -45,7 +45,7 @@ const ResetTeacher = () => {
     
     try {
       const response = axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}api/teacher/forgetpassword/${token}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/teacher/forgetpassword/${token}`,
         {
           password: data.password,
           confirmPassword: data.confirmPassword

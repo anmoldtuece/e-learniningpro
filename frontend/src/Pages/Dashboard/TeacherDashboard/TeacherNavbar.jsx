@@ -9,7 +9,7 @@ function TeacherNavbar() {
   const Handlelogout = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}api/teacher/logout`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/teacher/logout`,
         {
           method: 'POST',
           credentials: 'include',

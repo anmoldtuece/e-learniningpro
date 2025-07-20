@@ -48,7 +48,7 @@ export default function Login() {
     try {
       // Use VITE_BACKEND_URL from env for deployment
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}api/${userType}/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/${userType}/login`,
         {
           method: 'POST',
           credentials: "include",

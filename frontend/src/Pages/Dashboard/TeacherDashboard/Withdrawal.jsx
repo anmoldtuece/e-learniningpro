@@ -25,7 +25,7 @@ function Withdrawal({ onClose, balance, onWithdraw }) {
     try {
       // Send withdrawal request to backend
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}api/payment/teacher/${localStorage.getItem("teacherID")}/withdraw`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/payment/teacher/${localStorage.getItem("teacherID")}/withdraw`,
         {
           method: "POST",
           credentials: "include",

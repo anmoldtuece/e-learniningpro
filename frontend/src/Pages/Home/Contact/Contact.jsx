@@ -14,7 +14,7 @@ function Contact() {
       alert('Enter a valid email!');
     } else {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}api/admin/contact-us`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/contact-us`,
         {
           method: 'POST',
           credentials: 'include',

@@ -34,7 +34,7 @@ const Forgetpassword = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}api/${userType}/forgetpassword`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/${userType}/forgetpassword`,
         { Email: data.email }
       );
       console.log(response.data);

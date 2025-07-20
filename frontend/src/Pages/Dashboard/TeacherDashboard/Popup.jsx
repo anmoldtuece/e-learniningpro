@@ -112,7 +112,7 @@ function Popup({ onClose, subject }) {
 
     // Call API with backend URL from .env
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}api/course/${subject}/create/${ID}`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/course/${subject}/create/${ID}`,
       {
         method: 'POST',
         headers: {

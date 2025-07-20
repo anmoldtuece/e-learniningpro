@@ -10,7 +10,7 @@ function Courses() {
     setLoading(true);
 
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}api/course/${sub}`, {
+      `${import.meta.env.VITE_BACKEND_URL}/api/course/${sub}`, {
         method: 'GET',
         credentials: "include",
         headers: {
