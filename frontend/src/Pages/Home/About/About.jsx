@@ -142,7 +142,7 @@ function About() {
           </div>
 
           {/* Admins section */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-3xl mt-8">
+          {/* <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-3xl mt-8">
             <h2 className="text-2xl font-bold text-blue-700 mb-6 text-center">Admins</h2>
             <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
               {admins.map((admin, idx) => (
@@ -157,7 +157,7 @@ function About() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

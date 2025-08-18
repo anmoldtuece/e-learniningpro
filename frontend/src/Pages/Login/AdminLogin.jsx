@@ -154,7 +154,7 @@ export default function AdminLogin() {
           </div>
         </div>
         {/* Admins section */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mt-8 md:mt-0 md:ml-8 flex flex-col items-center">
+        {/* <div className="bg-white rounded-2xl shadow-lg p-6 mt-8 md:mt-0 md:ml-8 flex flex-col items-center">
           <h3 className="text-xl font-bold text-blue-700 mb-4">Admins</h3>
           {admins.map((admin, idx) => (
             <div key={idx} className="flex flex-col items-center mb-4">
@@ -167,7 +167,7 @@ export default function AdminLogin() {
               <div className="text-gray-700 text-sm">{admin.branch}</div>
             </div>
           ))}
-        </div>
+        </div> */}
       </section>
     </>
   );
