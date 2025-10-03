@@ -26,6 +26,7 @@
     "multer": "^2.0.1",
     "nodemailer": "^6.10.1",
     "nodemon": "^3.1.0",
-    "razorpay": "^2.9.3"
+    "razorpay": "^2.9.3",
+    "resend": "^6.1.2"
   }
 }
