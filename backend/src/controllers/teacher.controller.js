@@ -5,44 +5,89 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Sendmail } from "../utils/Nodemailer.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { student } from "../models/student.model.js";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
-const verifyEmail = async (Email, Firstname, createdTeacherId) => {
-    try {
-        const emailSender = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 587,
-            secure: false,
-            requireTLS: true,
-            auth: {
-                user: process.env.SMTP_EMAIL,
-                pass: process.env.SMTP_PASS,
-            }
-        });
-        const mailOptions = {
-            from: "namanadlakha9311@gmail.com",
-            to: Email,
-            subject: "Verify your E-mail",
-            html: `<div style="text-align: center;">
-            <p style="margin: 20px;"> Hi ${Firstname}, Please click the button below to verify your E-mail. </p>
-            <img src="https://img.freepik.com/free-vector/illustration-e-mail-protection-concept-e-mail-envelope-with-file-document-attach-file-system-security-approved_1150-41788.jpg?size=626&ext=jpg&uid=R140292450&ga=GA1.1.553867909.1706200225&semt=ais" alt="Verification Image" style="width: 100%; height: auto;">
-            <br>
-            <a href="${process.env.VITE_BACKEND_URL}/api/teacher/verify?id=${createdTeacherId}">
-                <button style="background-color: black; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 10px 0; cursor: pointer;">Verify Email</button>
-            </a>
-        </div>`
-        };
-        emailSender.sendMail(mailOptions, function(error) {
-            if (error) {
-                throw new ApiError(400, "Sending email verification failed");
-            } else {
-                console.log("Verification mail sent successfully");
-            }
-        });
-    } catch (error) {
-        console.log("hello",error);
-        throw new ApiError(400, "Failed to send email verification");
+// import nodemailer from "nodemailer";
+
+// const verifyEmail = async (Email, Firstname, createdTeacherId) => {
+//     try {
+//         const emailSender = nodemailer.createTransport({
+//             host: 'smtp.gmail.com',
+//             port: 587,
+//             secure: false,
+//             requireTLS: true,
+//             auth: {
+//                 user: process.env.SMTP_EMAIL,
+//                 pass: process.env.SMTP_PASS,
+//             }
+//         });
+//         const mailOptions = {
+//             from: "namanadlakha9311@gmail.com",
+//             to: Email,
+//             subject: "Verify your E-mail",
+//             html: `<div style="text-align: center;">
+//             <p style="margin: 20px;"> Hi ${Firstname}, Please click the button below to verify your E-mail. </p>
+//             <img src="https://img.freepik.com/free-vector/illustration-e-mail-protection-concept-e-mail-envelope-with-file-document-attach-file-system-security-approved_1150-41788.jpg?size=626&ext=jpg&uid=R140292450&ga=GA1.1.553867909.1706200225&semt=ais" alt="Verification Image" style="width: 100%; height: auto;">
+//             <br>
+//             <a href="${process.env.VITE_BACKEND_URL}/api/teacher/verify?id=${createdTeacherId}">
+//                 <button style="background-color: black; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 10px 0; cursor: pointer;">Verify Email</button>
+//             </a>
+//         </div>`
+//         };
+//         emailSender.sendMail(mailOptions, function(error) {
+//             if (error) {
+//                 throw new ApiError(400, "Sending email verification failed");
+//             } else {
+//                 console.log("Verification mail sent successfully");
+//             }
+//         });
+//     } catch (error) {
+//         console.log("hello",error);
+//         throw new ApiError(400, "Failed to send email verification");
+//     }
+// };
+
+
+const resend = new Resend('re_DwC3BJYL_GzpvcEuJspAUqpLJN5obBVA5');
+
+export const verifyEmail = async (Email, Firstname, createdTeacherId) => {
+  try {
+    if (!Email || !Firstname || !createdTeacherId) {
+      throw new ApiError(400, "Missing required parameters");
     }
+
+    const verificationLink = `https://gurukul-gec0.onrender.com/api/teacher/verify?id=${createdTeacherId}`;
+
+    const htmlMessage = `
+      <div style="text-align: center; font-family: Arial, sans-serif;">
+        <p style="margin: 20px;">Hi ${Firstname}, please click the button below to verify your E-mail.</p>
+        <img 
+          src="https://img.freepik.com/free-vector/illustration-e-mail-protection-concept-e-mail-envelope-with-file-document-attach-file-system-security-approved_1150-41788.jpg?size=626&ext=jpg&uid=R140292450&ga=GA1.1.553867909.1706200225&semt=ais" 
+          alt="Verification Image" 
+          style="width: 100%; max-width: 500px; border-radius: 8px;"
+        >
+        <br>
+        <a href="${verificationLink}">
+          <button style="background-color: black; color: white; padding: 10px 20px; text-align: center; border: none; border-radius: 6px; font-size: 16px; margin: 10px 0; cursor: pointer;">
+            Verify Email
+          </button>
+        </a>
+      </div>
+    `;
+
+    const data = await resend.emails.send({
+      from: `namanadlakha9311@gmail.com`, // must match your verified domain in Resend
+      to: Email,
+      subject: "Verify your E-mail",
+      html: htmlMessage,
+    });
+
+    console.log("Verification mail sent successfully:", data);
+    return { success: true, message: "Verification mail sent successfully" };
+  } catch (error) {
+    console.error("Error sending verification email:", error.message);
+    throw new ApiError(400, "Failed to send email verification");
+  }
 };
 
 const generateAccessAndRefreshTokens = async (teacherId) => { 

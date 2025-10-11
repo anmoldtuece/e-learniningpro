@@ -6,48 +6,92 @@ import nodemailer from "nodemailer";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Teacher } from "../models/teacher.model.js";
 import { Sendmail } from "../utils/Nodemailer.js";
+import { Resend } from "resend";
 
 
+// const verifyEmail = async (Email, Firstname, createdStudent_id) => {
+//     try {
+//         const emailsender = nodemailer.createTransport({
+//             host: 'smtp.gmail.com',
+//             port: 587,
+//             secure: false,
+//             requireTLS: true,
+//             auth: {
+//                 user: process.env.SMTP_EMAIL,
+//                 pass: process.env.SMTP_PASS,
+//             }
+//         });
 
-const verifyEmail = async (Email, Firstname, createdStudent_id) => {
-    try {
-        const emailsender = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 587,
-            secure: false,
-            requireTLS: true,
-            auth: {
-                user: process.env.SMTP_EMAIL,
-                pass: process.env.SMTP_PASS,
-            }
-        });
+//         const mailOptions = {
+//             from: "Gurukul@gmail.com",
+//             to: Email,
+//             subject: "Verify your E-mail",
+//             html: `
+//             <div style="text-align: center;">
+//                 <p style="margin: 20px;"> Hi ${Firstname}, Please click the button below to verify your E-mail. </p>
+//                 <img src="https://img.freepik.com/free-vector/illustration-e-mail-protection-concept-e-mail-envelope-with-file-document-attach-file-system-security-approved_1150-41788.jpg?size=626&ext=jpg&uid=R140292450&ga=GA1.1.553867909.1706200225&semt=ais" alt="Verification Image" style="width: 100%; height: auto;">
+//                 <br>
+//                 <a href="${process.env.VITE_BACKEND_URL}/api/student/verify?id=${createdStudent_id}">
+//                     <button style="background-color: black; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 10px 0; cursor: pointer;">Verify Email</button>
+//                 </a>
+//                 <p style="font-size: 14px;">&copy; 2024 Gurukul. All rights reserved.</p>
+//             </div>`
+//         };
 
-        const mailOptions = {
-            from: "Gurukul@gmail.com",
-            to: Email,
-            subject: "Verify your E-mail",
-            html: `
-            <div style="text-align: center;">
-                <p style="margin: 20px;"> Hi ${Firstname}, Please click the button below to verify your E-mail. </p>
-                <img src="https://img.freepik.com/free-vector/illustration-e-mail-protection-concept-e-mail-envelope-with-file-document-attach-file-system-security-approved_1150-41788.jpg?size=626&ext=jpg&uid=R140292450&ga=GA1.1.553867909.1706200225&semt=ais" alt="Verification Image" style="width: 100%; height: auto;">
-                <br>
-                <a href="${process.env.VITE_BACKEND_URL}/api/student/verify?id=${createdStudent_id}">
-                    <button style="background-color: black; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 10px 0; cursor: pointer;">Verify Email</button>
-                </a>
-                <p style="font-size: 14px;">&copy; 2024 Gurukul. All rights reserved.</p>
-            </div>`
-        };
+//         emailsender.sendMail(mailOptions, function(error) {
+//             if (error) {
+//                 throw new ApiError(400, "Sending email verification failed");
+//             } else {
+//                 console.log("Verification mail sent successfully");
+//             }
+//         });
+//     } catch (error) {
+//         throw new ApiError(400, "Failed to send email verification");
+//     }
+// };
 
-        emailsender.sendMail(mailOptions, function(error) {
-            if (error) {
-                throw new ApiError(400, "Sending email verification failed");
-            } else {
-                console.log("Verification mail sent successfully");
-            }
-        });
-    } catch (error) {
-        throw new ApiError(400, "Failed to send email verification");
+
+const resend = new Resend('re_DwC3BJYL_GzpvcEuJspAUqpLJN5obBVA5');
+
+export const verifyEmail = async (Email, Firstname, createdStudent_id) => {
+  try {
+    if (!Email || !Firstname || !createdStudent_id) {
+      throw new ApiError(400, "Missing required parameters");
     }
+
+    const verificationLink = `https://gurukul-gec0.onrender.com/api/student/verify?id=${createdStudent_id}`;
+
+    const htmlMessage = `
+      <div style="text-align: center; font-family: Arial, sans-serif;">
+        <p style="margin: 20px;">Hi ${Firstname}, please click the button below to verify your E-mail.</p>
+        <img 
+          src="https://img.freepik.com/free-vector/illustration-e-mail-protection-concept-e-mail-envelope-with-file-document-attach-file-system-security-approved_1150-41788.jpg?size=626&ext=jpg&uid=R140292450&ga=GA1.1.553867909.1706200225&semt=ais" 
+          alt="Verification Image" 
+          style="width: 100%; max-width: 500px; border-radius: 8px;"
+        >
+        <br>
+        <a href="${verificationLink}">
+          <button style="background-color: black; color: white; padding: 10px 20px; text-align: center; border: none; border-radius: 6px; font-size: 16px; margin: 10px 0; cursor: pointer;">
+            Verify Email
+          </button>
+        </a>
+        <p style="font-size: 14px; color: gray;">&copy; 2024 Gurukul. All rights reserved.</p>
+      </div>
+    `;
+
+    const data = await resend.emails.send({
+      from: `namanadlakha9311@gmail.com`, // must be verified in Resend
+      to: Email,
+      subject: "Verify your E-mail",
+      html: htmlMessage,
+    });
+
+    console.log("Verification mail sent successfully:", data);
+    return { success: true, message: "Verification mail sent successfully" };
+  } catch (error) {
+    console.error("Error sending student verification email:", error.message);
+    throw new ApiError(400, "Failed to send email verification");
+  }
 };
 
 const generateAccessAndRefreshTokens = async (stdID) =>{ 
