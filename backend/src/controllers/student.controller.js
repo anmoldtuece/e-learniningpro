@@ -51,9 +51,6 @@ import { Resend } from "resend";
 // };
 
 
-const resend = new Resend("re_DwC3BJYL_GzpvcEuJspAUqpLJN5obBVA5");
-
-// Direct frontend URL (replace with your real one)
 const FRONTEND_URL = "https://exquisite-raindrop-714b6e.netlify.app";
 
 export const verifyEmail = async (Email, Firstname, createdStudent_id) => {
@@ -62,39 +59,39 @@ export const verifyEmail = async (Email, Firstname, createdStudent_id) => {
       throw new ApiError(400, "Missing required parameters");
     }
 
-    // ✅ Use frontend route, not backend API route
-    const verificationLink = `https://exquisite-raindrop-714b6e.netlify.app/student/verify-email?id=${createdStudent_id}`;
+    // ✅ Create frontend verification link
+    const verificationLink = `${FRONTEND_URL}/student/verify-email?id=${createdStudent_id}`;
 
-    const htmlMessage = `
-      <div style="text-align: center; font-family: Arial, sans-serif;">
-        <p style="margin: 20px;">Hi ${Firstname}, please click the button below to verify your E-mail.</p>
-        <img 
-          src="https://img.freepik.com/free-vector/illustration-e-mail-protection-concept-e-mail-envelope-with-file-document-attach-file-system-security-approved_1150-41788.jpg" 
-          alt="Verification Image" 
-          style="width: 100%; max-width: 500px; border-radius: 8px;"
-        >
-        <br>
-        <a href="${verificationLink}">
-          <button style="background-color: black; color: white; padding: 10px 20px; border: none; border-radius: 6px; font-size: 16px; margin: 10px 0; cursor: pointer;">
-            Verify Email
-          </button>
+    // ✅ Email content (similar to forget password)
+    const subject = "Verify Your Email - Gurukul";
+
+    const message = `
+      <div style="font-family: Arial, sans-serif; text-align: center;">
+        <p>Dear ${Firstname},</p>
+        <p>Welcome to <b>Gurukul</b>! Please verify your email address by clicking the button below:</p>
+        <a href="${verificationLink}" target="_blank" 
+           style="display: inline-block; padding: 10px 20px; background-color: #000; color: white; border-radius: 6px; text-decoration: none; margin-top: 10px;">
+          Verify Email
         </a>
-        <p style="font-size: 14px; color: gray;">&copy; 2025 Gurukul. All rights reserved.</p>
+        <p>If the button doesn't work, copy and paste the link below in your browser:</p>
+        <p>${verificationLink}</p>
+        <br>
+        <img src="https://img.freepik.com/free-vector/illustration-e-mail-protection-concept-e-mail-envelope-with-file-document-attach-file-system-security-approved_1150-41788.jpg" 
+             alt="Verify Email Image" 
+             style="width: 100%; max-width: 500px; border-radius: 8px; margin-top: 10px;">
+        <br>
+        <p style="font-size: 14px; color: gray;">© 2025 Gurukul. All rights reserved.</p>
       </div>
     `;
 
-    const data = await resend.emails.send({
-      from: "Gurukul <onboarding@resend.dev>", // must be verified in Resend
-      to: Email,
-      subject: "Verify your E-mail",
-      html: htmlMessage,
-    });
+    // ✅ Send using your existing Nodemailer utility
+    await Sendmail(Email, subject, message);
 
-    console.log("Verification mail sent successfully:", data);
-    return { success: true, message: "Verification mail sent successfully" };
+    console.log("Verification email sent successfully to:", Email);
+    return { success: true, message: "Verification email sent successfully" };
   } catch (error) {
-    console.error("Error sending student verification email:", error.message);
-    throw new ApiError(400, "Failed to send email verification");
+    console.error("Error sending verification email:", error.message);
+    throw new ApiError(400, "Failed to send verification email");
   }
 };
 
