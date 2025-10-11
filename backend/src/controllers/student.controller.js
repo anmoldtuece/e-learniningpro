@@ -59,7 +59,7 @@ export const verifyEmail = async (Email, Firstname, createdStudent_id) => {
       throw new ApiError(400, "Missing required parameters");
     }
 
-    const verificationLink = `https://gurukul-gec0.onrender.com/api/student/verify?id=${createdStudent_id}`;
+    const verificationLink = `${process.env.VITE_BACKEND_URL}/api/student/verify?id=${createdStudent_id}`;
 
     const htmlMessage = `
       <div style="text-align: center; font-family: Arial, sans-serif;">
