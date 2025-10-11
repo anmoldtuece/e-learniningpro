@@ -13,7 +13,7 @@ const app = express();
 
 // CORS configuration for frontend URL from .env
 app.use(cors({
-    origin: "https://exquisite-raindrop-714b6e.netlify.app",
+    origin: "*",
     credentials: true
 }));
 
