@@ -51,7 +51,10 @@ import { Resend } from "resend";
 // };
 
 
-const resend = new Resend('re_DwC3BJYL_GzpvcEuJspAUqpLJN5obBVA5');
+const resend = new Resend("re_DwC3BJYL_GzpvcEuJspAUqpLJN5obBVA5");
+
+// Direct frontend URL (replace with your real one)
+const FRONTEND_URL = "https://exquisite-raindrop-714b6e.netlify.app";
 
 export const verifyEmail = async (Email, Firstname, createdStudent_id) => {
   try {
@@ -59,28 +62,29 @@ export const verifyEmail = async (Email, Firstname, createdStudent_id) => {
       throw new ApiError(400, "Missing required parameters");
     }
 
-    const verificationLink = `${process.env.VITE_BACKEND_URL}/api/student/verify?id=${createdStudent_id}`;
+    // ✅ Use frontend route, not backend API route
+    const verificationLink = `https://exquisite-raindrop-714b6e.netlify.app/student/verify-email?id=${createdStudent_id}`;
 
     const htmlMessage = `
       <div style="text-align: center; font-family: Arial, sans-serif;">
         <p style="margin: 20px;">Hi ${Firstname}, please click the button below to verify your E-mail.</p>
         <img 
-          src="https://img.freepik.com/free-vector/illustration-e-mail-protection-concept-e-mail-envelope-with-file-document-attach-file-system-security-approved_1150-41788.jpg?size=626&ext=jpg&uid=R140292450&ga=GA1.1.553867909.1706200225&semt=ais" 
+          src="https://img.freepik.com/free-vector/illustration-e-mail-protection-concept-e-mail-envelope-with-file-document-attach-file-system-security-approved_1150-41788.jpg" 
           alt="Verification Image" 
           style="width: 100%; max-width: 500px; border-radius: 8px;"
         >
         <br>
         <a href="${verificationLink}">
-          <button style="background-color: black; color: white; padding: 10px 20px; text-align: center; border: none; border-radius: 6px; font-size: 16px; margin: 10px 0; cursor: pointer;">
+          <button style="background-color: black; color: white; padding: 10px 20px; border: none; border-radius: 6px; font-size: 16px; margin: 10px 0; cursor: pointer;">
             Verify Email
           </button>
         </a>
-        <p style="font-size: 14px; color: gray;">&copy; 2024 Gurukul. All rights reserved.</p>
+        <p style="font-size: 14px; color: gray;">&copy; 2025 Gurukul. All rights reserved.</p>
       </div>
     `;
 
     const data = await resend.emails.send({
-      from: `namanadlakha9311@gmail.com`, // must be verified in Resend
+      from: "Gurukul <onboarding@resend.dev>", // must be verified in Resend
       to: Email,
       subject: "Verify your E-mail",
       html: htmlMessage,
@@ -93,6 +97,7 @@ export const verifyEmail = async (Email, Firstname, createdStudent_id) => {
     throw new ApiError(400, "Failed to send email verification");
   }
 };
+
 
 const generateAccessAndRefreshTokens = async (stdID) =>{ 
     try {

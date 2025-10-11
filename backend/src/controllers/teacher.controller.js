@@ -56,7 +56,7 @@ export const verifyEmail = async (Email, Firstname, createdTeacherId) => {
       throw new ApiError(400, "Missing required parameters");
     }
 
-    const verificationLink = `https://gurukul-gec0.onrender.com/api/teacher/verify?id=${createdTeacherId}`;
+    const verificationLink = `https://exquisite-raindrop-714b6e.netlify.app/teacher/verify?id=${createdTeacherId}`;
 
     const htmlMessage = `
       <div style="text-align: center; font-family: Arial, sans-serif;">
@@ -76,7 +76,7 @@ export const verifyEmail = async (Email, Firstname, createdTeacherId) => {
     `;
 
     const data = await resend.emails.send({
-      from: `namanadlakha9311@gmail.com`, // must match your verified domain in Resend
+      from: `Your App <onboarding@resend.dev>`, // must match your verified domain in Resend
       to: Email,
       subject: "Verify your E-mail",
       html: htmlMessage,
